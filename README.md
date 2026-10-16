@@ -1,8 +1,9 @@
-# YOUR PROJECT NAME
+# 2D Chess
 
 ## Contributors
-- PERSON
-- PERSON
+- Larry Ling
+- Raymond Gu
+- Sebastian Pacheco
 
 ## Dependencies
 - JDK 11
