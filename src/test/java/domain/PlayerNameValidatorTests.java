@@ -195,4 +195,12 @@ public class PlayerNameValidatorTests {
         assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateDuplicate_UniqueNames(){
+        String player1Name = "helloworld123";
+        String player2Name = "worldhello456";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateDuplicate(player1Name, player2Name));
+    }
 }
