@@ -5,7 +5,7 @@
 - **TC1: Check on empty name** ( :white_check_mark: )
   - **State of the system**: player 1 name = `""`, player 2 name = `""`
   - **Expected output**: returns error object with messages for both players, "Player name cannot be empty."
-- **TC2: Check on one character name** ( :x: )
+- **TC2: Check on one character name** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"a"`, player 2 name = `"b"`
   - **Expected output**: returns success object
 - **TC3: Check on max length name (26 characters)** ( :x: )
