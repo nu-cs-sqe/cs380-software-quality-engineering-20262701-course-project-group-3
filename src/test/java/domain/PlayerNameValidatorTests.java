@@ -203,4 +203,12 @@ public class PlayerNameValidatorTests {
 
         assertDoesNotThrow(() -> PlayerNameValidator.validateDuplicate(player1Name, player2Name));
     }
+
+    @Test
+    public void validateDuplicate_UniqueNamesNearDuplicate(){
+        String player1Name = "helloworld123";
+        String player2Name = "helloworld124";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateDuplicate(player1Name, player2Name));
+    }
 }

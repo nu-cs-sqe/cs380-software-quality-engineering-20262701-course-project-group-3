@@ -65,9 +65,9 @@
 - **TC19: Check on duplicate names (mixed case)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"HelloWorld123"`, player 2 name = `"helloworld123"`
   - **Expected output**: returns error object with message for both players, "Player names cannot match."
-- **TC20: Check on unique names** ( :x: )
+- **TC20: Check on unique names** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns success object
-- **TC21: Check on unique names (near duplicate)** ( :x: )
+- **TC21: Check on unique names (near duplicate)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"helloworld124"`
   - **Expected output**: returns success object
