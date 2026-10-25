@@ -24,6 +24,9 @@ public class GameClock {
     }
 
     public long getRemainingSeconds(PieceColor color) {
+        if (color == null) {
+            throw new IllegalArgumentException("Color cannot be null.");
+        }
         return color == PieceColor.WHITE ? whiteRemainingSeconds : blackRemainingSeconds;
     }
 }

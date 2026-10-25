@@ -20,8 +20,8 @@
 | TC03: Smallest positive time  | Call: `new GameClock(1)`                 | Both players start with 60 seconds                                               | :white_check_mark: |
 | TC04: Blitz preset            | Call: `new GameClock(3)`                 | Both players start with 180 seconds                                              | :white_check_mark: |
 | TC05: Rapid preset            | Call: `new GameClock(10)`                | Both players start with 600 seconds                                              | :white_check_mark: |
-| TC06: Classical preset        | Call: `new GameClock(60)`                | Both players start with 3,600 seconds                                            | :x:                |
-| TC07: Maximum integer input   | Call: `new GameClock(Integer.MAX_VALUE)` | Both players start with `(long) Integer.MAX_VALUE * 60` seconds without overflow | :x:                |
+| TC06: Classical preset        | Call: `new GameClock(60)`                | Both players start with 3,600 seconds                                            | :white_check_mark: |
+| TC07: Maximum integer input   | Call: `new GameClock(Integer.MAX_VALUE)` | Both players start with `(long) Integer.MAX_VALUE * 60` seconds without overflow | :white_check_mark: |
 
 ### Method under test: `isTimed()`
 

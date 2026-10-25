@@ -46,4 +46,12 @@ public class GameClockTest {
         assertEquals(3600L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
 
+    @Test
+    void constructor_MaxInteger_InitializesWithoutOverflow() {
+        GameClock clock = new GameClock(Integer.MAX_VALUE);
+        long expectedSeconds = (long) Integer.MAX_VALUE * 60;
+
+        assertEquals(expectedSeconds, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(expectedSeconds, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
 }
