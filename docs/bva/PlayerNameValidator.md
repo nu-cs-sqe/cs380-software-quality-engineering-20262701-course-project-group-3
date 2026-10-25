@@ -23,7 +23,7 @@
 
 ## Method: `validateCharacters`
 
-- **TC7: Check on names with one symbol character** ( :x: )
+- **TC7: Check on names with one symbol character** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"abc!"`, player 2 name = `"def#"`
   - **Expected output**: returns error object with messages for both players, "Player name must only contain alphanumeric characters."
 - **TC8: Check on name with symbol characters (player 1)** ( :x: )

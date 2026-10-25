@@ -23,4 +23,18 @@ public class PlayerNameValidator {
 
         if (!errors.isEmpty()) throw new ValidationException(errors);
     }
+
+    public static void validateCharacters(String player1Name, String player2Name) throws ValidationException {
+        Map<ValidationException.Field, String> errors = new EnumMap<>(ValidationException.Field.class);
+
+        if (player1Name.contains("!") || player1Name.contains("#")) {
+            errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters.");
+        }
+
+        if (player2Name.contains("!") || player2Name.contains("#")) {
+            errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters.");
+        }
+
+        if (!errors.isEmpty()) throw new ValidationException(errors);
+    }
 }
