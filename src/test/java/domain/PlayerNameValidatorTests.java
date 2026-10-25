@@ -69,8 +69,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
@@ -92,7 +92,7 @@ public class PlayerNameValidatorTests {
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -110,8 +110,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -121,8 +121,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -132,8 +132,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters or underscores.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
