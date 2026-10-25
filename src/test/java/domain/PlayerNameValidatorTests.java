@@ -94,4 +94,12 @@ public class PlayerNameValidatorTests {
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateCharacters_TerminalCharacters(){
+        String player1Name = "09AZaz";
+        String player2Name = "z0A9Za";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+    }
 }
