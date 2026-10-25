@@ -6,15 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerNameValidatorTests {
     @Test
-    public void validateLength_EmptyName() {
-        PlayerNameValidator pnv = new PlayerNameValidator();
+    public void validateLength_EmptyName(){
         String player1Name = "";
         String player2Name = "";
 
-        ValidationResult result = pnv.validateLength(player1Name, player2Name);
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateLength(player1Name, player2Name));
 
-        assertFalse(result.success);
-        assertEquals(result.errors.player1, "Player name cannot be empty.");
-        assertEquals(result.errors.player2, "Player name cannot be empty.");
+        assertEquals("Player name cannot be empty.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name cannot be empty.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 }
