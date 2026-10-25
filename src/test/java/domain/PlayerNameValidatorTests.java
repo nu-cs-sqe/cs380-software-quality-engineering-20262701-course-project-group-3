@@ -143,4 +143,12 @@ public class PlayerNameValidatorTests {
 
         assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
     }
+
+    @Test
+    public void validateCharacters_InternalWhitespace_Player1(){
+        String player1Name = "hello world 123";
+        String player2Name = "worldhello456";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+    }
 }
