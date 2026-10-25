@@ -61,4 +61,15 @@ public class PlayerNameValidatorTests {
         assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateCharacters_OneSymbol(){
+        String player1Name = "abc!";
+        String player2Name = "def#";
+
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+
+        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+    }
 }
