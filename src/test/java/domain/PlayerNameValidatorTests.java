@@ -151,4 +151,15 @@ public class PlayerNameValidatorTests {
 
         assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
     }
+
+    @Test
+    public void validateCharacters_LeadingTrailingWhitespace_Player2(){
+        String player1Name = "helloworld123";
+        String player2Name = " worldhello456 ";
+
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+
+        assertNull(e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name cannot contain leading/trailing whitespace.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+    }
 }
