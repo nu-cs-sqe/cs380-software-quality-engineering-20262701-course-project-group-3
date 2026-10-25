@@ -47,7 +47,7 @@
 - **TC14: Check on name with underscore (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"abc_def"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns success object
-- **TC15: Check on names with internal whitespace (player 1)** ( :x: )
+- **TC15: Check on names with internal whitespace (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"hello world 123"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns success object
 - **TC16: Check on names with leading/trailing whitespace (player 2)** ( :x: )
