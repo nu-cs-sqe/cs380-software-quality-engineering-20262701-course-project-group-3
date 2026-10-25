@@ -50,4 +50,15 @@ public class PlayerNameValidatorTests {
         assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateLength_AboveLimit_Player1(){
+        String player1Name = "ABCDEFGHIJKLMNOPQRSTUVWXYZA";
+        String player2Name = "abcdefghijklmnopqrstuvwxyz";
+
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateLength(player1Name, player2Name));
+
+        assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
+    }
 }

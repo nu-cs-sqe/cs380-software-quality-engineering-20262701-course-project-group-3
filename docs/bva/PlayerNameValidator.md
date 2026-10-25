@@ -17,7 +17,7 @@
 - **TC5: Check name length above limit (27 characters)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"ABCDEFGHIJKLMNOPQRSTUVWXYZA"`, player 2 name = `"zabcdefghijklmnopqrstuvwxyz"`
   - **Expected output**: returns error object with messages for both players, "Player name cannot contain more than 26 characters."
-- **TC6: Check name length above limit (player 1)** ( :x: )
+- **TC6: Check name length above limit (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"ABCDEFGHIJKLMNOPQRSTUVWXYZA"`, player 2 name = `"abcdefghijklmnopqrstuvwxyz"`
   - **Expected output**: returns error object with message for player 1, "Player name cannot contain more than 26 characters."
 
