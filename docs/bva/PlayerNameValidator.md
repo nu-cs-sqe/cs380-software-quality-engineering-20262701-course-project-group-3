@@ -35,7 +35,7 @@
 - **TC10: Check on names containing the first and last valid character of each range** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"09AZaz"`, player 2 name = `"z0A9Za"`
   - **Expected output**: returns success object
-- **TC11: Check on names with characters adjacent to digits (`/` and `:`)** ( :x: )
+- **TC11: Check on names with characters adjacent to digits (`/` and `:`)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"abc/"`, player 2 name = `"abc:"`
   - **Expected output**: returns error object with messages for both players, "Player name must only contain alphanumeric characters."
 - **TC12: Check on names with characters adjacent to uppercase letters (`@` and `[`)** ( :x: )
