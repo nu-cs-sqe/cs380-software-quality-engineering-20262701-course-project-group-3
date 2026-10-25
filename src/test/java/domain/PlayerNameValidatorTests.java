@@ -23,4 +23,12 @@ public class PlayerNameValidatorTests {
 
         assertDoesNotThrow(() -> PlayerNameValidator.validateLength(player1Name, player2Name));
     }
+
+    @Test
+    public void validateLength_MaxLength(){
+        String player1Name = "abcdefghijklmnopqrstuvwxyz";
+        String player2Name = "zabcdefghijklmnopqrstuvwxy";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateLength(player1Name, player2Name));
+    }
 }
