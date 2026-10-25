@@ -11,6 +11,7 @@
 - JDK 11
 - JUnit 5.10
 - Gradle 8.10
+- Swing
 
 ## Exceptions
 ### Code Coverage
@@ -19,3 +20,10 @@ N/A
 N/A
 ### Others
 N/A
+
+## Acknowledgements
+1. Images used in the project are under Creative Commons License and can be found at:
+    - [board](https://commons.wikimedia.org/wiki/File:Chess_Board.svg)
+    - [pieces](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces)
+
+2. [Northwestern Color Palette](https://www.northwestern.edu/brand/visual-identity/color-palettes/)
