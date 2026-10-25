@@ -105,8 +105,8 @@ public class PlayerNameValidatorTests {
 
     @Test
     public void validateCharacters_DigitAdjacentCharacters(){
-        String player1Name = "abc/";
-        String player2Name = "abc:";
+        String player1Name = "123/";
+        String player2Name = "789:";
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
