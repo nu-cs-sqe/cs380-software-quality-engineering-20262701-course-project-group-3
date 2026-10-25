@@ -124,4 +124,15 @@ public class PlayerNameValidatorTests {
         assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateCharacters_LowercaseAdjacentCharacters(){
+        String player1Name = "abc`";
+        String player2Name = "abc{";
+
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+
+        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+    }
 }
