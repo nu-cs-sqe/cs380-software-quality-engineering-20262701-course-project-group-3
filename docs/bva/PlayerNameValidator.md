@@ -59,7 +59,7 @@
 
 ## Method: `validateDuplicate`
 
-- **TC18: Check on duplicate names** ( :x: )
+- **TC18: Check on duplicate names** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"helloworld123"`
   - **Expected output**: returns error object with message for both players, "Player names cannot match."
 - **TC19: Check on duplicate names (mixed case)** ( :x: )
