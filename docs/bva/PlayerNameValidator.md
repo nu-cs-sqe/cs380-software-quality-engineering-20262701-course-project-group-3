@@ -50,12 +50,12 @@
 - **TC15: Check on names with internal whitespace (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"hello world 123"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns success object
-- **TC16: Check on names with leading/trailing whitespace (player 2)** ( :x: )
+- **TC16: Check on names with leading/trailing whitespace (player 2)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `" worldhello456 "`
-  - **Expected output**: player names are not trimmed, returns error object with message for player 2, "Player name cannot contain leader/trailing whitespace."
+  - **Expected output**: player names are not trimmed, returns error object with message for player 2, "Player name cannot contain leading/trailing whitespace."
 - **TC17: Check on names with only one whitespace (player 1)** ( :x: )
   - **State of the system**: player 1 name = `" "`, player 2 name = `"worldhello456"`
-  - **Expected output**: player names are not trimmed, returns error object with message for player 1, "Player name cannot contain leader/trailing whitespace."
+  - **Expected output**: player names are not trimmed, returns error object with message for player 1, "Player name cannot contain leading/trailing whitespace."
 
 ## Method: `validateDuplicate`
 
