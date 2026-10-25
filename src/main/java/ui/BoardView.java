@@ -26,14 +26,14 @@ public class BoardView extends JPanel {
     private int selectedRow = -1;
     private int selectedCol = -1;
 
-    private Map<PieceType, Image> whitePieceImages;
-    private Map<PieceType, Image> blackPieceImages;
+    private Map<PieceType, Image> whitePieceSprites;
+    private Map<PieceType, Image> blackPieceSprites;
 
     private BoardController boardController;
 
     public BoardView(BoardController boardController) {
         setPreferredSize(new Dimension(BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE));
-        loadPieceImages();
+        loadPieceSprites();
         this.boardController = boardController;
         boardController.setBoardView(this);
         addMouseListener(new BoardMouseListener());
@@ -57,24 +57,24 @@ public class BoardView extends JPanel {
         }
     }
 
-    private void loadPieceImages(){
+    private void loadPieceSprites(){
 
-        whitePieceImages = new HashMap<>();
-        blackPieceImages = new HashMap<>();
+        whitePieceSprites = new HashMap<>();
+        blackPieceSprites = new HashMap<>();
 
-        loadOnePieceImage(PieceType.PAWN, PieceColor.WHITE, "images/white_pawn.png");
-        loadOnePieceImage(PieceType.ROOK, PieceColor.WHITE, "images/white_rook.png");
-        loadOnePieceImage(PieceType.KNIGHT, PieceColor.WHITE, "images/white_knight.png");
-        loadOnePieceImage(PieceType.BISHOP, PieceColor.WHITE, "images/white_bishop.png");
-        loadOnePieceImage(PieceType.QUEEN, PieceColor.WHITE, "images/white_queen.png");
-        loadOnePieceImage(PieceType.KING, PieceColor.WHITE, "images/white_king.png");
+        loadOnePieceImage(PieceType.PAWN, PieceColor.WHITE, "sprites/white_pawn.png");
+        loadOnePieceImage(PieceType.ROOK, PieceColor.WHITE, "sprites/white_rook.png");
+        loadOnePieceImage(PieceType.KNIGHT, PieceColor.WHITE, "sprites/white_knight.png");
+        loadOnePieceImage(PieceType.BISHOP, PieceColor.WHITE, "sprites/white_bishop.png");
+        loadOnePieceImage(PieceType.QUEEN, PieceColor.WHITE, "sprites/white_queen.png");
+        loadOnePieceImage(PieceType.KING, PieceColor.WHITE, "sprites/white_king.png");
 
-        loadOnePieceImage(PieceType.PAWN, PieceColor.BLACK, "images/black_pawn.png");
-        loadOnePieceImage(PieceType.ROOK, PieceColor.BLACK, "images/black_rook.png");
-        loadOnePieceImage(PieceType.KNIGHT, PieceColor.BLACK, "images/black_knight.png");
-        loadOnePieceImage(PieceType.BISHOP, PieceColor.BLACK, "images/black_bishop.png");
-        loadOnePieceImage(PieceType.QUEEN, PieceColor.BLACK, "images/black_queen.png");
-        loadOnePieceImage(PieceType.KING, PieceColor.BLACK, "images/black_king.png");
+        loadOnePieceImage(PieceType.PAWN, PieceColor.BLACK, "sprites/black_pawn.png");
+        loadOnePieceImage(PieceType.ROOK, PieceColor.BLACK, "sprites/black_rook.png");
+        loadOnePieceImage(PieceType.KNIGHT, PieceColor.BLACK, "sprites/black_knight.png");
+        loadOnePieceImage(PieceType.BISHOP, PieceColor.BLACK, "sprites/black_bishop.png");
+        loadOnePieceImage(PieceType.QUEEN, PieceColor.BLACK, "sprites/black_queen.png");
+        loadOnePieceImage(PieceType.KING, PieceColor.BLACK, "sprites/black_king.png");
     }
 
     private void loadOnePieceImage(PieceType type, PieceColor color, String imagePath){
@@ -86,9 +86,9 @@ public class BoardView extends JPanel {
             throw new RuntimeException(e);
         }
         if (color.equals(PieceColor.BLACK))
-            blackPieceImages.put(type, image);
+            blackPieceSprites.put(type, image);
         else
-            this.whitePieceImages.put(type, image);
+            this.whitePieceSprites.put(type, image);
     }
 
     private void drawPieces(Graphics g){
@@ -100,8 +100,8 @@ public class BoardView extends JPanel {
                 Piece piece = boardSnapshot[row][col];
                 if (piece != null) {
                     Image pieceImage = piece.getColor() == PieceColor.WHITE ?
-                        whitePieceImages.get(piece.getType()) :
-                        blackPieceImages.get(piece.getType());
+                        whitePieceSprites.get(piece.getType()) :
+                        blackPieceSprites.get(piece.getType());
                     g.drawImage(pieceImage, col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
                 }
             }
