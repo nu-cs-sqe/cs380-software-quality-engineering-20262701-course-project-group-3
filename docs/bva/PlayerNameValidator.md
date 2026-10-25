@@ -53,7 +53,7 @@
 - **TC16: Check on names with leading/trailing whitespace (player 2)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `" worldhello456 "`
   - **Expected output**: player names are not trimmed, returns error object with message for player 2, "Player name cannot contain leading/trailing whitespace."
-- **TC17: Check on names with only one whitespace (player 1)** ( :x: )
+- **TC17: Check on names with only one whitespace (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `" "`, player 2 name = `"worldhello456"`
   - **Expected output**: player names are not trimmed, returns error object with message for player 1, "Player name cannot contain leading/trailing whitespace."
 
