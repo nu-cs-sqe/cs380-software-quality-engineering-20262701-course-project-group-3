@@ -1,0 +1,175 @@
+@startuml
+title Chess Game - System Design
+
+top to bottom direction
+skinparam classAttributeIconSize 10
+skinparam shadowing false
+
+package ui {
+    class Main {
+        +{static} main(args: String[]): void
+    }
+
+    class WelcomeView {
+        -player1NameField: JTextField
+        -player2NameField: JTextField
+        -timeControlSelector: JComboBox
+        +WelcomeView()
+        -createWelcomeScreenUI(): void
+    }
+
+    class MainView {
+        -boardView: BoardView
+        -boardController: BoardController
+        -gameStatsView: GameStatsView
+        +MainView(player1Name: String, player2Name: String)
+        -configureMainView(): void
+        -addGameStatsView(): void
+        -addBoardView(): void
+    }
+
+    class BoardView {
+        -selectedRow: int
+        -selectedCol: int
+        -boardController: BoardController
+        +BoardView(boardController: BoardController)
+        #paintComponent(g: Graphics): void
+        -drawBoard(g: Graphics): void
+        -drawPieces(g: Graphics): void
+    }
+
+    class GameStatsView {
+        -currentPlayerLabel: JLabel
+        -timerLabels: JLabel[]
+        -capturedPiecesLabels: JLabel[]
+        +GameStatsView(player1Name: String, player2Name: String)
+        +updateCurrentPlayer(): void
+        +updateTimers(): void
+        +updateCapturedPieces(): void
+    }
+
+    class BoardController {
+        -boardView: BoardView
+        -game: ChessGame
+        +BoardController()
+        +handleSquareClick(location: Location): void
+        +getBoardSnapshot(): Piece[][]
+    }
+}
+
+package domain {
+    class ChessGame <<planned>> {
+        -board: Board
+        -players: Player[]
+        -currentTurn: PieceColor
+        -clock: GameClock
+        -capturedPieces: List<Piece>
+        +startNewGame(): void
+        +getCurrentTurn(): PieceColor
+        +getCapturedPieces(): List<Piece>
+    }
+
+    class Player <<planned>> {
+        -name: String
+        -color: PieceColor
+        +getName(): String
+        +getColor(): PieceColor
+    }
+
+    class GameClock <<planned>> {
+        -whiteRemainingSeconds: long
+        -blackRemainingSeconds: long
+        +getRemainingTime(color: PieceColor): long
+        +startTurn(color: PieceColor): void
+        +stop(): void
+    }
+
+    class Board {
+        -pieces: Piece[][]
+        +Board()
+        +getSnapshot(): Piece[][]
+        -initializeBoard(): void
+    }
+
+    class Location {
+        -x: int
+        -y: int
+        +Location(x: int, y: int)
+        +getX(): int
+        +getY(): int
+    }
+
+    package piece {
+        enum PieceColor {
+            WHITE
+            BLACK
+        }
+
+        enum PieceType {
+            PAWN
+            ROOK
+            KNIGHT
+            BISHOP
+            QUEEN
+            KING
+        }
+
+        abstract class Piece {
+            -type: PieceType
+            -color: PieceColor
+            +getType(): PieceType
+            +getColor(): PieceColor
+            +makeCopy(): Piece
+        }
+
+        class Pawn {
+            +Pawn(color: PieceColor)
+            +makeCopy(): Piece
+        }
+        class Rook {
+            +Rook(color: PieceColor)
+            +makeCopy(): Piece
+        }
+        class Knight {
+            +Knight(color: PieceColor)
+            +makeCopy(): Piece
+        }
+        class Bishop {
+            +Bishop(color: PieceColor)
+            +makeCopy(): Piece
+        }
+        class Queen {
+            +Queen(color: PieceColor)
+            +makeCopy(): Piece
+        }
+        class King {
+            +King(color: PieceColor)
+            +makeCopy(): Piece
+        }
+    }
+}
+
+Main ..> WelcomeView
+WelcomeView ..> MainView
+MainView *-- BoardView
+MainView *-- GameStatsView
+MainView *-- BoardController
+BoardView --> BoardController
+BoardController --> ChessGame
+BoardController ..> GameStatsView
+BoardController ..> Location
+ChessGame *-- Board
+ChessGame *-- "2" Player
+ChessGame *-- "0..1" GameClock
+ChessGame --> "0..*" Piece
+Board --> "0..32" Piece
+Piece <|-- Pawn
+Piece <|-- Rook
+Piece <|-- Knight
+Piece <|-- Bishop
+Piece <|-- Queen
+Piece <|-- King
+Piece --> PieceColor
+Piece --> PieceType
+Player --> PieceColor
+@enduml
