@@ -15,4 +15,12 @@ public class PlayerNameValidatorTests {
         assertEquals("Player name cannot be empty.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertEquals("Player name cannot be empty.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateLength_OneCharacter(){
+        String player1Name = "a";
+        String player2Name = "b";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateLength(player1Name, player2Name));
+    }
 }
