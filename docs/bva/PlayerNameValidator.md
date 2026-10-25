@@ -29,7 +29,7 @@
 - **TC8: Check on name with symbol characters (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123$%^()"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns error object with message for player 1, "Player name must only contain alphanumeric characters."
-- **TC9: Check on names with special characters (player 2)** ( :x: )
+- **TC9: Check on names with special characters (player 2)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"ŵôřłďħëļľø¢∞§¡™£“‘"`
   - **Expected output**: returns error object with message for player 2, "Player name must only contain alphanumeric characters."
 - **TC10: Check on names containing the first and last valid character of each range** ( :x: )
