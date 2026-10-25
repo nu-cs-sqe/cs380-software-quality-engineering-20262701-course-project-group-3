@@ -22,5 +22,28 @@ public class GameClockTest {
         assertEquals(-1L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
 
+    @Test
+    void constructor_ThreeMinutes_InitializesBlitzGame() {
+        GameClock clock = new GameClock(3);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void constructor_TenMinutes_InitializesRapidGame() {
+        GameClock clock = new GameClock(10);
+
+        assertEquals(600L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(600L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void constructor_SixtyMinutes_InitializesClassicalGame() {
+        GameClock clock = new GameClock(60);
+
+        assertEquals(3600L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(3600L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
 
 }
