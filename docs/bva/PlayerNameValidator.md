@@ -2,7 +2,7 @@
 
 ## Method: `validateLength`
 
-- **TC1: Check on empty name** ( :x: )
+- **TC1: Check on empty name** ( :white_check_mark: )
   - **State of the system**: player 1 name = `""`, player 2 name = `""`
   - **Expected output**: returns error object with messages for both players, "Player name cannot be empty."
 - **TC2: Check on one character name** ( :x: )
