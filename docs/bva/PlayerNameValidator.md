@@ -11,7 +11,7 @@
 - **TC3: Check on max length name (26 characters)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"abcdefghijklmnopqrstuvwxyz"`, player 2 name = `"zabcdefghijklmnopqrstuvwxy"`
   - **Expected output**: returns success object
-- **TC4: Check name length below limit (25 characters)** ( :x: )
+- **TC4: Check name length below limit (25 characters)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"ABCDEFGHIJKLMNOPQRSTUVWXY"`, player 2 name = `"zabcdefghijklmnopqrstuvwx"`
   - **Expected output**: returns success object
 - **TC5: Check name length above limit (27 characters)** ( :x: )
