@@ -135,4 +135,12 @@ public class PlayerNameValidatorTests {
         assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertEquals("Player name must only contain alphanumeric characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateCharacters_Underscore_Player1(){
+        String player1Name = "abc_def";
+        String player2Name = "worldhello456";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+    }
 }
