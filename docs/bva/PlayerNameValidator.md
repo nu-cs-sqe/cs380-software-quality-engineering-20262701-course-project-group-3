@@ -44,7 +44,7 @@
 - **TC13: Check on names with characters adjacent to lowercase letters (`` ` `` and `{`)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `` "abc`" ``, player 2 name = `"abc{"`
   - **Expected output**: returns error object with messages for both players, "Player name must only contain alphanumeric characters."
-- **TC14: Check on name with underscore (player 1)** ( :x: )
+- **TC14: Check on name with underscore (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"abc_def"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns success object
 - **TC15: Check on names with internal whitespace (player 1)** ( :x: )
