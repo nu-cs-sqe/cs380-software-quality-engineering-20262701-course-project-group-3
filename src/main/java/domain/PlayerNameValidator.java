@@ -45,7 +45,7 @@ public class PlayerNameValidator {
     public static void validateDuplicate(String player1Name, String player2Name) throws ValidationException {
         Map<ValidationException.Field, String> errors = new EnumMap<>(ValidationException.Field.class);
 
-        if (player1Name.equals(player2Name)) {
+        if (player1Name.equalsIgnoreCase(player2Name)) {
             errors.put(ValidationException.Field.PLAYER_1, "Player names cannot match.");
             errors.put(ValidationException.Field.PLAYER_2, "Player names cannot match.");
         }
