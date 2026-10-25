@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "nu.csse.sqe"
@@ -26,4 +27,8 @@ tasks.compileJava {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = "ui.Main"
 }
