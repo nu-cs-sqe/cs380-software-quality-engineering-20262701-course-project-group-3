@@ -173,4 +173,15 @@ public class PlayerNameValidatorTests {
         assertEquals("Player name cannot contain leading/trailing whitespace.", e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
+
+    @Test
+    public void validateDuplicate_DuplicateNames(){
+        String player1Name = "helloworld123";
+        String player2Name = "helloworld123";
+
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateDuplicate(player1Name, player2Name));
+
+        assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+    }
 }
