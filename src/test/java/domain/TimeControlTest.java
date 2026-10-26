@@ -19,4 +19,9 @@ public class TimeControlTest {
     void getMinutesPerPlayer_Rapid_ReturnsTen() {
         assertEquals(10, TimeControl.RAPID_10_MIN.getMinutesPerPlayer());
     }
+
+    @Test
+    void getMinutesPerPlayer_Classical_ReturnsSixty() {
+        assertEquals(60, TimeControl.CLASSICAL_60_MIN.getMinutesPerPlayer());
+    }
 }
