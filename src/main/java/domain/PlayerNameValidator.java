@@ -29,13 +29,13 @@ public class PlayerNameValidator {
 
         if (!player1Name.trim().equals(player1Name)) {
             errors.put(ValidationException.Field.PLAYER_1, "Player name cannot contain leading/trailing whitespace.");
-        } else if (!player1Name.matches("^[a-zA-Z0-9_ ]+$")) {
+        } else if (!player1Name.matches("^[a-zA-Z0-9_. ]+$")) {
             errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters or underscores.");
         }
 
         if (!player2Name.trim().equals(player2Name)) {
             errors.put(ValidationException.Field.PLAYER_2, "Player name cannot contain leading/trailing whitespace.");
-        } else if (!player2Name.matches("^[a-zA-Z0-9_ ]+$")) {
+        } else if (!player2Name.matches("^[a-zA-Z0-9_. ]+$")) {
             errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters or underscores.");
         }
 
