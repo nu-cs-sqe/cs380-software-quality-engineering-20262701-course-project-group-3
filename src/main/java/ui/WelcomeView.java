@@ -9,6 +9,10 @@ import java.util.Map;
 
 public class WelcomeView extends JFrame {
 
+    private static final String NAME_RULES_TEXT =
+            "Names must be 1 to 26 characters long, include at least one letter or number, "
+                    + "and may only contain letters, numbers, spaces, underscores, and periods.";
+
     private JTextField player1NameField;
     private JTextField player2NameField;
     private JLabel player1ErrorLabel;
@@ -31,7 +35,7 @@ public class WelcomeView extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Welcome message
+        // Welcome message (row 0)
         JLabel welcomeLabel = new JLabel("Welcome to our Chess Game!", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
         welcomeLabel.setForeground(Color.WHITE);
@@ -40,10 +44,18 @@ public class WelcomeView extends JFrame {
         gbc.gridwidth = 2;
         welcomePanel.add(welcomeLabel, gbc);
 
-        // Player 1 Name Input (row 1)
+        // Name rules description (row 1)
+        // Text is set further down, once the width of the input columns is known
+        JLabel rulesLabel = new JLabel("", SwingConstants.CENTER);
+        rulesLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+        rulesLabel.setForeground(new Color(230, 220, 245)); // soft light purple
+        gbc.gridy = 1;
+        welcomePanel.add(rulesLabel, gbc);
+
+        // Player 1 Name Input (row 2)
         gbc.gridwidth = 1;
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         JLabel player1NameLabel = new JLabel("Player 1 Name:");
         player1NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         player1NameLabel.setForeground(Color.WHITE);
@@ -64,14 +76,14 @@ public class WelcomeView extends JFrame {
         errorGbc.fill = GridBagConstraints.NONE; // don't stretch to fit the text
         errorGbc.insets = new Insets(0, 10, 5, 10);
 
-        // Player 1 error (row 2)
+        // Player 1 error (row 3)
         player1ErrorLabel = createErrorLabel();
-        errorGbc.gridy = 2;
+        errorGbc.gridy = 3;
         welcomePanel.add(player1ErrorLabel, errorGbc);
 
-        // Player 2 Name Input (row 3)
+        // Player 2 Name Input (row 4)
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         JLabel player2NameLabel = new JLabel("Player 2 Name:");
         player2NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         player2NameLabel.setForeground(Color.WHITE);
@@ -81,12 +93,20 @@ public class WelcomeView extends JFrame {
         gbc.gridx = 1;
         welcomePanel.add(player2NameField, gbc);
 
-        // Player 2 error (row 4)
+        // Wrap the rules text to the combined width of the label + field columns
+        // (minus the 10px insets between them) so it can't widen the layout
+        int rulesWidth = Math.max(player1NameLabel.getPreferredSize().width,
+                player2NameLabel.getPreferredSize().width)
+                + errorWidth + 20;
+        rulesLabel.setText("<html><div style='width:" + rulesWidth + "px; text-align:center'>"
+                + NAME_RULES_TEXT + "</div></html>");
+
+        // Player 2 error (row 5)
         player2ErrorLabel = createErrorLabel();
-        errorGbc.gridy = 4;
+        errorGbc.gridy = 5;
         welcomePanel.add(player2ErrorLabel, errorGbc);
 
-        // Start Game Button (row 5)
+        // Start Game Button (row 6)
         JButton startGameButton = new JButton("Start Game");
         startGameButton.setFont(new Font("Arial", Font.BOLD, 20));
         startGameButton.setOpaque(true);
@@ -125,7 +145,7 @@ public class WelcomeView extends JFrame {
             mainScreen.setVisible(true);
         });
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.gridwidth = 2; // Span two columns
         gbc.anchor = GridBagConstraints.CENTER; // Center the button
         welcomePanel.add(startGameButton, gbc);
