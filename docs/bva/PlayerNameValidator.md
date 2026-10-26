@@ -59,18 +59,27 @@
 - **TC18: Check on names with only one whitespace (player 1)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `" "`, player 2 name = `"worldhello456"`
   - **Expected output**: player names are not trimmed, returns error object with message for player 1, "Player name cannot contain leading/trailing whitespace."
+- **TC18: Check on names with only one alphanumeric character** ( :x: )
+  - **State of the system**: player 1 name = `"a"`, player 2 name = `"1"`
+  - **Expected output**: returns success object
+- **TC19: Check on names with only no alphanumeric characters** ( :x: )
+  - **State of the system**: player 1 name = `"."`, player 2 name = `"_"`
+  - **Expected output**: returns error object with messages for both players, "Player name contain at least one alphanumeric character."
+- **TC20: Check on names with only 2 alphanumeric characters** ( :x: )
+  - **State of the system**: player 1 name = `".h1"`, player 2 name = `"A9_"`
+  - **Expected output**: returns success object
 
 ## Method: `validateDuplicate`
 
-- **TC19: Check on duplicate names** ( :white_check_mark: )
+- **TC21: Check on duplicate names** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"helloworld123"`
   - **Expected output**: returns error object with message for both players, "Player names cannot match."
-- **TC20: Check on duplicate names (mixed case)** ( :white_check_mark: )
+- **TC21: Check on duplicate names (mixed case)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"HelloWorld123"`, player 2 name = `"helloworld123"`
   - **Expected output**: returns error object with message for both players, "Player names cannot match."
-- **TC21: Check on unique names** ( :white_check_mark: )
+- **TC22: Check on unique names** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"worldhello456"`
   - **Expected output**: returns success object
-- **TC22: Check on unique names (near duplicate)** ( :white_check_mark: )
+- **TC23: Check on unique names (near duplicate)** ( :white_check_mark: )
   - **State of the system**: player 1 name = `"helloworld123"`, player 2 name = `"helloworld124"`
   - **Expected output**: returns success object
