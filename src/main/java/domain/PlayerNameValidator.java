@@ -30,13 +30,13 @@ public class PlayerNameValidator {
         if (!player1Name.matches(".*[a-zA-Z0-9].*")) {
             errors.put(ValidationException.Field.PLAYER_1, "Player name contain at least one alphanumeric character.");
         } else if (!player1Name.matches("^[a-zA-Z0-9_. ]+$")) {
-            errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters, underscores, or periods.");
+            errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters, spaces, underscores, or periods.");
         }
 
         if (!player2Name.matches(".*[a-zA-Z0-9].*")) {
             errors.put(ValidationException.Field.PLAYER_2, "Player name contain at least one alphanumeric character.");
         } else if (!player2Name.matches("^[a-zA-Z0-9_. ]+$")) {
-            errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters, underscores, or periods.");
+            errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters, spaces, underscores, or periods.");
         }
 
         if (!errors.isEmpty()) throw new ValidationException(errors);
