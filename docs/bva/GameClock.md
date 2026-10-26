@@ -1,4 +1,5 @@
 # BVA Analysis for GameClock
+# Author: Sebastian Pacheco
 
 **Scope:** Player timer initialization only. Countdown, switching the active clock, and timeout handling will be implemented in a later feature. Move increments will not be supported.
 
@@ -45,9 +46,9 @@
 | TC18: Invalid null color        | Clock: `new GameClock(3)`; call: `getRemainingSeconds(null)`         | Throws `IllegalArgumentException`                | :white_check_mark: |
 
 ### Method under test: `TimeControl.getMinutesPerPlayer()`
-|                        | System under test                      | Expected output | Implemented? |
-|------------------------|----------------------------------------|-----------------|--------------|
-| TC19: Untimed preset   | Call on `TimeControl.UNTIMED`          | Returns 0       | :x:          |
-| TC20: Blitz preset     | Call on `TimeControl.BLITZ_3_MIN`      | Returns 3       | :x:          |
-| TC21: Rapid preset     | Call on `TimeControl.RAPID_10_MIN`     | Returns 10      | :x:          |
-| TC22: Classical preset | Call on `TimeControl.CLASSICAL_60_MIN` | Returns 60      | :x:          |
+|                        | System under test                      | Expected output | Implemented?       |
+|------------------------|----------------------------------------|-----------------|--------------------|
+| TC19: Untimed preset   | Call on `TimeControl.UNTIMED`          | Returns 0       | :white_check_mark: |
+| TC20: Blitz preset     | Call on `TimeControl.BLITZ_3_MIN`      | Returns 3       | :white_check_mark: |
+| TC21: Rapid preset     | Call on `TimeControl.RAPID_10_MIN`     | Returns 10      | :white_check_mark: |
+| TC22: Classical preset | Call on `TimeControl.CLASSICAL_60_MIN` | Returns 60      | :white_check_mark: |
