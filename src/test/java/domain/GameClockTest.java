@@ -54,4 +54,32 @@ public class GameClockTest {
         assertEquals(expectedSeconds, clock.getRemainingSeconds(PieceColor.WHITE));
         assertEquals(expectedSeconds, clock.getRemainingSeconds(PieceColor.BLACK));
     }
+
+    @Test
+    void isTimed_UntimedGame_ReturnsFalse() {
+        GameClock clock = new GameClock(0);
+
+        assertFalse(clock.isTimed());
+    }
+
+    @Test
+    void isTimed_MinimumPositiveTime_ReturnsTrue() {
+        GameClock clock = new GameClock(1);
+
+        assertTrue(clock.isTimed());
+    }
+
+    @Test
+    void isTimed_BlitzGame_ReturnsTrue() {
+        GameClock clock = new GameClock(3);
+
+        assertTrue(clock.isTimed());
+    }
+
+    @Test
+    void isTimed_ClassicalGame_ReturnsTrue() {
+        GameClock clock = new GameClock(60);
+
+        assertTrue(clock.isTimed());
+    }
 }
