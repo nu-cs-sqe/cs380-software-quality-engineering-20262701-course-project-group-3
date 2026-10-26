@@ -1,7 +1,11 @@
 package ui;
 
+import domain.PlayerNameValidator;
+import domain.ValidationException;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 public class WelcomeView extends JFrame {
 
@@ -45,7 +49,6 @@ public class WelcomeView extends JFrame {
         player1NameField = new JTextField(20);
         player1NameField.setFont(new Font("Arial", Font.PLAIN, 16));
         gbc.gridx = 1;
-        gbc.gridy = 1;
         welcomePanel.add(player1NameField, gbc);
 
         // Player 2 Name Input
@@ -58,7 +61,6 @@ public class WelcomeView extends JFrame {
         player2NameField = new JTextField(20);
         player2NameField.setFont(new Font("Arial", Font.PLAIN, 16));
         gbc.gridx = 1;
-        gbc.gridy = 2;
         welcomePanel.add(player2NameField, gbc);
 
         // Start Game Button
@@ -75,7 +77,20 @@ public class WelcomeView extends JFrame {
             String player1Name = player1NameField.getText().trim();
             String player2Name = player2NameField.getText().trim();
 
-            // FIXME: perform input validation on player names
+            try {
+                PlayerNameValidator.validateLength(player1Name, player2Name);
+                PlayerNameValidator.validateCharacters(player1Name, player2Name);
+                PlayerNameValidator.validateDuplicate(player1Name, player2Name);
+            } catch (ValidationException exception) {
+                Map<ValidationException.Field, String> errors = exception.getErrors();
+
+                String player1Error = errors.get(ValidationException.Field.PLAYER_1);
+                String player2Error = errors.get(ValidationException.Field.PLAYER_2);
+
+                // TODO: Set player error UI
+
+                return;
+            }
 
             // Hide the welcome screen
             setVisible(false);
