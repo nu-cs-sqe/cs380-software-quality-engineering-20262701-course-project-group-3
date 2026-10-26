@@ -11,6 +11,8 @@ public class WelcomeView extends JFrame {
 
     private JTextField player1NameField;
     private JTextField player2NameField;
+    private JLabel player1ErrorLabel;
+    private JLabel player2ErrorLabel;
 
     public WelcomeView() {
         setTitle("Welcome Screen!");
@@ -32,45 +34,66 @@ public class WelcomeView extends JFrame {
         // Welcome message
         JLabel welcomeLabel = new JLabel("Welcome to our Chess Game!", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
-        welcomeLabel.setForeground(new Color(255, 255, 255));
+        welcomeLabel.setForeground(Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         welcomePanel.add(welcomeLabel, gbc);
 
-        // Player 1 Name Input
+        // Player 1 Name Input (row 1)
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
         JLabel player1NameLabel = new JLabel("Player 1 Name:");
         player1NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        player1NameLabel.setForeground(new Color(255, 255, 255));
+        player1NameLabel.setForeground(Color.WHITE);
         welcomePanel.add(player1NameLabel, gbc);
         player1NameField = new JTextField(20);
         player1NameField.setFont(new Font("Arial", Font.PLAIN, 16));
         gbc.gridx = 1;
         welcomePanel.add(player1NameField, gbc);
 
-        // Player 2 Name Input
+        // Fixed width for error labels = width of the text fields
+        final int errorWidth = player1NameField.getPreferredSize().width;
+
+        // Separate constraints for error rows so they don't alter gbc
+        GridBagConstraints errorGbc = new GridBagConstraints();
+        errorGbc.gridx = 1;
+        errorGbc.gridwidth = 1;
+        errorGbc.anchor = GridBagConstraints.NORTHWEST;
+        errorGbc.fill = GridBagConstraints.NONE; // don't stretch to fit the text
+        errorGbc.insets = new Insets(0, 10, 5, 10);
+
+        // Player 1 error (row 2)
+        player1ErrorLabel = createErrorLabel();
+        errorGbc.gridy = 2;
+        welcomePanel.add(player1ErrorLabel, errorGbc);
+
+        // Player 2 Name Input (row 3)
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         JLabel player2NameLabel = new JLabel("Player 2 Name:");
         player2NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        player2NameLabel.setForeground(new Color(255, 255, 255));
+        player2NameLabel.setForeground(Color.WHITE);
         welcomePanel.add(player2NameLabel, gbc);
         player2NameField = new JTextField(20);
         player2NameField.setFont(new Font("Arial", Font.PLAIN, 16));
         gbc.gridx = 1;
         welcomePanel.add(player2NameField, gbc);
 
-        // Start Game Button
+        // Player 2 error (row 4)
+        player2ErrorLabel = createErrorLabel();
+        errorGbc.gridy = 4;
+        welcomePanel.add(player2ErrorLabel, errorGbc);
+
+        // Start Game Button (row 5)
         JButton startGameButton = new JButton("Start Game");
         startGameButton.setFont(new Font("Arial", Font.BOLD, 20));
         startGameButton.setOpaque(true);
         startGameButton.setBackground(Color.WHITE);
         startGameButton.setForeground(Color.BLACK);
 
-        startGameButton.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255), 2, true));
+        startGameButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2, true));
         startGameButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor on hover
         startGameButton.addActionListener(e -> {
             // Get player names
@@ -84,13 +107,14 @@ public class WelcomeView extends JFrame {
             } catch (ValidationException exception) {
                 Map<ValidationException.Field, String> errors = exception.getErrors();
 
-                String player1Error = errors.get(ValidationException.Field.PLAYER_1);
-                String player2Error = errors.get(ValidationException.Field.PLAYER_2);
-
-                // TODO: Set player error UI
-
+                setError(player1ErrorLabel, errors.get(ValidationException.Field.PLAYER_1), errorWidth);
+                setError(player2ErrorLabel, errors.get(ValidationException.Field.PLAYER_2), errorWidth);
                 return;
             }
+
+            // Validation passed: clear any old errors
+            setError(player1ErrorLabel, null, errorWidth);
+            setError(player2ErrorLabel, null, errorWidth);
 
             // Hide the welcome screen
             setVisible(false);
@@ -101,11 +125,37 @@ public class WelcomeView extends JFrame {
             mainScreen.setVisible(true);
         });
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.gridwidth = 2; // Span two columns
         gbc.anchor = GridBagConstraints.CENTER; // Center the button
         welcomePanel.add(startGameButton, gbc);
 
         add(welcomePanel);
+    }
+
+    private JLabel createErrorLabel() {
+        JLabel label = new JLabel();
+        label.setFont(new Font("Arial", Font.PLAIN, 13));
+        label.setForeground(new Color(255, 75, 75)); // light red, readable on purple
+        label.setVisible(false);
+        return label;
+    }
+
+    private void setError(JLabel label, String message, int width) {
+        if (message == null || message.isBlank()) {
+            label.setText("");
+            label.setVisible(false);
+        } else {
+            // The fixed-width div makes the HTML label wrap instead of growing
+            label.setText("<html><div style='width:" + width + "px'>"
+                    + escapeHtml(message) + "</div></html>");
+            label.setVisible(true);
+        }
+        label.revalidate();
+        label.repaint();
+    }
+
+    private String escapeHtml(String s) {
+        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
     }
 }
