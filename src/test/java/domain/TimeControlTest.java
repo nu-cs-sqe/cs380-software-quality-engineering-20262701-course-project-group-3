@@ -14,4 +14,9 @@ public class TimeControlTest {
     void getMinutesPerPlayer_Blitz_ReturnsThree() {
         assertEquals(3, TimeControl.BLITZ_3_MIN.getMinutesPerPlayer());
     }
+
+    @Test
+    void getMinutesPerPlayer_Rapid_ReturnsTen() {
+        assertEquals(10, TimeControl.RAPID_10_MIN.getMinutesPerPlayer());
+    }
 }
