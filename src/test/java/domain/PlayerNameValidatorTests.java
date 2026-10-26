@@ -190,6 +190,17 @@ public class PlayerNameValidatorTests {
     }
 
     @Test
+    public void validateCharacters_NoAlphanumeric(){
+        String player1Name = ".";
+        String player2Name = "_";
+
+        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+
+        assertEquals("Player name contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+    }
+
+    @Test
     public void validateDuplicate_DuplicateNames(){
         String player1Name = "helloworld123";
         String player2Name = "helloworld123";
