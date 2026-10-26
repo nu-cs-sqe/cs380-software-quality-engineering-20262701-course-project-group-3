@@ -27,11 +27,15 @@ public class PlayerNameValidator {
     public static void validateCharacters(String player1Name, String player2Name) throws ValidationException {
         Map<ValidationException.Field, String> errors = new EnumMap<>(ValidationException.Field.class);
 
-        if (!player1Name.matches("^[a-zA-Z0-9_. ]+$")) {
+        if (!player1Name.matches(".*[a-zA-Z0-9].*")) {
+            errors.put(ValidationException.Field.PLAYER_1, "Player name contain at least one alphanumeric character.");
+        } else if (!player1Name.matches("^[a-zA-Z0-9_. ]+$")) {
             errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters, underscores, or periods.");
         }
 
-        if (!player2Name.matches("^[a-zA-Z0-9_. ]+$")) {
+        if (!player2Name.matches(".*[a-zA-Z0-9].*")) {
+            errors.put(ValidationException.Field.PLAYER_2, "Player name contain at least one alphanumeric character.");
+        } else if (!player2Name.matches("^[a-zA-Z0-9_. ]+$")) {
             errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters, underscores, or periods.");
         }
 
