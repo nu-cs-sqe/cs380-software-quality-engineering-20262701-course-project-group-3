@@ -145,6 +145,14 @@ public class PlayerNameValidatorTests {
     }
 
     @Test
+    public void validateCharacters_Period_Player1(){
+        String player1Name = "abc_def";
+        String player2Name = "world.hello";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+    }
+
+    @Test
     public void validateCharacters_InternalWhitespace_Player1(){
         String player1Name = "hello world 123";
         String player2Name = "worldhello456";
