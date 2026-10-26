@@ -180,6 +180,14 @@ public class PlayerNameValidatorTests {
     }
 
     @Test
+    public void validateCharacters_TwoAlphanumeric(){
+        String player1Name = ".h1";
+        String player2Name = "A9_";
+
+        assertDoesNotThrow(() -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
+    }
+
+    @Test
     public void validateDuplicate_DuplicateNames(){
         String player1Name = "helloworld123";
         String player2Name = "helloworld123";
