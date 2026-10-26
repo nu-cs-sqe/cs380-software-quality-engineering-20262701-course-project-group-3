@@ -34,15 +34,15 @@
 
 ### Method under test: `getRemainingSeconds(PieceColor color)`
 
-|                                 | System under test                                                    | Expected output                                  | Implemented? |
-|---------------------------------|----------------------------------------------------------------------|--------------------------------------------------|--------------|
-| TC12: Untimed for both colors   | Clock: `new GameClock(0)`; call with WHITE and BLACK                 | Returns -1 for both                              | :x:          |
-| TC13: Minimum positive time     | Clock: `new GameClock(1)`; call with WHITE and BLACK                 | Returns 60 for both                              | :x:          |
-| TC14: Blitz for both colors     | Clock: `new GameClock(3)`; call with WHITE and BLACK                 | Returns 180 for both                             | :x:          |
-| TC15: Rapid for both colors     | Clock: `new GameClock(10)`; call with WHITE and BLACK                | Returns 600 for both                             | :x:          |
-| TC16: Classical for both colors | Clock: `new GameClock(60)`; call with WHITE and BLACK                | Returns 3,600 for both                           | :x:          |
-| TC17: Maximum integer input     | Clock: `new GameClock(Integer.MAX_VALUE)`; call with WHITE and BLACK | Returns `(long) Integer.MAX_VALUE * 60` for both | :x:          |
-| TC18: Invalid null color        | Clock: `new GameClock(3)`; call: `getRemainingSeconds(null)`         | Throws `IllegalArgumentException`                | :x:          |
+|                                 | System under test                                                    | Expected output                                  | Implemented?       |
+|---------------------------------|----------------------------------------------------------------------|--------------------------------------------------|--------------------|
+| TC12: Untimed for both colors   | Clock: `new GameClock(0)`; call with WHITE and BLACK                 | Returns -1 for both                              | :white_check_mark: |
+| TC13: Minimum positive time     | Clock: `new GameClock(1)`; call with WHITE and BLACK                 | Returns 60 for both                              | :white_check_mark: |
+| TC14: Blitz for both colors     | Clock: `new GameClock(3)`; call with WHITE and BLACK                 | Returns 180 for both                             | :white_check_mark: |
+| TC15: Rapid for both colors     | Clock: `new GameClock(10)`; call with WHITE and BLACK                | Returns 600 for both                             | :white_check_mark: |
+| TC16: Classical for both colors | Clock: `new GameClock(60)`; call with WHITE and BLACK                | Returns 3,600 for both                           | :white_check_mark: |
+| TC17: Maximum integer input     | Clock: `new GameClock(Integer.MAX_VALUE)`; call with WHITE and BLACK | Returns `(long) Integer.MAX_VALUE * 60` for both | :white_check_mark: |
+| TC18: Invalid null color        | Clock: `new GameClock(3)`; call: `getRemainingSeconds(null)`         | Throws `IllegalArgumentException`                | :white_check_mark: |
 
 ### Method under test: `TimeControl.getMinutesPerPlayer()`
 |                        | System under test                      | Expected output | Implemented? |

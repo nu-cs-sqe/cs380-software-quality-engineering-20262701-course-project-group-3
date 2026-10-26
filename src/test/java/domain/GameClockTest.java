@@ -82,4 +82,19 @@ public class GameClockTest {
 
         assertTrue(clock.isTimed());
     }
+
+    @Test
+    void constructor_OneMinute_InitializesBothPlayersWith60Seconds() {
+        GameClock clock = new GameClock(1);
+
+        assertEquals(60L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(60L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void getRemainingSeconds_NullColor_ThrowsIllegalArgumentException() {
+        GameClock clock = new GameClock(3);
+
+        assertThrows(IllegalArgumentException.class, () -> clock.getRemainingSeconds(null));
+    }
 }
