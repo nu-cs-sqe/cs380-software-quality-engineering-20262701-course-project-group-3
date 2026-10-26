@@ -27,16 +27,12 @@ public class PlayerNameValidator {
     public static void validateCharacters(String player1Name, String player2Name) throws ValidationException {
         Map<ValidationException.Field, String> errors = new EnumMap<>(ValidationException.Field.class);
 
-        if (!player1Name.trim().equals(player1Name)) {
-            errors.put(ValidationException.Field.PLAYER_1, "Player name cannot contain leading/trailing whitespace.");
-        } else if (!player1Name.matches("^[a-zA-Z0-9_. ]+$")) {
-            errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters or underscores.");
+        if (!player1Name.matches("^[a-zA-Z0-9_. ]+$")) {
+            errors.put(ValidationException.Field.PLAYER_1, "Player name must only contain alphanumeric characters, underscores, or periods.");
         }
 
-        if (!player2Name.trim().equals(player2Name)) {
-            errors.put(ValidationException.Field.PLAYER_2, "Player name cannot contain leading/trailing whitespace.");
-        } else if (!player2Name.matches("^[a-zA-Z0-9_. ]+$")) {
-            errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters or underscores.");
+        if (!player2Name.matches("^[a-zA-Z0-9_. ]+$")) {
+            errors.put(ValidationException.Field.PLAYER_2, "Player name must only contain alphanumeric characters, underscores, or periods.");
         }
 
         if (!errors.isEmpty()) throw new ValidationException(errors);

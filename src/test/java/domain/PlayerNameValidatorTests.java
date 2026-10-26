@@ -161,27 +161,6 @@ public class PlayerNameValidatorTests {
     }
 
     @Test
-    public void validateCharacters_LeadingTrailingWhitespace_Player2(){
-        String player1Name = "helloworld123";
-        String player2Name = " worldhello456 ";
-
-        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
-
-        assertNull(e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name cannot contain leading/trailing whitespace.", e.getErrors().get(ValidationException.Field.PLAYER_2));
-    }
-
-    @Test
-    public void validateCharacters_SingleWhitespace_Player1(){
-        String player1Name = " ";
-        String player2Name = "worldhello456";
-
-        ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
-
-        assertEquals("Player name cannot contain leading/trailing whitespace.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
-    }
-    @Test
     public void validateCharacters_OneAlphanumeric(){
         String player1Name = "a";
         String player2Name = "1";
