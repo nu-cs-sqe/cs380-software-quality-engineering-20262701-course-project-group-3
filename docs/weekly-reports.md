@@ -10,8 +10,8 @@
 1. [done] Team: Schedule the required meeting with the instructor.
 2. [done] Team: Review the provided Chess reference project and decide to use Java Swing for the GUI.
 3. [in progress] Team: Define and document functional requirements, user stories, and acceptance criteria for the Chess Game Setup Phase in GitHub Projects.
-4. [not started] Team: Design the classes, methods, and interactions required for chess game initialization and document the design in docs/.
-5. [not started] Team: Create feature branches and draft pull requests, conduct code reviews, and merge completed features into main.
+4. [in progress] Team: Design the classes, methods, and interactions required for chess game initialization and document the design in docs/.
+5. [in progress] Team: Create feature branches and draft pull requests, conduct code reviews, and merge completed features into main.
 6. [in progress] Team: Document weekly progress, completed tasks, and outstanding work in docs/weekly-reports.md.
 
 # Week 5 (10/26/2026-11/01/2026)
