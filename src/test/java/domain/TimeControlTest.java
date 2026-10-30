@@ -1,0 +1,27 @@
+package domain;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TimeControlTest {
+
+    @Test
+    void getMinutesPerPlayer_Untimed_ReturnsZero() {
+        assertEquals(0, TimeControl.UNTIMED.getMinutesPerPlayer());
+    }
+
+    @Test
+    void getMinutesPerPlayer_Blitz_ReturnsThree() {
+        assertEquals(3, TimeControl.BLITZ_3_MIN.getMinutesPerPlayer());
+    }
+
+    @Test
+    void getMinutesPerPlayer_Rapid_ReturnsTen() {
+        assertEquals(10, TimeControl.RAPID_10_MIN.getMinutesPerPlayer());
+    }
+
+    @Test
+    void getMinutesPerPlayer_Classical_ReturnsSixty() {
+        assertEquals(60, TimeControl.CLASSICAL_60_MIN.getMinutesPerPlayer());
+    }
+}
