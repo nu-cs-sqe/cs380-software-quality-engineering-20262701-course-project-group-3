@@ -1,5 +1,5 @@
 package ui;
 
 public interface BoardStateListener {
-    void onTurnChanged(String activePlayerName);
+    default void onTurnChanged(String activePlayerName) {};
 }
