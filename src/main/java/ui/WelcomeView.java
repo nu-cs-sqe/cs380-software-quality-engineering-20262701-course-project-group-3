@@ -6,8 +6,11 @@ import domain.ValidationException;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class WelcomeView extends JFrame {
+
+    private final BiConsumer<String, String> onStartGame;
 
     private static final String NAME_RULES_TEXT =
             "Names must be 1 to 26 characters long, include at least one letter or number, "
@@ -18,7 +21,9 @@ public class WelcomeView extends JFrame {
     private JLabel player1ErrorLabel;
     private JLabel player2ErrorLabel;
 
-    public WelcomeView() {
+    public WelcomeView(BiConsumer<String, String> onStartGame) {
+        this.onStartGame = onStartGame;
+
         setTitle("Welcome Screen!");
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,9 +145,8 @@ public class WelcomeView extends JFrame {
             setVisible(false);
             dispose(); // Dispose of this frame to free up resources
 
-            // Create and show the main game screen
-            MainView mainScreen = new MainView(player1Name, player2Name);
-            mainScreen.setVisible(true);
+            // Initialize game state and show the main game screen
+            onStartGame.accept(player1Name, player2Name);
         });
         gbc.gridx = 0;
         gbc.gridy = 6;
