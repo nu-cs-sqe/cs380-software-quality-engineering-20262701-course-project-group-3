@@ -1,17 +1,17 @@
 package ui;
 
 import domain.Board;
-import domain.BoardState;
+import domain.state.GameState;
 import domain.Location;
 import domain.piece.Piece;
 
 public class BoardController {
     private BoardView boardView;
     private final Board board;
-    private final BoardState boardState;
+    private final GameState boardState;
     private final BoardStateListener listener;
 
-    public BoardController(Board board, BoardState boardState, BoardStateListener listener) {
+    public BoardController(Board board, GameState boardState, BoardStateListener listener) {
         this.board = board;
         this.boardState = boardState;
         this.listener = listener;

@@ -1,7 +1,7 @@
 package ui;
 
 import domain.Board;
-import domain.BoardState;
+import domain.state.GameState;
 
 import javax.swing.*;
 
@@ -17,8 +17,8 @@ public class Main{
         GameStatsView statsView = new GameStatsView(player1Name, player2Name);
 
         Board board = new Board();
-        BoardState boardState = new BoardState(player1Name, player2Name);
-        BoardController controller = new BoardController(board, boardState, statsView);
+        GameState gameState = new GameState(player1Name, player2Name);
+        BoardController controller = new BoardController(board, gameState, statsView);
         BoardView boardView = new BoardView(controller);
 
         MainView mainView = new MainView(boardView, statsView);
