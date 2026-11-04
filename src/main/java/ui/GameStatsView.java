@@ -3,7 +3,7 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameStatsView extends JPanel implements BoardStateListener {
+public class GameStatsView extends JPanel implements GameStateListener {
 
     public JLabel currentPlayerLabel;
 

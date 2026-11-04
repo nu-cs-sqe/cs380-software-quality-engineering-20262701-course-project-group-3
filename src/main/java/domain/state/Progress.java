@@ -1,6 +1,6 @@
 package domain.state;
 
-public enum GameProgress {
+public enum Progress {
     PLAYING,
     COMPLETE;
 }

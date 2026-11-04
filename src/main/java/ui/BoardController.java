@@ -8,15 +8,15 @@ import domain.piece.Piece;
 public class BoardController {
     private BoardView boardView;
     private final Board board;
-    private final GameState boardState;
-    private final BoardStateListener listener;
+    private final GameState gameState;
+    private final GameStateListener listener;
 
-    public BoardController(Board board, GameState boardState, BoardStateListener listener) {
+    public BoardController(Board board, GameState gameState, GameStateListener listener) {
         this.board = board;
-        this.boardState = boardState;
+        this.gameState = gameState;
         this.listener = listener;
 
-        this.listener.onTurnChanged(boardState.getActivePlayerName());
+        this.listener.onTurnChanged(gameState.getActivePlayerName());
     }
 
     void setBoardView(BoardView boardView) {

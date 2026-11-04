@@ -13,7 +13,7 @@ public class GameState {
     private final String player2Name; // BLACK
     private PieceColor activeColor = PieceColor.WHITE;
 
-    private GameProgress progress = GameProgress.PLAYING;
+    private Progress progress = Progress.PLAYING;
 
     private final List<Move> moveHistory = new ArrayList<Move>();
 
