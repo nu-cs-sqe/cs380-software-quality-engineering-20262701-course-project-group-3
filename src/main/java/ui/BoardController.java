@@ -7,12 +7,16 @@ import domain.piece.Piece;
 
 public class BoardController {
     private BoardView boardView;
-    private Board board;
-    private BoardState boardState;
+    private final Board board;
+    private final BoardState boardState;
+    private final BoardStateListener listener;
 
-    public BoardController(Board board, BoardState boardState) {
+    public BoardController(Board board, BoardState boardState, BoardStateListener listener) {
         this.board = board;
         this.boardState = boardState;
+        this.listener = listener;
+
+        this.listener.onTurnChanged(boardState.getActivePlayerName());
     }
 
     void setBoardView(BoardView boardView) {
