@@ -4,22 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
-    private BoardView boardView;
-    private BoardController boardController;
-
-    private GameStatsView gameStatsView;
-    private String player1Name;
-    private String player2Name;
-
-    public MainView(String Player1Name, String Player2Name) {
-        this.player1Name = Player1Name;
-        this.player2Name = Player2Name;
-
+    public MainView(BoardView boardView, GameStatsView gameStatsView) {
         configureMainView();
-        addGameStatsView();
-        addBoardView();
+        add(gameStatsView, BorderLayout.PAGE_START);
+        add(boardView, BorderLayout.CENTER);
 
-        setVisible(true);
         validate();
     }
 
@@ -28,15 +17,5 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 1200);
         setLocationRelativeTo(null); // Center the window on the screen
-    }
-
-    private void addGameStatsView(){
-        gameStatsView = new GameStatsView(player1Name, player2Name);
-        add(gameStatsView, BorderLayout.PAGE_START);
-    }
-    private void addBoardView() {
-        boardController = new BoardController();
-        boardView = new BoardView(boardController);
-        add(boardView, BorderLayout.CENTER);
     }
 }

@@ -3,7 +3,7 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameStatsView extends JPanel {
+public class GameStatsView extends JPanel implements GameStateListener {
 
     public JLabel currentPlayerLabel;
 
@@ -24,7 +24,7 @@ public class GameStatsView extends JPanel {
         player2Label.setFont(new Font("Arial", Font.BOLD, 20));
         player2Label.setForeground(new Color(255, 255, 255));
 
-        currentPlayerLabel = new JLabel("Current Player: " + player1Name); //FIXME: hardcoded for now, but should be updated dynamically
+        currentPlayerLabel = new JLabel();
         currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 30));
         currentPlayerLabel.setForeground(new Color(255, 255, 255));
 
@@ -32,5 +32,10 @@ public class GameStatsView extends JPanel {
         add(player1Label);
         add(player2Label);
         add(currentPlayerLabel);
+    }
+
+    @Override
+    public void onTurnChanged(String activePlayerName) {
+        currentPlayerLabel.setText("Current Player: " + activePlayerName);
     }
 }
