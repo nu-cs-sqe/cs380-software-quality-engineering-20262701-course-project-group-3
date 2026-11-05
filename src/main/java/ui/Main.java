@@ -14,13 +14,14 @@ public class Main{
     }
 
     private static void startGame(String player1Name, String player2Name) {
-        GameStatsView statsView = new GameStatsView(player1Name, player2Name);
-
         Board board = new Board();
         GameState gameState = new GameState(player1Name, player2Name);
-        BoardController controller = new BoardController(board, gameState, statsView);
-        BoardView boardView = new BoardView(controller);
+        BoardController controller = new BoardController(board, gameState);
 
+        GameStatsView statsView = new GameStatsView(player1Name, player2Name);
+        controller.addListener(statsView);
+
+        BoardView boardView = new BoardView(controller);
         MainView mainView = new MainView(boardView, statsView);
         mainView.setVisible(true);
     }

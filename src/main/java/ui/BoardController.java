@@ -5,22 +5,35 @@ import domain.state.GameState;
 import domain.Location;
 import domain.piece.Piece;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardController {
     private BoardView boardView;
     private final Board board;
     private final GameState gameState;
-    private final GameStateListener listener;
 
-    public BoardController(Board board, GameState gameState, GameStateListener listener) {
+    private final List<GameStateListener> listeners = new ArrayList<>();
+
+    public BoardController(Board board, GameState gameState) {
         this.board = board;
         this.gameState = gameState;
-        this.listener = listener;
-
-        this.listener.onTurnChanged(gameState.getActivePlayerName());
     }
 
     void setBoardView(BoardView boardView) {
         this.boardView = boardView;
+    }
+
+    public void addListener(GameStateListener listener) {
+        listeners.add(listener);
+
+        // sync state changes for each added listener
+        // fine for now because each listener should only be added once when the game initialized
+        listener.onTurnChanged(gameState.getActivePlayerName());
+    }
+
+    private void fireTurnChanged() {
+        for (GameStateListener listener : listeners) listener.onTurnChanged(gameState.getActivePlayerName());
     }
 
     public void handleSquareClick(Location location) {
