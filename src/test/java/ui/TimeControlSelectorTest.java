@@ -47,6 +47,19 @@ public class TimeControlSelectorTest {
         });
     }
 
+    @Test
+    void getSelectedTimeControl_ChangeSelection_ReturnsSelectedPreset() {
+        SwingTestSupport.onEventThread(() -> {
+            TimeControlSelector selector = new TimeControlSelector();
+
+            for (TimeControl control : TimeControl.values()) {
+                selector.setSelectedItem(control);
+                assertEquals(control, selector.getSelectedTimeControl());
+            }
+            return null;
+        });
+    }
+
 
 
 }
