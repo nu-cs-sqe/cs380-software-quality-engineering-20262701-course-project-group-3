@@ -1,3 +1,4 @@
+
 package ui;
 
 import domain.PlayerNameValidator;
@@ -6,11 +7,10 @@ import domain.ValidationException;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class WelcomeView extends JFrame {
 
-    private final BiConsumer<String, String> onStartGame;
+    private final GameStartHandler onStartGame;
 
     private static final String NAME_RULES_TEXT =
             "Names must be 1 to 26 characters long, include at least one letter or number, "
@@ -20,8 +20,9 @@ public class WelcomeView extends JFrame {
     private JTextField player2NameField;
     private JLabel player1ErrorLabel;
     private JLabel player2ErrorLabel;
+    private TimeControlSelector timeControlSelector;
 
-    public WelcomeView(BiConsumer<String, String> onStartGame) {
+    public WelcomeView(GameStartHandler onStartGame) {
         this.onStartGame = onStartGame;
 
         setTitle("Welcome Screen!");
@@ -65,6 +66,7 @@ public class WelcomeView extends JFrame {
         player1NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         player1NameLabel.setForeground(Color.WHITE);
         welcomePanel.add(player1NameLabel, gbc);
+
         player1NameField = new JTextField(20);
         player1NameField.setFont(new Font("Arial", Font.PLAIN, 16));
         gbc.gridx = 1;
@@ -93,6 +95,7 @@ public class WelcomeView extends JFrame {
         player2NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         player2NameLabel.setForeground(Color.WHITE);
         welcomePanel.add(player2NameLabel, gbc);
+
         player2NameField = new JTextField(20);
         player2NameField.setFont(new Font("Arial", Font.PLAIN, 16));
         gbc.gridx = 1;
@@ -111,7 +114,21 @@ public class WelcomeView extends JFrame {
         errorGbc.gridy = 5;
         welcomePanel.add(player2ErrorLabel, errorGbc);
 
-        // Start Game Button (row 6)
+        // Time control selection (row 6)
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+
+        JLabel timeControlLabel = new JLabel("Time Control:");
+        timeControlLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        timeControlLabel.setForeground(Color.WHITE);
+        welcomePanel.add(timeControlLabel, gbc);
+
+        timeControlSelector = new TimeControlSelector();
+        gbc.gridx = 1;
+        welcomePanel.add(timeControlSelector, gbc);
+
+        // Start Game Button (row 7)
         JButton startGameButton = new JButton("Start Game");
         startGameButton.setFont(new Font("Arial", Font.BOLD, 20));
         startGameButton.setOpaque(true);
@@ -120,6 +137,7 @@ public class WelcomeView extends JFrame {
 
         startGameButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2, true));
         startGameButton.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor on hover
+
         startGameButton.addActionListener(e -> {
             // Get player names
             String player1Name = player1NameField.getText().trim();
@@ -146,10 +164,11 @@ public class WelcomeView extends JFrame {
             dispose(); // Dispose of this frame to free up resources
 
             // Initialize game state and show the main game screen
-            onStartGame.accept(player1Name, player2Name);
+            onStartGame.start(player1Name, player2Name, timeControlSelector.getSelectedTimeControl());
         });
+
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.gridwidth = 2; // Span two columns
         gbc.anchor = GridBagConstraints.CENTER; // Center the button
         welcomePanel.add(startGameButton, gbc);

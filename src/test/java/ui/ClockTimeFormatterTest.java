@@ -1,0 +1,76 @@
+package ui;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+public class ClockTimeFormatterTest {
+    @Test
+    void format_NegativeSeconds_ThrowsIllegalArgumentException() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ClockTimeFormatter.format(-2));
+
+        assertTrue(exception.getMessage() != null && !exception.getMessage().isBlank());
+    }
+
+    @Test
+    void format_UntimedSentinel_ReturnsUntimed() {
+        assertEquals("Untimed", ClockTimeFormatter.format(-1));
+    }
+
+    @Test
+    void format_ZeroSeconds_ReturnsZeroTime() {
+        assertEquals("00:00", ClockTimeFormatter.format(0));
+    }
+
+    @Test
+    void format_OneSecond_ReturnsCorrectTime() {
+        assertEquals("00:01", ClockTimeFormatter.format(1));
+    }
+
+    @Test
+    void format_FiftyNineSeconds_ReturnsCorrectTime() {
+        assertEquals("00:59", ClockTimeFormatter.format(59));
+    }
+
+    @Test
+    void format_SixtySeconds_ReturnsOneMinute() {
+        assertEquals("01:00", ClockTimeFormatter.format(60));
+    }
+
+    @Test
+    void format_FiveHundredNinetyNineSeconds_ReturnsCorrectTime() {
+        assertEquals("09:59", ClockTimeFormatter.format(599));
+    }
+
+    @Test
+    void format_SixHundredSeconds_ReturnsTenMinutes() {
+        assertEquals("10:00", ClockTimeFormatter.format(600));
+    }
+
+    @Test
+    void format_ThreeThousandFiveHundredNinetyNineSeconds_ReturnsCorrectTime() {
+        assertEquals("59:59", ClockTimeFormatter.format(3599));
+    }
+
+    @Test
+    void format_ThreeThousandSixHundredSeconds_ReturnsOneHour() {
+        assertEquals("01:00:00", ClockTimeFormatter.format(3600));
+    }
+
+    @Test
+    void format_ThreeThousandSixHundredOneSeconds_ReturnsCorrectTime() {
+        assertEquals("01:00:01", ClockTimeFormatter.format(3601));
+    }
+
+    @Test
+    void format_EightySixThousandFourHundredSeconds_ReturnsTwentyFourHours() {
+        assertEquals("24:00:00", ClockTimeFormatter.format(86400));
+    }
+
+    @Test
+    void format_MaximumSupportedTime_ReturnsWithoutOverflow() {
+        assertEquals("35791394:07:00", ClockTimeFormatter.format((long) Integer.MAX_VALUE * 60));
+    }
+}
