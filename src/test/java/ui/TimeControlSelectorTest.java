@@ -60,6 +60,19 @@ public class TimeControlSelectorTest {
         });
     }
 
+    @Test
+    void getSelectedTimeControl_RevertSelection_ReturnsUntimed() {
+        SwingTestSupport.onEventThread(() -> {
+            TimeControlSelector selector = new TimeControlSelector();
+
+            selector.setSelectedItem(TimeControl.CLASSICAL_60_MIN);
+            selector.setSelectedItem(TimeControl.UNTIMED);
+
+            assertEquals(TimeControl.UNTIMED, selector.getSelectedTimeControl());
+            return null;
+        });
+    }
+
 
 
 }

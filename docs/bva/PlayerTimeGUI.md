@@ -21,7 +21,7 @@
 | TC02: Available presets   | Inspect available dropdown options         | Contains exactly Untimed, Blitz, Rapid, and Classical                           | :white_check_mark: |
 | TC03: Display names       | Inspect each dropdown option               | Displays `Untimed`, `Blitz (3 min)`, `Rapid (10 min)`, and `Classical (60 min)` | :white_check_mark: |
 | TC04: Change selection    | Select each available time control         | Returns the corresponding selected `TimeControl`                                | :white_check_mark: |
-| TC05: Revert selection    | Select Classical, then select Untimed      | Returns `TimeControl.UNTIMED`                                                   | :x:                |
+| TC05: Revert selection    | Select Classical, then select Untimed      | Returns `TimeControl.UNTIMED`                                                   | :white_check_mark: |
 
 ### Method under test: `ClockTimeFormatter.format(long remainingSeconds)`
 
