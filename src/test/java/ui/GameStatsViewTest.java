@@ -1,3 +1,4 @@
+
 package ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,12 +15,43 @@ import org.junit.jupiter.api.Test;
 class GameStatsViewTest {
 
     @Test
-    void rejectsNullClock() {
+    void constructor_NullClock_ThrowsIllegalArgumentException() {
         SwingTestSupport.onEventThread(() -> {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new GameStatsView("Alex", "Taylor", null));
 
             assertTrue(exception.getMessage() != null && !exception.getMessage().isBlank());
             return null;
         });
+    }
+
+    @Test
+    void constructor_UntimedGame_DisplaysUntimedForBothPlayers() {
+        assertInitialTimes(0, "Untimed");
+    }
+
+    private void assertInitialTimes(int minutes, String expected) {
+        SwingTestSupport.onEventThread(() -> {GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
+            assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
+            assertEquals("Black Time: " + expected, namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    private String namedLabel(GameStatsView view, String name) {
+        for (Component component : view.getComponents()) {
+            if (component instanceof JLabel && name.equals(component.getName())) {
+                return ((JLabel) component).getText();
+            }
+        }
+        throw new AssertionError("Could not find clock label: " + name);
+    }
+
+    private boolean hasLabelContaining(GameStatsView view, String text) {
+        for (Component component : view.getComponents()) {
+            if (component instanceof JLabel && ((JLabel) component).getText().contains(text)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
