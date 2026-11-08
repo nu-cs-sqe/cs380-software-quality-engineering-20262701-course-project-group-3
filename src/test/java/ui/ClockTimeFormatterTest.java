@@ -13,4 +13,9 @@ public class ClockTimeFormatterTest {
 
         assertTrue(exception.getMessage() != null && !exception.getMessage().isBlank());
     }
+
+    @Test
+    void format_UntimedSentinel_ReturnsUntimed() {
+        assertEquals("Untimed", ClockTimeFormatter.format(-1));
+    }
 }
