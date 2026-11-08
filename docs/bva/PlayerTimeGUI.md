@@ -37,7 +37,7 @@
 | TC13: Exactly ten minutes            | Call: `format(600)`                           | Returns `10:00`                                             | :white_check_mark: |
 | TC14: Below one hour                 | Call: `format(3599)`                          | Returns `59:59`                                             | :white_check_mark: |
 | TC15: Exactly one hour               | Call: `format(3600)`                          | Returns `01:00:00`                                          | :white_check_mark: |
-| TC16: Above one hour                 | Call: `format(3601)`                          | Returns `01:00:01`                                          | :x:                |
+| TC16: Above one hour                 | Call: `format(3601)`                          | Returns `01:00:01`                                          | :white_check_mark: |
 | TC17: Beyond 23 hours                | Call: `format(86400)`                         | Returns `24:00:00` without wrapping hours                   | :x:                |
 | TC18: Maximum supported initial time | Call: `format((long) Integer.MAX_VALUE * 60)` | Returns `35791394:07:00` without overflow                   | :x:                |
 
