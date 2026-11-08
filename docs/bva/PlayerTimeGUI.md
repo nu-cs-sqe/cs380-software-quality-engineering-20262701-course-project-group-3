@@ -32,7 +32,7 @@
 | TC08: Zero remaining time            | Call: `format(0)`                             | Returns `00:00`                                             | :white_check_mark: |
 | TC09: Smallest positive time         | Call: `format(1)`                             | Returns `00:01`                                             | :white_check_mark: |
 | TC10: Below one minute               | Call: `format(59)`                            | Returns `00:59`                                             | :white_check_mark: |
-| TC11: Exactly one minute             | Call: `format(60)`                            | Returns `01:00`                                             | :x:                |
+| TC11: Exactly one minute             | Call: `format(60)`                            | Returns `01:00`                                             | :white_check_mark: |
 | TC12: Below ten minutes              | Call: `format(599)`                           | Returns `09:59`                                             | :x:                |
 | TC13: Exactly ten minutes            | Call: `format(600)`                           | Returns `10:00`                                             | :x:                |
 | TC14: Below one hour                 | Call: `format(3599)`                          | Returns `59:59`                                             | :x:                |

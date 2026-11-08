@@ -33,4 +33,9 @@ public class ClockTimeFormatterTest {
     void format_FiftyNineSeconds_ReturnsCorrectTime() {
         assertEquals("00:59", ClockTimeFormatter.format(59));
     }
+
+    @Test
+    void format_SixtySeconds_ReturnsOneMinute() {
+        assertEquals("01:00", ClockTimeFormatter.format(60));
+    }
 }
