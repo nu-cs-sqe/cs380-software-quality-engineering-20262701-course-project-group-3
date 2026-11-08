@@ -57,6 +57,26 @@ class GameStatsViewTest {
         });
     }
 
+    @Test
+    void constructor_SelectedTimeControl_DisplaysCorrectTimeForBothPlayers() {
+        SwingTestSupport.onEventThread(() -> {
+            TimeControlSelector selector = new TimeControlSelector();
+
+            for (TimeControl preset : TimeControl.values()) {
+                selector.setSelectedItem(preset);
+                GameClock clock = new GameClock(selector.getSelectedTimeControl().getMinutesPerPlayer());
+
+                GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+                String expected = ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE));
+
+                assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
+                assertEquals("Black Time: " + expected, namedLabel(view, "blackClockLabel"));
+            }
+            return null;
+        });
+    }
+
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
             assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
