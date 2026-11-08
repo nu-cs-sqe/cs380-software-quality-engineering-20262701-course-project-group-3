@@ -30,7 +30,7 @@
 | TC06: Invalid negative time          | Call: `format(-2)`                            | Throws `IllegalArgumentException` with a meaningful message | :white_check_mark: |
 | TC07: Untimed boundary               | Call: `format(-1)`                            | Returns `Untimed`                                           | :white_check_mark: |
 | TC08: Zero remaining time            | Call: `format(0)`                             | Returns `00:00`                                             | :white_check_mark: |
-| TC09: Smallest positive time         | Call: `format(1)`                             | Returns `00:01`                                             | :x:                |
+| TC09: Smallest positive time         | Call: `format(1)`                             | Returns `00:01`                                             | :white_check_mark: |
 | TC10: Below one minute               | Call: `format(59)`                            | Returns `00:59`                                             | :x:                |
 | TC11: Exactly one minute             | Call: `format(60)`                            | Returns `01:00`                                             | :x:                |
 | TC12: Below ten minutes              | Call: `format(599)`                           | Returns `09:59`                                             | :x:                |
