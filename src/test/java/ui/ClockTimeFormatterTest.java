@@ -18,4 +18,9 @@ public class ClockTimeFormatterTest {
     void format_UntimedSentinel_ReturnsUntimed() {
         assertEquals("Untimed", ClockTimeFormatter.format(-1));
     }
+
+    @Test
+    void format_ZeroSeconds_ReturnsZeroTime() {
+        assertEquals("00:00", ClockTimeFormatter.format(0));
+    }
 }

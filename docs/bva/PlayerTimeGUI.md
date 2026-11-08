@@ -25,21 +25,21 @@
 
 ### Method under test: `ClockTimeFormatter.format(long remainingSeconds)`
 
-|                                      | System under test                             | Expected output                                             | Implemented?        |
-|--------------------------------------|-----------------------------------------------|-------------------------------------------------------------|---------------------|
-| TC06: Invalid negative time          | Call: `format(-2)`                            | Throws `IllegalArgumentException` with a meaningful message | :white_check_mark:  |
-| TC07: Untimed boundary               | Call: `format(-1)`                            | Returns `Untimed`                                           | :white_check_mark:  |
-| TC08: Zero remaining time            | Call: `format(0)`                             | Returns `00:00`                                             | :x:                 |
-| TC09: Smallest positive time         | Call: `format(1)`                             | Returns `00:01`                                             | :x:                 |
-| TC10: Below one minute               | Call: `format(59)`                            | Returns `00:59`                                             | :x:                 |
-| TC11: Exactly one minute             | Call: `format(60)`                            | Returns `01:00`                                             | :x:                 |
-| TC12: Below ten minutes              | Call: `format(599)`                           | Returns `09:59`                                             | :x:                 |
-| TC13: Exactly ten minutes            | Call: `format(600)`                           | Returns `10:00`                                             | :x:                 |
-| TC14: Below one hour                 | Call: `format(3599)`                          | Returns `59:59`                                             | :x:                 |
-| TC15: Exactly one hour               | Call: `format(3600)`                          | Returns `01:00:00`                                          | :x:                 |
-| TC16: Above one hour                 | Call: `format(3601)`                          | Returns `01:00:01`                                          | :x:                 |
-| TC17: Beyond 23 hours                | Call: `format(86400)`                         | Returns `24:00:00` without wrapping hours                   | :x:                 |
-| TC18: Maximum supported initial time | Call: `format((long) Integer.MAX_VALUE * 60)` | Returns `35791394:07:00` without overflow                   | :x:                 |
+|                                      | System under test                             | Expected output                                             | Implemented?       |
+|--------------------------------------|-----------------------------------------------|-------------------------------------------------------------|--------------------|
+| TC06: Invalid negative time          | Call: `format(-2)`                            | Throws `IllegalArgumentException` with a meaningful message | :white_check_mark: |
+| TC07: Untimed boundary               | Call: `format(-1)`                            | Returns `Untimed`                                           | :white_check_mark: |
+| TC08: Zero remaining time            | Call: `format(0)`                             | Returns `00:00`                                             | :white_check_mark: |
+| TC09: Smallest positive time         | Call: `format(1)`                             | Returns `00:01`                                             | :x:                |
+| TC10: Below one minute               | Call: `format(59)`                            | Returns `00:59`                                             | :x:                |
+| TC11: Exactly one minute             | Call: `format(60)`                            | Returns `01:00`                                             | :x:                |
+| TC12: Below ten minutes              | Call: `format(599)`                           | Returns `09:59`                                             | :x:                |
+| TC13: Exactly ten minutes            | Call: `format(600)`                           | Returns `10:00`                                             | :x:                |
+| TC14: Below one hour                 | Call: `format(3599)`                          | Returns `59:59`                                             | :x:                |
+| TC15: Exactly one hour               | Call: `format(3600)`                          | Returns `01:00:00`                                          | :x:                |
+| TC16: Above one hour                 | Call: `format(3601)`                          | Returns `01:00:01`                                          | :x:                |
+| TC17: Beyond 23 hours                | Call: `format(86400)`                         | Returns `24:00:00` without wrapping hours                   | :x:                |
+| TC18: Maximum supported initial time | Call: `format((long) Integer.MAX_VALUE * 60)` | Returns `35791394:07:00` without overflow                   | :x:                |
 
 ### Method under test: `GameStatsView(String whiteName, String blackName, GameClock clock)`
 
