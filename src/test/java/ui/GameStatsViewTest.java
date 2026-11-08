@@ -29,6 +29,12 @@ class GameStatsViewTest {
         assertInitialTimes(0, "Untimed");
     }
 
+    @Test
+    void constructor_BlitzGame_DisplaysThreeMinutesForBothPlayers() {
+        assertInitialTimes(3, "03:00");
+    }
+
+
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
             assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
