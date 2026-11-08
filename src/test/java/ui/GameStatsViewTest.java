@@ -34,6 +34,11 @@ class GameStatsViewTest {
         assertInitialTimes(3, "03:00");
     }
 
+    @Test
+    void constructor_RapidGame_DisplaysTenMinutesForBothPlayers() {
+        assertInitialTimes(10, "10:00");
+    }
+
 
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
