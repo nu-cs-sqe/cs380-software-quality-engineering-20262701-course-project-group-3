@@ -68,4 +68,9 @@ public class ClockTimeFormatterTest {
     void format_EightySixThousandFourHundredSeconds_ReturnsTwentyFourHours() {
         assertEquals("24:00:00", ClockTimeFormatter.format(86400));
     }
+
+    @Test
+    void format_MaximumSupportedTime_ReturnsWithoutOverflow() {
+        assertEquals("35791394:07:00", ClockTimeFormatter.format((long) Integer.MAX_VALUE * 60));
+    }
 }
