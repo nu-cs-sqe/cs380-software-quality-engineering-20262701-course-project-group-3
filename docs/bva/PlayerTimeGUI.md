@@ -34,7 +34,7 @@
 | TC10: Below one minute               | Call: `format(59)`                            | Returns `00:59`                                             | :white_check_mark: |
 | TC11: Exactly one minute             | Call: `format(60)`                            | Returns `01:00`                                             | :white_check_mark: |
 | TC12: Below ten minutes              | Call: `format(599)`                           | Returns `09:59`                                             | :white_check_mark: |
-| TC13: Exactly ten minutes            | Call: `format(600)`                           | Returns `10:00`                                             | :x:                |
+| TC13: Exactly ten minutes            | Call: `format(600)`                           | Returns `10:00`                                             | :white_check_mark: |
 | TC14: Below one hour                 | Call: `format(3599)`                          | Returns `59:59`                                             | :x:                |
 | TC15: Exactly one hour               | Call: `format(3600)`                          | Returns `01:00:00`                                          | :x:                |
 | TC16: Above one hour                 | Call: `format(3601)`                          | Returns `01:00:01`                                          | :x:                |
