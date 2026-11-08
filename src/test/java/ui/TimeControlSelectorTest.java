@@ -32,6 +32,21 @@ public class TimeControlSelectorTest {
         });
     }
 
+    @Test
+    void constructor_DisplayNames_ShowsReadableNames() {
+        SwingTestSupport.onEventThread(() -> {
+            TimeControlSelector selector = new TimeControlSelector();
+            String[] expected = {"Untimed", "Blitz (3 min)", "Rapid (10 min)", "Classical (60 min)"};
+
+            for (int i = 0; i < expected.length; i++) {
+                TimeControl item = selector.getItemAt(i);
+                JLabel rendered = (JLabel) selector.getRenderer().getListCellRendererComponent(new JList<TimeControl>(), item, i, false, false);
+                assertEquals(expected[i], rendered.getText());
+            }
+            return null;
+        });
+    }
+
 
 
 }
