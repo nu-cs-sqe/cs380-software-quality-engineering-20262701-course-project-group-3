@@ -28,4 +28,9 @@ public class ClockTimeFormatterTest {
     void format_OneSecond_ReturnsCorrectTime() {
         assertEquals("00:01", ClockTimeFormatter.format(1));
     }
+
+    @Test
+    void format_FiftyNineSeconds_ReturnsCorrectTime() {
+        assertEquals("00:59", ClockTimeFormatter.format(59));
+    }
 }
