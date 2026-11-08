@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class TimeControlSelectorTest {
     @Test
-    void defaultsToUntimed() { // TC01
+    void constructor_DefaultSelection_ReturnsUntimed() {
         SwingTestSupport.onEventThread(() -> {
             TimeControlSelector selector = new TimeControlSelector();
 
@@ -17,5 +17,21 @@ public class TimeControlSelectorTest {
             return null;
         });
     }
+
+    @Test
+    void constructor_AvailablePresets_ContainsAllFourTimeControls() {
+        SwingTestSupport.onEventThread(() -> {
+            TimeControlSelector selector = new TimeControlSelector();
+
+            assertEquals(4, selector.getItemCount());
+            assertEquals(TimeControl.UNTIMED, selector.getItemAt(0));
+            assertEquals(TimeControl.BLITZ_3_MIN, selector.getItemAt(1));
+            assertEquals(TimeControl.RAPID_10_MIN, selector.getItemAt(2));
+            assertEquals(TimeControl.CLASSICAL_60_MIN, selector.getItemAt(3));
+            return null;
+        });
+    }
+
+
 
 }

@@ -15,13 +15,13 @@
 
 ### Method under test: `TimeControlSelector()` and `getSelectedTimeControl()`
 
-|                           | System under test                          | Expected output                                                                 | Implemented? |
-|---------------------------|--------------------------------------------|---------------------------------------------------------------------------------|--------------|
-| TC01: Default selection   | Create selector without changing selection | Returns `TimeControl.UNTIMED`                                                   | :x:          |
-| TC02: Available presets   | Inspect available dropdown options         | Contains exactly Untimed, Blitz, Rapid, and Classical                           | :x:          |
-| TC03: Display names       | Inspect each dropdown option               | Displays `Untimed`, `Blitz (3 min)`, `Rapid (10 min)`, and `Classical (60 min)` | :x:          |
-| TC04: Change selection    | Select each available time control         | Returns the corresponding selected `TimeControl`                                | :x:          |
-| TC05: Revert selection    | Select Classical, then select Untimed      | Returns `TimeControl.UNTIMED`                                                   | :x:          |
+|                           | System under test                          | Expected output                                                                 | Implemented?       |
+|---------------------------|--------------------------------------------|---------------------------------------------------------------------------------|--------------------|
+| TC01: Default selection   | Create selector without changing selection | Returns `TimeControl.UNTIMED`                                                   | :white_check_mark: |
+| TC02: Available presets   | Inspect available dropdown options         | Contains exactly Untimed, Blitz, Rapid, and Classical                           | :white_check_mark: |
+| TC03: Display names       | Inspect each dropdown option               | Displays `Untimed`, `Blitz (3 min)`, `Rapid (10 min)`, and `Classical (60 min)` | :x:                |
+| TC04: Change selection    | Select each available time control         | Returns the corresponding selected `TimeControl`                                | :x:                |
+| TC05: Revert selection    | Select Classical, then select Untimed      | Returns `TimeControl.UNTIMED`                                                   | :x:                |
 
 ### Method under test: `ClockTimeFormatter.format(long remainingSeconds)`
 
