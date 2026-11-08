@@ -44,6 +44,19 @@ class GameStatsViewTest {
         assertInitialTimes(60, "01:00:00");
     }
 
+    @Test
+    void onTurnChanged_ValidPlayer_PreservesPlayerInformationAndUpdatesTurn() {
+        SwingTestSupport.onEventThread(() -> {
+            GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(3));
+            assertTrue(hasLabelContaining(view, "Player 1: Alex (Team: White)"));
+            assertTrue(hasLabelContaining(view, "Player 2: Taylor (Team: Black)"));
+
+            view.onTurnChanged("Alex");
+            assertEquals("Current Player: Alex", view.currentPlayerLabel.getText());
+            return null;
+        });
+    }
+
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
             assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
