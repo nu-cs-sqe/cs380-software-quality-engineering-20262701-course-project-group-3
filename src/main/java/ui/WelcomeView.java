@@ -161,8 +161,10 @@ public class WelcomeView extends JFrame {
             } catch (ValidationException exception) {
                 Map<ValidationException.Field, String> errors = exception.getErrors();
 
-                setError(player1ErrorLabel, errors.get(ValidationException.Field.PLAYER_1), errorWidth);
-                setError(player2ErrorLabel, errors.get(ValidationException.Field.PLAYER_2), errorWidth);
+                setError(player1ErrorLabel,
+                        errors.get(ValidationException.Field.PLAYER_1), errorWidth);
+                setError(player2ErrorLabel,
+                        errors.get(ValidationException.Field.PLAYER_2), errorWidth);
                 return;
             }
 
@@ -175,7 +177,8 @@ public class WelcomeView extends JFrame {
             dispose(); // Dispose of this frame to free up resources
 
             // Initialize game state and show the main game screen
-            onStartGame.start(player1Name, player2Name, timeControlSelector.getSelectedTimeControl());
+            onStartGame.start(player1Name, player2Name,
+                    timeControlSelector.getSelectedTimeControl());
         });
 
         gbc.gridx = 0;
@@ -210,6 +213,8 @@ public class WelcomeView extends JFrame {
     }
 
     private String escapeHtml(String s) {
-        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+        return s.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
     }
 }
