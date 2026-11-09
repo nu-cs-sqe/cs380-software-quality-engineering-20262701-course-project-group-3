@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+
+    <!-- ================================= -->
+    <!-- TEST CODE -->
+    <!-- ================================= -->
+
+    <!-- Test method names often use underscores for readability,
+         e.g. shouldRejectEmptyName_whenNameIsBlank -->
+    <suppress checks="MethodName" files="[\\/]src[\\/]test[\\/]"/>
+
+    <!-- Static star imports are the norm for assertion libraries,
+         e.g. import static org.junit.jupiter.api.Assertions.*; -->
+    <suppress checks="AvoidStarImport" files="[\\/]src[\\/]test[\\/]"/>
+
+    <!-- Descriptive test names, @DisplayName strings, and fluent assertion
+         chains regularly exceed 100 characters -->
+    <suppress checks="LineLength" files="[\\/]src[\\/]test[\\/]"/>
+
+    <!-- Test helpers are often overloaded and grouped by the test they
+         support rather than by name -->
+    <suppress checks="OverloadMethodsDeclarationOrder" files="[\\/]src[\\/]test[\\/]"/>
+
+    <!-- ================================= -->
+    <!-- OPTIONAL (uncomment if needed) -->
+    <!-- ================================= -->
+
+    <!-- Tests that deliberately swallow an exception -->
+    <!-- <suppress checks="EmptyCatchBlock" files="[\\/]src[\\/]test[\\/]"/> -->
+
+    <!-- Test fixtures declared as non-static constants in test classes -->
+    <!-- <suppress checks="ConstantName" files="[\\/]src[\\/]test[\\/]"/> -->
+
+</suppressions>

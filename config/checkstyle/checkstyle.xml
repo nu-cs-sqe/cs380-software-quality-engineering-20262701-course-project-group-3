@@ -5,6 +5,10 @@
 
 <module name="Checker">
 
+    <module name="SuppressionFilter">
+        <property name="file" value="${config_loc}/suppressions.xml"/>
+    </module>
+
     <!-- General settings -->
     <property name="charset" value="UTF-8"/>
     <property name="severity" value="error"/>
