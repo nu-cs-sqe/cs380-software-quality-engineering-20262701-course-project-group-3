@@ -175,8 +175,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals("Player name must contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals("Player name must contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
