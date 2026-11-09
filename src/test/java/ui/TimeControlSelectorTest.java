@@ -72,7 +72,4 @@ public class TimeControlSelectorTest {
             return null;
         });
     }
-
-
-
 }
