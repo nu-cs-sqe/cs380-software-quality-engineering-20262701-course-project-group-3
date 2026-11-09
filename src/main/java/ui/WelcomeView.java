@@ -4,8 +4,19 @@ package ui;
 import domain.PlayerNameValidator;
 import domain.ValidationException;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import javax.swing.BorderFactory;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.util.Map;
 
 public class WelcomeView extends JFrame {
