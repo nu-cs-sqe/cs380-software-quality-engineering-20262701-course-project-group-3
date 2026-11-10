@@ -13,7 +13,8 @@ public final class ClockTimeFormatter {
         }
 
         if (remainingSeconds < 0) {
-            throw new IllegalArgumentException("Remaining seconds cannot be negative: " + remainingSeconds);
+            throw new IllegalArgumentException("Remaining seconds cannot be negative: "
+                    + remainingSeconds);
         }
 
         long hours = remainingSeconds / 3600;

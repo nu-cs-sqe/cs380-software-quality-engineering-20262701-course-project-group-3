@@ -6,7 +6,9 @@ import java.util.Map;
 
 public class ValidationException extends Exception {
 
-    public enum Field { PLAYER_1, PLAYER_2 }
+    public enum Field {
+        PLAYER_1, PLAYER_2
+    }
 
     private final Map<Field, String> errors;
 

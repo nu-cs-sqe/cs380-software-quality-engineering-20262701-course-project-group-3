@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+    <module name="SuppressionFilter">
+        <property name="file" value="${config_loc}/suppressions.xml"/>
+    </module>
+
+    <!-- General settings -->
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="error"/>
+    <property name="fileExtensions" value="java"/>
+
+    <!-- Maximum line length -->
+    <module name="LineLength">
+        <property name="max" value="100"/>
+    </module>
+
+    <!-- Disallow tabs -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <module name="TreeWalker">
+
+        <!-- ================================= -->
+        <!-- FORMATTING -->
+        <!-- ================================= -->
+
+        <!-- Two-space indentation -->
+        <!-- Four-space indentation -->
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/>
+            <property name="braceAdjustment" value="4"/>
+            <property name="caseIndent" value="4"/>
+            <property name="throwsIndent" value="4"/>
+            <property name="lineWrappingIndentation" value="4"/>
+            <property name="arrayInitIndent" value="4"/>
+        </module>
+
+        <!-- Opening braces on the same line -->
+        <module name="LeftCurly">
+            <property name="option" value="eol"/>
+        </module>
+
+        <!-- Closing braces -->
+        <module name="RightCurly">
+            <property name="option" value="alone"/>
+            <property name="tokens"
+                      value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF,
+                             ANNOTATION_DEF, METHOD_DEF, CTOR_DEF,
+                             LITERAL_FOR, LITERAL_WHILE,
+                             STATIC_INIT, INSTANCE_INIT"/>
+        </module>
+
+        <module name="RightCurly">
+            <property name="option" value="same"/>
+            <property name="tokens"
+                      value="LITERAL_IF, LITERAL_ELSE,
+                             LITERAL_TRY, LITERAL_CATCH,
+                             LITERAL_FINALLY, LITERAL_DO"/>
+        </module>
+
+        <!-- Require braces around control statements -->
+        <module name="NeedBraces"/>
+
+        <!-- Blank lines between declarations -->
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+            <property name="allowMultipleEmptyLines" value="false"/>
+        </module>
+
+        <!-- One statement per line -->
+        <module name="OneStatementPerLine"/>
+
+        <!-- One variable declaration per statement -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- ================================= -->
+        <!-- NAMING CONVENTIONS -->
+        <!-- ================================= -->
+
+        <!-- Class, interface, enum names: UpperCamelCase, max 100 chars -->
+        <module name="TypeName">
+            <property name="format" value="^[A-Z][a-zA-Z0-9]{0,99}$"/>
+        </module>
+
+        <!-- Method names: lowerCamelCase -->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Instance field names: lowerCamelCase -->
+        <module name="MemberName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Local variables: lowerCamelCase -->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <module name="LocalFinalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Parameters: lowerCamelCase -->
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Constants: UPPER_SNAKE_CASE -->
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+        </module>
+
+        <!-- Package names: lowercase -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
+
+        <!-- ================================= -->
+        <!-- CODE QUALITY -->
+        <!-- ================================= -->
+
+        <!-- Disallow wildcard imports -->
+        <module name="AvoidStarImport"/>
+
+        <!-- Disallow unused imports -->
+        <module name="UnusedImports"/>
+
+        <!-- Disallow empty catch blocks -->
+        <module name="EmptyCatchBlock"/>
+
+        <!-- Require default in switch statements -->
+        <module name="MissingSwitchDefault"/>
+
+        <!-- Keep overloaded methods together -->
+        <module name="OverloadMethodsDeclarationOrder"/>
+
+    </module>
+</module>

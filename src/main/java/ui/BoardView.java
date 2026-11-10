@@ -6,8 +6,11 @@ import domain.piece.PieceColor;
 import domain.piece.PieceType;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -19,10 +22,10 @@ import java.util.Map;
 public class BoardView extends JPanel {
     private static final int BOARD_SIZE = 8;
     private static final int TILE_SIZE = 100; // size of each square in pixels
-    private final Color LIGHT_SQUARE_COLOR = new Color(240, 217, 181);
-    private final Color DARK_SQUARE_COLOR = new Color(181, 136, 99);
+    private static final Color LIGHT_SQUARE_COLOR = new Color(240, 217, 181);
+    private static final Color DARK_SQUARE_COLOR = new Color(181, 136, 99);
+    private static final Color SELECTED_SQUARE_COLOR = new Color(164, 149, 195); // NU Purple 40
 
-    private final Color SELECTED_SQUARE_COLOR = new Color(164, 149, 195); // NU Purple 40
     private int selectedRow = -1;
     private int selectedCol = -1;
 
@@ -80,29 +83,33 @@ public class BoardView extends JPanel {
     private void loadOnePieceImage(PieceType type, PieceColor color, String imagePath){
         InputStream imageInputStream = getClass().getClassLoader().getResourceAsStream(imagePath);
         BufferedImage image = null;
+
         try {
             image = ImageIO.read(imageInputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (color.equals(PieceColor.BLACK))
+
+        if (color.equals(PieceColor.BLACK)) {
             blackPieceSprites.put(type, image);
-        else
+        } else {
             this.whitePieceSprites.put(type, image);
+        }
     }
 
     private void drawPieces(Graphics g){
 
         Piece[][] boardSnapshot = boardController.getBoardSnapshot();
 
-        for(int row = 0; row < BOARD_SIZE; row++) {
-            for (int col = 0; col < BOARD_SIZE; col++) {
-                Piece piece = boardSnapshot[row][col];
+        for(int r = 0; r < BOARD_SIZE; r++) {
+            for (int c = 0; c < BOARD_SIZE; c++) {
+                Piece piece = boardSnapshot[r][c];
                 if (piece != null) {
                     Image pieceImage = piece.getColor() == PieceColor.WHITE ?
                         whitePieceSprites.get(piece.getType()) :
                         blackPieceSprites.get(piece.getType());
-                    g.drawImage(pieceImage, col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
+                    g.drawImage(pieceImage, c * TILE_SIZE, r * TILE_SIZE,
+                            TILE_SIZE, TILE_SIZE, this);
                 }
             }
         }
@@ -112,7 +119,6 @@ public class BoardView extends JPanel {
         g.setColor(SELECTED_SQUARE_COLOR);
         g.fillRect(selectedCol * TILE_SIZE, selectedRow * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
-
 
     private class BoardMouseListener extends MouseAdapter {
         @Override
@@ -128,5 +134,4 @@ public class BoardView extends JPanel {
             boardController.handleSquareClick(new Location(selectedCol, selectedRow));
         }
     }
-
 }

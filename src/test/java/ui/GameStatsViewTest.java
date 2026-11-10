@@ -78,7 +78,8 @@ class GameStatsViewTest {
     }
 
     private void assertInitialTimes(int minutes, String expected) {
-        SwingTestSupport.onEventThread(() -> {GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
+        SwingTestSupport.onEventThread(() -> {
+            GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
             assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
             assertEquals("Black Time: " + expected, namedLabel(view, "blackClockLabel"));
             return null;
