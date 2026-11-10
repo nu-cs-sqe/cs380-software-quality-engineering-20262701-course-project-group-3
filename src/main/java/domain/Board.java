@@ -1,16 +1,22 @@
 package domain;
 
-import domain.piece.*;
+import domain.piece.Piece;
+import domain.piece.Pawn;
+import domain.piece.Rook;
+import domain.piece.Knight;
+import domain.piece.Bishop;
+import domain.piece.Queen;
+import domain.piece.King;
 
 import static domain.piece.PieceColor.BLACK;
 import static domain.piece.PieceColor.WHITE;
 
 public class Board {
 
-    private final int TOTAL_ROWS = 8;
-    private final int TOTAL_COLS = 8;
-    private Piece[][] pieces;
+    private static final int TOTAL_ROWS = 8;
+    private static final int TOTAL_COLS = 8;
 
+    private Piece[][] pieces;
 
     public Board(){
         initializeBoard();

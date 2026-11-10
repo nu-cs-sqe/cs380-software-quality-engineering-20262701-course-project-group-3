@@ -4,8 +4,19 @@ package ui;
 import domain.PlayerNameValidator;
 import domain.ValidationException;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import javax.swing.BorderFactory;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.util.Map;
 
 public class WelcomeView extends JFrame {
@@ -150,8 +161,10 @@ public class WelcomeView extends JFrame {
             } catch (ValidationException exception) {
                 Map<ValidationException.Field, String> errors = exception.getErrors();
 
-                setError(player1ErrorLabel, errors.get(ValidationException.Field.PLAYER_1), errorWidth);
-                setError(player2ErrorLabel, errors.get(ValidationException.Field.PLAYER_2), errorWidth);
+                setError(player1ErrorLabel,
+                        errors.get(ValidationException.Field.PLAYER_1), errorWidth);
+                setError(player2ErrorLabel,
+                        errors.get(ValidationException.Field.PLAYER_2), errorWidth);
                 return;
             }
 
@@ -164,7 +177,8 @@ public class WelcomeView extends JFrame {
             dispose(); // Dispose of this frame to free up resources
 
             // Initialize game state and show the main game screen
-            onStartGame.start(player1Name, player2Name, timeControlSelector.getSelectedTimeControl());
+            onStartGame.start(player1Name, player2Name,
+                    timeControlSelector.getSelectedTimeControl());
         });
 
         gbc.gridx = 0;
@@ -199,6 +213,8 @@ public class WelcomeView extends JFrame {
     }
 
     private String escapeHtml(String s) {
-        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+        return s.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
     }
 }

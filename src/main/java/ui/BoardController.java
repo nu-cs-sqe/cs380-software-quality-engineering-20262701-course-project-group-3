@@ -33,7 +33,9 @@ public class BoardController {
     }
 
     private void fireTurnChanged() {
-        for (GameStateListener listener : listeners) listener.onTurnChanged(gameState.getActivePlayerName());
+        for (GameStateListener listener : listeners) {
+            listener.onTurnChanged(gameState.getActivePlayerName());
+        }
     }
 
     public void handleSquareClick(Location location) {

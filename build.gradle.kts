@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("application")
+    id("checkstyle")
 }
 
 group = "nu.csse.sqe"
@@ -31,4 +32,8 @@ tasks.test {
 
 application {
     mainClass = "ui.Main"
+}
+
+checkstyle {
+    toolVersion = "10.21.0"
 }

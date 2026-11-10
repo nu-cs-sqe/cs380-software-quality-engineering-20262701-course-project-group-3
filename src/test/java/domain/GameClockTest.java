@@ -1,10 +1,8 @@
 package domain;
 
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import domain.piece.PieceColor;
-
 
 public class GameClockTest {
 

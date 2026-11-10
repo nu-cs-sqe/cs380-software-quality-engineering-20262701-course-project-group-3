@@ -39,12 +39,14 @@ public class GameStatsView extends JPanel implements GameStateListener {
         currentPlayerLabel.setFont(new Font("Arial", Font.BOLD, 30));
         currentPlayerLabel.setForeground(Color.WHITE);
 
-        JLabel whiteClockLabel = new JLabel("White Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        JLabel whiteClockLabel = new JLabel("White Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
         whiteClockLabel.setName("whiteClockLabel");
         whiteClockLabel.setFont(new Font("Arial", Font.BOLD, 20));
         whiteClockLabel.setForeground(Color.WHITE);
 
-        JLabel blackClockLabel = new JLabel("Black Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
+        JLabel blackClockLabel = new JLabel("Black Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
         blackClockLabel.setName("blackClockLabel");
         blackClockLabel.setFont(new Font("Arial", Font.BOLD, 20));
         blackClockLabel.setForeground(Color.WHITE);

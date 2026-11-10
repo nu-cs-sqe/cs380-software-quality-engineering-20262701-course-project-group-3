@@ -18,7 +18,9 @@ public class MainView extends JFrame {
     }
 
     private void configureMainView(TimeControl timeControl) {
-        String duration = timeControl.getMinutesPerPlayer() == 0 ? "Untimed" : timeControl.getMinutesPerPlayer() + " min";
+        String duration = timeControl.getMinutesPerPlayer() == 0
+                ? "Untimed"
+                : timeControl.getMinutesPerPlayer() + " min";
 
         setTitle("Yiji's Chess Game GUI Example :)! - " + duration);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
