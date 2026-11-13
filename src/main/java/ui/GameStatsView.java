@@ -14,16 +14,19 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Box;
+import java.awt.Component;
+import java.awt.FlowLayout;
 
 public class GameStatsView implements GameStateListener {
     private static final int BASE_SIZE = 400; // 8 * 50, matches BoardView's preferred size
     private static final double MIN_SCALE = 0.5;
-    private static final Color BACKGROUND_COLOR = new Color(104, 76, 150);
+    private static final Color BACKGROUND_COLOR = new Color(172, 125, 110);
 
     public JLabel currentPlayerLabel;
 
-    private final PlayerPanel whitePanel = new PlayerPanel();
-    private final PlayerPanel blackPanel = new PlayerPanel();
+    private final PlayerPanel whitePanel = new PlayerPanel(Color.WHITE);
+    private final PlayerPanel blackPanel = new PlayerPanel(Color.BLACK);
 
     public GameStatsView(String player1Name, String player2Name, GameClock clock) {
 
@@ -32,21 +35,19 @@ public class GameStatsView implements GameStateListener {
         }
 
         // Black (top)
-        blackPanel.addLabel(new JLabel("Player 2: " + player2Name + " (Team: Black)"), 20);
-        JLabel blackClockLabel = new JLabel("Black Time: "
+        JLabel blackClockLabel = new JLabel("Time: "
                 + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
         blackClockLabel.setName("blackClockLabel");
-        blackPanel.addLabel(blackClockLabel, 20);
+        blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
 
         // White (bottom)
-        whitePanel.addLabel(new JLabel("Player 1: " + player1Name + " (Team: White)"), 20);
-        JLabel whiteClockLabel = new JLabel("White Time: "
+        JLabel whiteClockLabel = new JLabel("Time: "
                 + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
         whiteClockLabel.setName("whiteClockLabel");
-        whitePanel.addLabel(whiteClockLabel, 20);
+        whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
 
         currentPlayerLabel = new JLabel();
-        whitePanel.addLabel(currentPlayerLabel, 30);
+        whitePanel.addFooterLabel(currentPlayerLabel, 30);
     }
 
     /** Add to BorderLayout.NORTH. */
@@ -59,11 +60,15 @@ public class GameStatsView implements GameStateListener {
         return whitePanel;
     }
 
+    /** Pieces captured BY this color. Add your piece icons here. */
+    public JPanel getCapturedPanel(PieceColor color) {
+        return color == PieceColor.WHITE ? whitePanel.captured : blackPanel.captured;
+    }
+
         @Override
     public void onTurnChanged(String activePlayerName) {
         currentPlayerLabel.setText("Current Player: " + activePlayerName);
     }
-
 
     /** A purple panel whose fonts and padding scale with the window. */
     private static class PlayerPanel extends JPanel {
@@ -75,20 +80,45 @@ public class GameStatsView implements GameStateListener {
                 applyScale();
             }
         };
-        private double lastScale = -1;
 
-        PlayerPanel() {
+        private double lastScale = -1;
+        final JPanel captured = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+        private final Color textColor;
+
+        PlayerPanel(Color textColor) {
+            this.textColor = textColor;
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setOpaque(true);
             setBackground(BACKGROUND_COLOR);
+            captured.setOpaque(false);
         }
 
-        void addLabel(JLabel label, int baseSize) {
+        /** Name on its own row; clock and captured pieces side by side below it. */
+        void init(JLabel nameLabel, JLabel clockLabel) {
+            style(nameLabel, 10, textColor);
+            style(clockLabel, 10, textColor);
+
+            JLabel capturedTitle = new JLabel("Captured:");
+            style(capturedTitle, 10, textColor);
+            captured.add(capturedTitle);
+            captured.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            add(nameLabel);
+            add(clockLabel);
+            add(captured);
+        }
+
+        void addFooterLabel(JLabel label, int baseSize) {
+            style(label, baseSize, Color.WHITE);
+            add(label);
+        }
+
+        private void style(JLabel label, int baseSize, Color textcolor) {
             label.setFont(new Font("Arial", Font.BOLD, baseSize));
-            label.setForeground(Color.WHITE);
+            label.setForeground(textcolor);
+            label.setAlignmentX(Component.LEFT_ALIGNMENT);
             labels.add(label);
             baseSizes.add(baseSize);
-            add(label);
         }
 
         // Track the parent's size, not our own: our width stays the same when
