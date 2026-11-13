@@ -9,8 +9,20 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 
+/**
+ * <u>MainView</u>
+ * <p> The main window of the chess game. It arranges the black player panel (top),
+ * the board with the history panel (center), and the white player panel (bottom).
+ *
+ * <p> The board and history panel are placed by {@link BoardWithHistoryLayout} so the
+ * history panel stays flush against the board and fills the remaining width.
+ */
 public class MainView extends JFrame {
 
+    /**
+     * <u>MainView</u>
+     * <p> Creates the window and places the board and the stats panels in it.
+     */
     public MainView(BoardView boardView, GameStatsView gameStatsView, TimeControl timeControl) {
 
         configureMainView(timeControl);
@@ -31,6 +43,10 @@ public class MainView extends JFrame {
         validate();
     }
 
+    /**
+     * <u>configureMainView</u>
+     * <p> Sets the window title , close behavior, size, and position.
+     */
     private void configureMainView(TimeControl timeControl) {
         String duration = timeControl.getMinutesPerPlayer() == 0
                 ? "Untimed"
@@ -42,16 +58,30 @@ public class MainView extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    /** Square board on the left, history panel flush against its right edge. */
+    /**
+     * <u>BoardWithHistoryLayout</u>
+     * <p> A layout manager that places a square board on the left and a history panel
+     * directly to its right. The history panel matches the board's height and fills
+     * the rest of the width.
+     */
     private static class BoardWithHistoryLayout implements LayoutManager {
         private final Component board;
         private final Component history;
 
+        /**
+         * <u>BoardWithHistoryLayout</u>
+         * <p> Creates a layout that manages the given board and history components.
+         */
         BoardWithHistoryLayout(Component board, Component history) {
             this.board = board;
             this.history = history;
         }
 
+        /**
+         * <u>layoutContainer</u>
+         * <p> Sizes the board as the largest square that fits , centers it vertically,
+         * and gives the history panel the same height and all remaining width.
+         */
         @Override
         public void layoutContainer(Container parent) {
             int side = GameStatsView.boardSide(parent.getWidth(), parent.getHeight());
@@ -61,6 +91,10 @@ public class MainView extends JFrame {
             history.setBounds(side, y, parent.getWidth() - side, side);
         }
 
+        /**
+         * <u>preferredLayoutSize</u>
+         * <p> Returns the board's preferred size, widened to leave room for the history panel.
+         */
         @Override
         public Dimension preferredLayoutSize(Container parent) {
             Dimension b = board.getPreferredSize();
@@ -68,14 +102,20 @@ public class MainView extends JFrame {
             return new Dimension(width, b.height);
         }
 
+        /**
+         * <u>minimumLayoutSize</u>
+         * <p> Returns zero size, so the container can shrink freely.
+         */
         @Override
         public Dimension minimumLayoutSize(Container parent) {
             return new Dimension(0, 0);
         }
 
+        /** NOT USED: Just here to fulfill interface requirements */
         @Override public void addLayoutComponent(String name, Component comp) {
         }
 
+        /** NOT USED: Just here to fulfill interface requirements */
         @Override public void removeLayoutComponent(Component comp) {
         }
     }
