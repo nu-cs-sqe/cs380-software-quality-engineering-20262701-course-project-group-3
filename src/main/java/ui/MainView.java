@@ -34,9 +34,6 @@ public class MainView extends JFrame {
         center.add(boardView);
         center.add(historyPanel);
         add(center, BorderLayout.CENTER);
-        center.add(boardView);
-        center.add(gameStatsView.getHistoryPanel());
-        add(center, BorderLayout.CENTER);
 
         add(gameStatsView.getWhitePanel(), BorderLayout.SOUTH);
 
