@@ -11,8 +11,9 @@ public class MainView extends JFrame {
 
         configureMainView(timeControl);
 
-        add(gameStatsView, BorderLayout.PAGE_START);
+        add(gameStatsView.getBlackPanel(), BorderLayout.NORTH);
         add(boardView, BorderLayout.CENTER);
+        add(gameStatsView.getWhitePanel(), BorderLayout.SOUTH);
 
         validate();
     }

@@ -50,7 +50,7 @@ public class BoardView extends JPanel {
 
     // Left edge of the board
     private int originX(int tile) {
-        return (getWidth() - tile * BOARD_SIZE) / 2;
+        return 0;
     }
 
     // Top edge of the board.
