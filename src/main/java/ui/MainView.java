@@ -4,6 +4,11 @@ package ui;
 import domain.TimeControl;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 
 public class MainView extends JFrame {
 
@@ -12,7 +17,12 @@ public class MainView extends JFrame {
         configureMainView(timeControl);
 
         add(gameStatsView.getBlackPanel(), BorderLayout.NORTH);
-        add(boardView, BorderLayout.CENTER);
+
+        JPanel center = new JPanel(new BoardWithHistoryLayout(boardView, gameStatsView.getHistoryPanel()));
+        center.add(boardView);
+        center.add(gameStatsView.getHistoryPanel());
+        add(center, BorderLayout.CENTER);   // this line was missing
+
         add(gameStatsView.getWhitePanel(), BorderLayout.SOUTH);
 
         validate();
@@ -27,5 +37,39 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 800);
         setLocationRelativeTo(null);
+    }
+
+    /** Square board on the left, history panel flush against its right edge. */
+    private static class BoardWithHistoryLayout implements LayoutManager {
+        private final Component board;
+        private final Component history;
+
+        BoardWithHistoryLayout(Component board, Component history) {
+            this.board = board;
+            this.history = history;
+        }
+
+        @Override
+        public void layoutContainer(Container parent) {
+            int side = GameStatsView.boardSide(parent.getWidth(), parent.getHeight());
+            int y = (parent.getHeight() - side) / 2;
+            board.setBounds(0, y, side, side);
+            // same top and height as the board, width fills everything to the right
+            history.setBounds(side, y, parent.getWidth() - side, side);
+        }
+
+        @Override
+        public Dimension preferredLayoutSize(Container parent) {
+            Dimension b = board.getPreferredSize();
+            return new Dimension((int) (b.width * (1 + GameStatsView.HISTORY_TO_BOARD_RATIO)), b.height);
+        }
+
+        @Override
+        public Dimension minimumLayoutSize(Container parent) {
+            return new Dimension(0, 0);
+        }
+
+        @Override public void addLayoutComponent(String name, Component comp) {}
+        @Override public void removeLayoutComponent(Component comp) {}
     }
 }
