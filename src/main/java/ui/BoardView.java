@@ -8,9 +8,11 @@ import domain.piece.PieceType;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -21,7 +23,7 @@ import java.util.Map;
 
 public class BoardView extends JPanel {
     private static final int BOARD_SIZE = 8;
-    private static final int TILE_SIZE = 100; // size of each square in pixels
+    private static final int PREFERRED_TILE_SIZE = 80; // initial window size
     private static final Color LIGHT_SQUARE_COLOR = new Color(240, 217, 181);
     private static final Color DARK_SQUARE_COLOR = new Color(181, 136, 99);
     private static final Color SELECTED_SQUARE_COLOR = new Color(164, 149, 195); // NU Purple 40
@@ -35,27 +37,54 @@ public class BoardView extends JPanel {
     private BoardController boardController;
 
     public BoardView(BoardController boardController) {
-        setPreferredSize(new Dimension(BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE));
+        setPreferredSize(new Dimension(BOARD_SIZE * PREFERRED_TILE_SIZE, BOARD_SIZE * PREFERRED_TILE_SIZE));
         loadPieceSprites();
         this.boardController = boardController;
         boardController.setBoardView(this);
         addMouseListener(new BoardMouseListener());
     }
 
+    private int tileSize() {
+        return Math.min(getWidth(), getHeight()) / BOARD_SIZE;
+    }
+
+    // Left edge of the board
+    private int originX(int tile) {
+        return (getWidth() - tile * BOARD_SIZE) / 2;
+    }
+
+    // Top edge of the board.
+    private int originY(int tile) {
+        return (getHeight() - tile * BOARD_SIZE) / 2;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawBoard(g);
-        drawSelectedSquare(g);
-        drawPieces(g); // draw piece after draw selected square to ensure piece image is on top
+
+        int tile = tileSize();
+        if (tile <= 0) return; // panel not laid out yet
+
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+        int ox = originX(tile);
+        int oy = originY(tile);
+
+        drawBoard(g2, tile, ox, oy);
+        drawSelectedSquare(g2, tile, ox, oy);
+        drawPieces(g2, tile, ox, oy); // after selected square so piece image is on top
+
+        g2.dispose();
+
     }
 
-    private void drawBoard(Graphics g) {
+    private void drawBoard(Graphics2D g, int tile, int ox, int oy) {
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
-                Color squareColor = (row + col) % 2 == 0 ? LIGHT_SQUARE_COLOR : DARK_SQUARE_COLOR;
-                g.setColor(squareColor);
-                g.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                g.setColor((row + col) % 2 == 0 ? LIGHT_SQUARE_COLOR : DARK_SQUARE_COLOR);
+                g.fillRect(ox + col * tile, oy + row * tile, tile, tile);
             }
         }
     }
@@ -97,7 +126,13 @@ public class BoardView extends JPanel {
         }
     }
 
-    private void drawPieces(Graphics g){
+    private void drawSelectedSquare(Graphics2D g, int tile, int ox, int oy) {
+        if (selectedRow < 0 || selectedCol < 0) return;
+        g.setColor(SELECTED_SQUARE_COLOR);
+        g.fillRect(ox + selectedCol * tile, oy + selectedRow * tile, tile, tile);
+    }
+
+    private void drawPieces(Graphics2D g, int tile, int ox, int oy){
 
         Piece[][] boardSnapshot = boardController.getBoardSnapshot();
 
@@ -108,24 +143,29 @@ public class BoardView extends JPanel {
                     Image pieceImage = piece.getColor() == PieceColor.WHITE ?
                         whitePieceSprites.get(piece.getType()) :
                         blackPieceSprites.get(piece.getType());
-                    g.drawImage(pieceImage, c * TILE_SIZE, r * TILE_SIZE,
-                            TILE_SIZE, TILE_SIZE, this);
+                    g.drawImage(pieceImage, ox + c * tile, oy + r * tile, tile, tile, this);
                 }
             }
         }
-    }
-
-    private void drawSelectedSquare(Graphics g){
-        g.setColor(SELECTED_SQUARE_COLOR);
-        g.fillRect(selectedCol * TILE_SIZE, selectedRow * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
     private class BoardMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
 
-            selectedCol = e.getX() / TILE_SIZE;
-            selectedRow = e.getY() / TILE_SIZE;
+            int tile = tileSize();
+            if (tile <= 0) return;
+
+            int x = e.getX() - originX(tile);
+            int y = e.getY() - originY(tile);
+
+            // ignore clicks in the margin outside the board
+            if (x < 0 || y < 0 || x >= tile * BOARD_SIZE || y >= tile * BOARD_SIZE) {
+                return;
+            }
+
+            selectedCol = x / tile;
+            selectedRow = y / tile;
 
             // FIXME: perform input validation
 
