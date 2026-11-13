@@ -37,7 +37,8 @@ public class BoardView extends JPanel {
     private BoardController boardController;
 
     public BoardView(BoardController boardController) {
-        setPreferredSize(new Dimension(BOARD_SIZE * PREFERRED_TILE_SIZE, BOARD_SIZE * PREFERRED_TILE_SIZE));
+        int preferredSide = BOARD_SIZE * PREFERRED_TILE_SIZE;
+        setPreferredSize(new Dimension(preferredSide, preferredSide));
         loadPieceSprites();
         this.boardController = boardController;
         boardController.setBoardView(this);
@@ -63,10 +64,13 @@ public class BoardView extends JPanel {
         super.paintComponent(g);
 
         int tile = tileSize();
-        if (tile <= 0) return; // panel not laid out yet
+        if (tile <= 0) {
+            return;
+        }
 
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
         int ox = originX(tile);
@@ -127,7 +131,9 @@ public class BoardView extends JPanel {
     }
 
     private void drawSelectedSquare(Graphics2D g, int tile, int ox, int oy) {
-        if (selectedRow < 0 || selectedCol < 0) return;
+        if (selectedRow < 0 || selectedCol < 0) {
+            return;
+        }
         g.setColor(SELECTED_SQUARE_COLOR);
         g.fillRect(ox + selectedCol * tile, oy + selectedRow * tile, tile, tile);
     }
@@ -154,7 +160,9 @@ public class BoardView extends JPanel {
         public void mouseClicked(MouseEvent e) {
 
             int tile = tileSize();
-            if (tile <= 0) return;
+            if (tile <= 0) {
+                return;
+            }
 
             int x = e.getX() - originX(tile);
             int y = e.getY() - originY(tile);
