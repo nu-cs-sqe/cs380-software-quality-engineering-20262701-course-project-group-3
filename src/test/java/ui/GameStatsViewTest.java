@@ -8,11 +8,33 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import domain.GameClock;
 import domain.TimeControl;
 import domain.piece.PieceColor;
-import java.awt.Component;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 import org.junit.jupiter.api.Test;
 
 class GameStatsViewTest {
+
+    private static List<Component> allComponents(GameStatsView view) {
+        List<Component> result = new ArrayList<>();
+        result.addAll(collect(view.getBlackPanel()));
+        result.addAll(collect(view.getWhitePanel()));
+        result.addAll(collect(view.getHistoryPanel()));
+        return result;
+    }
+
+    private static List<Component> collect(Container root) {
+        List<Component> result = new ArrayList<>();
+        for (Component child : root.getComponents()) {
+            result.add(child);
+            if (child instanceof Container) {
+                result.addAll(collect((Container) child));
+            }
+        }
+        return result;
+    }
 
     @Test
     void constructor_NullClock_ThrowsIllegalArgumentException() {
@@ -48,8 +70,8 @@ class GameStatsViewTest {
     void onTurnChanged_ValidPlayer_PreservesPlayerInformationAndUpdatesTurn() {
         SwingTestSupport.onEventThread(() -> {
             GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(3));
-            assertTrue(hasLabelContaining(view, "Player 1: Alex (Team: White)"));
-            assertTrue(hasLabelContaining(view, "Player 2: Taylor (Team: Black)"));
+            assertTrue(hasLabelContaining(view, "Player 1: Alex"));
+            assertTrue(hasLabelContaining(view, "Player 2: Taylor"));
 
             view.onTurnChanged("Alex");
             assertEquals("Current Player: Alex", view.currentPlayerLabel.getText());
@@ -70,8 +92,8 @@ class GameStatsViewTest {
 
                 String expected = ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE));
 
-                assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
-                assertEquals("Black Time: " + expected, namedLabel(view, "blackClockLabel"));
+                assertEquals("Time: " + expected, namedLabel(view, "whiteClockLabel"));
+                assertEquals("Time: " + expected, namedLabel(view, "blackClockLabel"));
             }
             return null;
         });
@@ -80,14 +102,14 @@ class GameStatsViewTest {
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {
             GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
-            assertEquals("White Time: " + expected, namedLabel(view, "whiteClockLabel"));
-            assertEquals("Black Time: " + expected, namedLabel(view, "blackClockLabel"));
+            assertEquals("Time: " + expected, namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: " + expected, namedLabel(view, "blackClockLabel"));
             return null;
         });
     }
 
     private String namedLabel(GameStatsView view, String name) {
-        for (Component component : view.getComponents()) {
+        for (Component component : allComponents(view)) {
             if (component instanceof JLabel && name.equals(component.getName())) {
                 return ((JLabel) component).getText();
             }
@@ -96,7 +118,7 @@ class GameStatsViewTest {
     }
 
     private boolean hasLabelContaining(GameStatsView view, String text) {
-        for (Component component : view.getComponents()) {
+        for (Component component : allComponents(view)) {
             if (component instanceof JLabel && ((JLabel) component).getText().contains(text)) {
                 return true;
             }

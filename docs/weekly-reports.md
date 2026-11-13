@@ -28,8 +28,12 @@
 2. [done] Sebastian: Complete Player Timer GUI Integration with four selectable time controls, initial timer displays, BVA documentation, and GUI tests ([PR #20](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/20)).
 3. [done] Team: Review, approve, and merge PRs #16 and #20 into `main`.
 4. [in progress] Team: Review instructor feedback and prepare to merge the code review documentation ([PR #17](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/17)).
-5. [in progress] Raymond: Configure Checkstyle linting and formatting rules ([PR #21](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/21)).
+5. [done] Raymond: Configure Checkstyle linting and formatting rules ([PR #21](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/21)).
 6. [not started] Team: Implement initial timer countdown behavior and subsequent gameplay functionality ([Issue #14](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/issues/14)).
+
+# Week 7 (11/09/2026-11/15/2026)
+**Planning and Progress Tracking**:
+1. [done] Raymond: Restructuring UI + adding individual player panels and history panels ([PR #24](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/24)).
 
 # One section per week until the last week of class (the week before the Finals week)
 
