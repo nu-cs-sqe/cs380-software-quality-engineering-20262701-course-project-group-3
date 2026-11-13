@@ -153,7 +153,8 @@ public class GameStatsView implements GameStateListener {
      * registered with a base font size and rescaled whenever the parent is resized.
      */
     private static class ScalingPanel extends JPanel {
-        private final List<JComponent> labels = new ArrayList<>();        private final List<Integer> baseSizes = new ArrayList<>();
+        private final List<JComponent> labels = new ArrayList<>();
+        private final List<Integer> baseSizes = new ArrayList<>();
         private final ComponentAdapter parentListener = new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -197,7 +198,6 @@ public class GameStatsView implements GameStateListener {
             baseSizes.add(baseSize);
         }
 
-
         @Override
         public void addNotify() {
             super.addNotify();
@@ -224,10 +224,14 @@ public class GameStatsView implements GameStateListener {
          */
         private void applyScale() {
             Container parent = getParent();
-            if (parent == null) return;
+            if (parent == null){
+                return;
+            }
 
             double scale = computeScale(parent);
-            if (Math.abs(scale - lastScale) < 0.01) return;
+            if (Math.abs(scale - lastScale) < 0.01){
+                return;
+            }
             lastScale = scale;
 
             for (int i = 0; i < labels.size(); i++) {
