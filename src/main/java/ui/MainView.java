@@ -25,7 +25,7 @@ public class MainView extends JFrame {
 
         setTitle("Yiji's Chess Game GUI Example :)! - " + duration);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 1200);
+        setSize(800, 800);
         setLocationRelativeTo(null);
     }
 }

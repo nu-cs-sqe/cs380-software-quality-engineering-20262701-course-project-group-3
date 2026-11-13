@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class BoardView extends JPanel {
     private static final int BOARD_SIZE = 8;
-    private static final int PREFERRED_TILE_SIZE = 80; // initial window size
+    private static final int PREFERRED_TILE_SIZE = 50; // initial window size
     private static final Color LIGHT_SQUARE_COLOR = new Color(240, 217, 181);
     private static final Color DARK_SQUARE_COLOR = new Color(181, 136, 99);
     private static final Color SELECTED_SQUARE_COLOR = new Color(164, 149, 195); // NU Purple 40

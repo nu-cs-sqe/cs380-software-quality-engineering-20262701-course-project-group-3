@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStatsView implements GameStateListener {
-    private static final int BASE_SIZE = 800; // 8 * 100, matches BoardView's preferred size
+    private static final int BASE_SIZE = 400; // 8 * 50, matches BoardView's preferred size
     private static final double MIN_SCALE = 0.5;
     private static final Color BACKGROUND_COLOR = new Color(104, 76, 150);
 
