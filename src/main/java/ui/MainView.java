@@ -1,4 +1,3 @@
-
 package ui;
 
 import domain.TimeControl;
@@ -18,10 +17,14 @@ public class MainView extends JFrame {
 
         add(gameStatsView.getBlackPanel(), BorderLayout.NORTH);
 
-        JPanel center = new JPanel(new BoardWithHistoryLayout(boardView, gameStatsView.getHistoryPanel()));
+        JPanel historyPanel = gameStatsView.getHistoryPanel();
+        JPanel center = new JPanel(new BoardWithHistoryLayout(boardView, historyPanel));
+        center.add(boardView);
+        center.add(historyPanel);
+        add(center, BorderLayout.CENTER);
         center.add(boardView);
         center.add(gameStatsView.getHistoryPanel());
-        add(center, BorderLayout.CENTER);   // this line was missing
+        add(center, BorderLayout.CENTER);
 
         add(gameStatsView.getWhitePanel(), BorderLayout.SOUTH);
 
@@ -35,7 +38,7 @@ public class MainView extends JFrame {
 
         setTitle("Yiji's Chess Game GUI Example :)! - " + duration);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 800);
+        setSize(1000, 800);
         setLocationRelativeTo(null);
     }
 
@@ -61,7 +64,8 @@ public class MainView extends JFrame {
         @Override
         public Dimension preferredLayoutSize(Container parent) {
             Dimension b = board.getPreferredSize();
-            return new Dimension((int) (b.width * (1 + GameStatsView.HISTORY_TO_BOARD_RATIO)), b.height);
+            int width = (int) (b.width * (1 + GameStatsView.HISTORY_TO_BOARD_RATIO));
+            return new Dimension(width, b.height);
         }
 
         @Override
@@ -69,7 +73,10 @@ public class MainView extends JFrame {
             return new Dimension(0, 0);
         }
 
-        @Override public void addLayoutComponent(String name, Component comp) {}
-        @Override public void removeLayoutComponent(Component comp) {}
+        @Override public void addLayoutComponent(String name, Component comp) {
+        }
+
+        @Override public void removeLayoutComponent(Component comp) {
+        }
     }
 }
