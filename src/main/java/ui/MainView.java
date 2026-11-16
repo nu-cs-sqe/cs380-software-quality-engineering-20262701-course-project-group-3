@@ -1,9 +1,9 @@
+
 package ui;
 
 import domain.TimeControl;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -27,15 +27,7 @@ public class MainView extends JFrame {
 
         configureMainView(timeControl);
 
-        add(gameStatsView.getBlackPanel(), BorderLayout.NORTH);
-
-        JPanel historyPanel = gameStatsView.getHistoryPanel();
-        JPanel center = new JPanel(new BoardWithHistoryLayout(boardView, historyPanel));
-        center.add(boardView);
-        center.add(historyPanel);
-        add(center, BorderLayout.CENTER);
-
-        add(gameStatsView.getWhitePanel(), BorderLayout.SOUTH);
+        add(gameStatsView.createContentPanel(boardView), BorderLayout.CENTER);
 
         validate();
     }
@@ -61,7 +53,7 @@ public class MainView extends JFrame {
      * directly to its right. The history panel matches the board's height and fills
      * the rest of the width.
      */
-    private static class BoardWithHistoryLayout implements LayoutManager {
+    static class BoardWithHistoryLayout implements LayoutManager {
         private final Component board;
         private final Component history;
 

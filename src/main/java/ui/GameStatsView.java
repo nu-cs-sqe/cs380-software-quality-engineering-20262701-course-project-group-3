@@ -1,3 +1,4 @@
+
 package ui;
 
 import domain.GameClock;
@@ -17,6 +18,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
+import java.awt.BorderLayout;
 
 /**
  * <u>GameStatsView</u>
@@ -27,12 +29,8 @@ import javax.swing.JTextArea;
  *   <li> History panel (right of the board)
  * </ul>
  * <p> All text and padding scale with the window size so the panels stay consistent
- * with {@link BoardView}. This class is NOT itself a Swing component. Callers retrieve
- * the panels with <ul>
- *   <li> {@link #getBlackPanel()}
- *   <li> {@link #getWhitePanel()}
- *   <li> {@link #getHistoryPanel()}
- * </ul>
+ * with {@link BoardView}. This class is NOT itself a Swing component. Callers use
+ * {@link #createContentPanel(Component)} to assemble the game display.
  */
 public class GameStatsView implements GameStateListener {
 
@@ -97,19 +95,24 @@ public class GameStatsView implements GameStateListener {
     }
 
     /**
-     * <u>getBlackPanel</u>
-     * <p> Returns the black player's panel to place above the board.
+     * <u>createContentPanel</u>
+     * <p> Assembles the board, player information, and history panels.
      */
-    public JPanel getBlackPanel() {
-        return blackPanel;
-    }
+    public JPanel createContentPanel(Component boardView) {
+        JPanel content = new JPanel(new BorderLayout());
 
-    /**
-     * <u>getWhitePanel</u>
-     * <p> Returns the white player's panel to place below the board.
-     */
-    public JPanel getWhitePanel() {
-        return whitePanel;
+        content.add(blackPanel, BorderLayout.NORTH);
+
+        JPanel center = new JPanel(
+                new MainView.BoardWithHistoryLayout(boardView, historyPanel)
+        );
+        center.add(boardView);
+        center.add(historyPanel);
+        content.add(center, BorderLayout.CENTER);
+
+        content.add(whitePanel, BorderLayout.SOUTH);
+
+        return content;
     }
 
     /**
@@ -118,14 +121,6 @@ public class GameStatsView implements GameStateListener {
      */
     public JPanel getCapturedPanel(PieceColor color) {
         return color == PieceColor.WHITE ? whitePanel.captured : blackPanel.captured;
-    }
-
-    /**
-     * <u>getHistoryPanel</u>
-     * <p> Returns the history panel to be placed on the right of board.
-     */
-    public JPanel getHistoryPanel() {
-        return historyPanel;
     }
 
     /**
@@ -309,4 +304,3 @@ public class GameStatsView implements GameStateListener {
         }
     }
 }
-

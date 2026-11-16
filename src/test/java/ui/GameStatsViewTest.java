@@ -14,15 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 import org.junit.jupiter.api.Test;
+import javax.swing.JPanel;
 
 class GameStatsViewTest {
 
     private static List<Component> allComponents(GameStatsView view) {
-        List<Component> result = new ArrayList<>();
-        result.addAll(collect(view.getBlackPanel()));
-        result.addAll(collect(view.getWhitePanel()));
-        result.addAll(collect(view.getHistoryPanel()));
-        return result;
+        return collect(view.createContentPanel(new JPanel()));
     }
 
     private static List<Component> collect(Container root) {
