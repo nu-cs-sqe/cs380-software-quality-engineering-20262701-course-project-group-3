@@ -2,7 +2,7 @@ package domain;
 
 import domain.piece.PieceColor;
 
-public class GameClock {
+public final class GameClock {
     public static final long UNLIMITED_SECONDS = -1L;
 
     private final long whiteRemainingSeconds;
