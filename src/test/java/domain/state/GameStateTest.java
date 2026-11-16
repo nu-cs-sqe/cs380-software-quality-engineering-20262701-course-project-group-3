@@ -22,4 +22,11 @@ class GameStateTest {
 
         assertEquals("Alice", gameState.getActivePlayerName());
     }
+
+    @Test
+    void getActivePlayerName_ReversedPlayerNames_ReturnsWhitePlayerName() {
+        GameState gameState = new GameState("Bob", "Alice");
+
+        assertEquals("Bob", gameState.getActivePlayerName());
+    }
 }
