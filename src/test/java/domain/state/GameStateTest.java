@@ -2,6 +2,7 @@
 package domain.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.state.GameState;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,12 @@ class GameStateTest {
         GameState gameState = new GameState("Alice", "Bob");
 
         assertEquals(Progress.PLAYING, gameState.getProgress());
+    }
+
+    @Test
+    void getMoveHistory_NewGame_ReturnsEmptyList() {
+        GameState gameState = new GameState("Alice", "Bob");
+
+        assertTrue(gameState.getMoveHistory().isEmpty());
     }
 }

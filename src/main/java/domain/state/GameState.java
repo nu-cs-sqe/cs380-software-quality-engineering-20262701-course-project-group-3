@@ -37,4 +37,8 @@ public class GameState {
     public Progress getProgress() {
         return progress;
     }
+
+    public List<Move> getMoveHistory() {
+        return List.copyOf(moveHistory);
+    }
 }
