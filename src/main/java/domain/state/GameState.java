@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GameState {
-    private final String player1Name; // WHITE
-    private final String player2Name; // BLACK
+    private final String whitePlayerName;
+    private final String blackPlayerName;
     private PieceColor activeColor = PieceColor.WHITE;
 
     private Progress progress = Progress.PLAYING;
@@ -20,9 +20,9 @@ public class GameState {
     private final Map<PieceType, Integer> player1CapturedPieces = new HashMap<>();
     private final Map<PieceType, Integer> player2CapturedPieces = new HashMap<>();
 
-    public GameState(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+    public GameState(String whitePlayerName, String blackPlayerName) {
+        this.whitePlayerName = whitePlayerName;
+        this.blackPlayerName = blackPlayerName;
 
         for (PieceType type : PieceType.values()) {
             player1CapturedPieces.put(type, 0);
@@ -30,7 +30,7 @@ public class GameState {
         }
     }
 
-    public String getActivePlayerName(){
-        return activeColor == PieceColor.WHITE ? player1Name : player2Name;
+    public String getActivePlayerName() {
+        return activeColor == PieceColor.WHITE ? whitePlayerName : blackPlayerName;
     }
 }
