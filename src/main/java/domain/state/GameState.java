@@ -41,4 +41,15 @@ public class GameState {
     public List<Move> getMoveHistory() {
         return List.copyOf(moveHistory);
     }
+
+    public int getCapturedPieceCount(PieceColor color, PieceType type) {
+        switch (color) {
+            case WHITE:
+                return player1CapturedPieces.get(type);
+            case BLACK:
+                return player2CapturedPieces.get(type);
+            default:
+                throw new IllegalArgumentException("Invalid piece color");
+        }
+    }
 }

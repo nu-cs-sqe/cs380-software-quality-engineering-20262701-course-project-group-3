@@ -4,6 +4,8 @@ package domain.state;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import domain.piece.PieceColor;
+import domain.piece.PieceType;
 import domain.state.GameState;
 import org.junit.jupiter.api.Test;
 
@@ -43,5 +45,15 @@ class GameStateTest {
         GameState gameState = new GameState("Alice", "Bob");
 
         assertTrue(gameState.getMoveHistory().isEmpty());
+    }
+
+    @Test
+    void getCapturedPieceCount_NewGame_ReturnsZeroForBothPlayers() {
+        GameState gameState = new GameState("Alice", "Bob");
+
+        for (PieceType type : PieceType.values()) {
+            assertEquals(0, gameState.getCapturedPieceCount(PieceColor.WHITE, type));
+            assertEquals(0, gameState.getCapturedPieceCount(PieceColor.BLACK, type));
+        }
     }
 }
