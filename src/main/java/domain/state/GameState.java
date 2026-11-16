@@ -33,4 +33,8 @@ public class GameState {
     public String getActivePlayerName() {
         return activeColor == PieceColor.WHITE ? whitePlayerName : blackPlayerName;
     }
+
+    public Progress getProgress() {
+        return progress;
+    }
 }

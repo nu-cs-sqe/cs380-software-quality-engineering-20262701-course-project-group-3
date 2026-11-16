@@ -29,4 +29,11 @@ class GameStateTest {
 
         assertEquals("Bob", gameState.getActivePlayerName());
     }
+
+    @Test
+    void getProgress_NewGame_ReturnsPlaying() {
+        GameState gameState = new GameState("Alice", "Bob");
+
+        assertEquals(Progress.PLAYING, gameState.getProgress());
+    }
 }
