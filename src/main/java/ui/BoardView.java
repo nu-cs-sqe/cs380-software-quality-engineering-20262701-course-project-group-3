@@ -41,7 +41,6 @@ public class BoardView extends JPanel {
         setPreferredSize(new Dimension(preferredSide, preferredSide));
         loadPieceSprites();
         this.boardController = boardController;
-        boardController.setBoardView(this);
         addMouseListener(new BoardMouseListener());
     }
 

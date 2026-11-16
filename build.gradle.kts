@@ -4,6 +4,7 @@ plugins {
     id("checkstyle")
     jacoco
     id("info.solidsoft.pitest") version "1.19.0"
+    id("com.github.spotbugs") version "6.5.13"
 }
 
 group = "nu.csse.sqe"
@@ -71,4 +72,10 @@ pitest {
     outputFormats.set(setOf("HTML", "XML"))
     timestampedReports.set(false)
     threads.set(2)
+}
+
+tasks.withType<com.github.spotbugs.snom.SpotBugsTask>().configureEach {
+    reports.create("html") {
+        required.set(true)
+    }
 }
