@@ -74,6 +74,11 @@ pitest {
     threads.set(2)
 }
 
+spotbugs {
+    reportLevel = com.github.spotbugs.snom.Confidence.HIGH
+    ignoreFailures = false
+}
+
 tasks.withType<com.github.spotbugs.snom.SpotBugsTask>().configureEach {
     reports.create("html") {
         required.set(true)
