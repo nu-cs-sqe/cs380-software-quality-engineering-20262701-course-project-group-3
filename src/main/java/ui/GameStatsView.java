@@ -32,7 +32,7 @@ import java.awt.BorderLayout;
  * with {@link BoardView}. This class is NOT itself a Swing component. Callers use
  * {@link #createContentPanel(Component)} to assemble the game display.
  */
-public class GameStatsView implements GameStateListener {
+public final class GameStatsView implements GameStateListener {
 
     private static final int BASE_SIZE = 400;
     private static final double MIN_SCALE = 0.5;
