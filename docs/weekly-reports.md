@@ -35,6 +35,10 @@
 **Planning and Progress Tracking**:
 1. [done] Raymond: Restructuring UI + adding individual player panels and history panels ([PR #24](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/24)).
 
+# Week 8 (11/16/2026-11/25/2026)
+**Planning and Progress Tracking**:
+1. [in progress] Larry: Implement i18n and dropdown UI to switch between languages
+
 # One section per week until the last week of class (the week before the Finals week)
 
 
