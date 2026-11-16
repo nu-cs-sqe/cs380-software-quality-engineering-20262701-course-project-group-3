@@ -150,12 +150,7 @@ public class GameStatsView implements GameStateListener {
     private static class ScalingPanel extends JPanel {
         private final List<JComponent> labels = new ArrayList<>();
         private final List<Integer> baseSizes = new ArrayList<>();
-        private final ComponentAdapter parentListener = new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                applyScale();
-            }
-        };
+        private transient ComponentAdapter parentListener;
 
         private double lastScale = -1;
         protected final Color textColor;
@@ -198,6 +193,14 @@ public class GameStatsView implements GameStateListener {
             super.addNotify();
             Container parent = getParent();
             if (parent != null) {
+                if (parentListener == null) {
+                    parentListener = new ComponentAdapter() {
+                        @Override
+                        public void componentResized(ComponentEvent e) {
+                            applyScale();
+                        }
+                    };
+                }
                 parent.addComponentListener(parentListener);
                 applyScale();
             }
@@ -206,7 +209,7 @@ public class GameStatsView implements GameStateListener {
         @Override
         public void removeNotify() {
             Container parent = getParent();
-            if (parent != null) {
+            if (parent != null && parentListener != null) {
                 parent.removeComponentListener(parentListener);
             }
             super.removeNotify();
