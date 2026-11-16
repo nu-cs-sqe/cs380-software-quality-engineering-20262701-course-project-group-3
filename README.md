@@ -12,8 +12,10 @@
 - JUnit 5.10
 - Gradle 8.10
 - Swing
-- JaCoCo 0.8.12
-- PIT 1.22.1
+- JaCoCo
+- PIT Gradle Plugin 1.19.0
+- Checkstyle 10.21.0
+- SpotBugs Gradle Plugin 6.5.13 (SpotBugs 4.10.5)
 
 ## Exceptions
 ### Code Coverage
@@ -33,7 +35,9 @@ Report: `build/reports/pitest/index.html`
 
 Mutation testing currently targets the `domain` packages and excludes Swing UI classes. No minimum mutation coverage threshold is enforced.
 ### Others
-N/A
+- **Checkstyle:** Configured with team-specific rules in `config/checkstyle/`. Both `checkstyleMain` and `checkstyleTest` pass.
+- **SpotBugs:** Configured to analyze production and test code using `./gradlew.bat spotbugsMain spotbugsTest`. Reports are generated in `build/reports/spotbugs/`. The latest analysis identified 9 medium-priority warnings and no high-priority warnings. The remaining findings are under review, and `spotbugsMain` currently fails verification.
+- **TDD Violation:** `GameState` was merged into `main` without corresponding tests, violating the required TDD workflow. This historical violation was identified in the [Week 7 instructor code review (PR #23)](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/23).
 
 ## Acknowledgements
 1. Images used in the project are under Creative Commons License and can be found at:
