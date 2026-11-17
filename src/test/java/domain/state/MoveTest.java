@@ -44,4 +44,15 @@ public class MoveTest {
 
         assertEquals(MoveType.EN_PASSANT, move.getMoveType());
     }
+
+    @Test
+    void capturedPiece_NoCapture_ReturnsEmptyOptional() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        assertTrue(move.capturedPiece().isEmpty());
+    }
 }

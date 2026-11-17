@@ -5,6 +5,8 @@ import domain.Location;
 import domain.piece.Piece;
 import domain.piece.PieceType;
 
+import java.util.Optional;
+
 public final class Move {
     private final Location from;
     private final Location to;
@@ -24,5 +26,9 @@ public final class Move {
 
     public MoveType getMoveType() {
         return moveType;
+    }
+
+    public Optional<Piece> capturedPiece() {
+        return Optional.ofNullable(capturedPiece);
     }
 }
