@@ -63,4 +63,8 @@ public final class GameClock {
         startedAtNanos = nanoTimeSource.getAsLong();
         running = true;
     }
+
+    public void pause() {
+        running = false;
+    }
 }

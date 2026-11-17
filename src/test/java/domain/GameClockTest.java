@@ -206,4 +206,16 @@ public class GameClockTest {
 
         assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
+
+    @Test
+    void countdown_PauseBeforeStart_DoesNotDecreaseTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.pause();
+        time.set(5_000_000_000L);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
 }
