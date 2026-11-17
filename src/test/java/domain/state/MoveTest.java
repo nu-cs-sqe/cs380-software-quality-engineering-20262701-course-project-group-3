@@ -88,4 +88,14 @@ public class MoveTest {
         assertTrue(move.promotion().isPresent());
         assertEquals(PieceType.QUEEN, move.promotion().get());
     }
+
+    @Test
+    void constructor_KingPromotion_ThrowsIllegalArgumentException() {
+        Location from = new Location(7, 4);
+        Location to = new Location(6, 4);
+        Piece king = new King(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Move(from, to, king, null, PieceType.QUEEN, MoveType.NORMAL));
+    }
 }

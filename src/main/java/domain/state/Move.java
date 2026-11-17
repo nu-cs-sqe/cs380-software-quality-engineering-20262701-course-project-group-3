@@ -4,6 +4,7 @@ import domain.Location;
 
 import domain.piece.Piece;
 import domain.piece.PieceType;
+import domain.piece.Pawn;
 
 import java.util.Optional;
 
@@ -17,6 +18,9 @@ public final class Move {
 
     public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType) {
+        if (promotion != null && !(movedPiece instanceof Pawn)) {
+            throw new IllegalArgumentException("Only pawns can promote");
+        }
         this.from = from;
         this.to = to;
         this.movedPiece = movedPiece;
