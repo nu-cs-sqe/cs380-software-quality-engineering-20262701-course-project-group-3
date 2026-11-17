@@ -204,4 +204,22 @@ public class MoveTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Move(from, to, pawn, null, PieceType.PAWN, MoveType.NORMAL));
     }
+
+    @Test
+    void getRookMovement_CastlingMove_ReturnsRookLocations() {
+        Location from = new Location(7, 4);
+        Location to = new Location(7, 6);
+        Piece king = new King(PieceColor.WHITE);
+
+        Location rookFrom = new Location(7, 7);
+        Location rookTo = new Location(7, 5);
+        RookMovement rookMovement = new RookMovement(rookFrom, rookTo);
+
+        Move move = new Move(from, to, king, null, null,
+                MoveType.CASTLE, rookMovement);
+
+        assertTrue(move.getRookMovement().isPresent());
+        assertSame(rookFrom, move.getRookMovement().get().getFrom());
+        assertSame(rookTo, move.getRookMovement().get().getTo());
+    }
 }

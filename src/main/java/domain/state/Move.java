@@ -1,7 +1,7 @@
+
 package domain.state;
 
 import domain.Location;
-
 import domain.piece.Piece;
 import domain.piece.PieceType;
 import domain.piece.Pawn;
@@ -13,12 +13,22 @@ public final class Move {
     private final Location from;
     private final Location to;
     private final Piece movedPiece;
-    private final Piece capturedPiece;   // null if no capture
-    private final PieceType promotion;   // null unless a pawn promoted
+    private final Piece capturedPiece;
+    private final PieceType promotion;
     private final MoveType moveType;
+    private final RookMovement rookMovement;
 
     public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType) {
+        this(from, to, movedPiece, capturedPiece, promotion, moveType, null);
+    }
+
+    public Move(Location from, Location to, Piece movedPiece,
+                Piece capturedPiece, PieceType promotion, MoveType moveType,
+                RookMovement rookMovement) {
+        if (moveType == null) {
+            throw new IllegalArgumentException("Move type cannot be null");
+        }
         if (promotion != null && !(movedPiece instanceof Pawn)) {
             throw new IllegalArgumentException("Only pawns can promote");
         }
@@ -43,9 +53,6 @@ public final class Move {
         if (moveType == MoveType.EN_PASSANT && promotion != null) {
             throw new IllegalArgumentException("En passant cannot include promotion");
         }
-        if (moveType == null) {
-            throw new IllegalArgumentException("Move type cannot be null");
-        }
 
         this.from = from;
         this.to = to;
@@ -53,6 +60,7 @@ public final class Move {
         this.capturedPiece = capturedPiece;
         this.promotion = promotion;
         this.moveType = moveType;
+        this.rookMovement = rookMovement;
     }
 
     public MoveType getMoveType() {
@@ -65,5 +73,9 @@ public final class Move {
 
     public Optional<PieceType> promotion() {
         return Optional.ofNullable(promotion);
+    }
+
+    public Optional<RookMovement> getRookMovement() {
+        return Optional.ofNullable(rookMovement);
     }
 }
