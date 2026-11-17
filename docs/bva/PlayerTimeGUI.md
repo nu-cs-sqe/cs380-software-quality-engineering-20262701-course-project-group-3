@@ -52,3 +52,18 @@
 | TC23: Classical game              | Construct with `new GameClock(60)`                                                                 | Both players display `01:00:00`                                                                  | :white_check_mark: |
 | TC24: Existing player information | Construct with valid player names; call `onTurnChanged()`                                          | Player names and colors remain visible, and the current-player label displays the correct player | :white_check_mark: |
 | TC25: Selected preset integration | For each `TimeControl`, initialize `GameClock` with its minute value and construct `GameStatsView` | Both players display the correct and equal initial times for all four presets                    | :white_check_mark: |
+
+### Method under test: `GameStatsView` countdown refresh and `Main.startGame()`
+
+| Test case                           | System under test                                                                | Expected output                                                       | Implemented? |
+|-------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------------------------|--------------|
+| TC26: Automatic countdown startup   | Start a Blitz game through `Main.startGame()`; allow time to elapse              | White's countdown starts automatically without user interaction       | :x:          |
+| TC27: Below first display change    | Start Blitz countdown; advance 999 milliseconds; refresh GUI                     | WHITE displays `03:00`; BLACK displays `03:00`                        | :x:          |
+| TC28: First countdown update        | Start Blitz countdown; advance 1,000 milliseconds; trigger scheduled GUI refresh | WHITE displays `02:59` automatically                                  | :x:          |
+| TC29: Black display unchanged       | Start Blitz countdown; advance 2 seconds; refresh GUI                            | WHITE displays `02:58`; BLACK displays `03:00`                        | :x:          |
+| TC30: Paused countdown display      | Start; advance 1 second; pause; advance 5 more seconds; refresh GUI              | WHITE continues displaying `02:59`                                    | :x:          |
+| TC31: Resumed countdown display     | Pause at 179 seconds remaining; resume; advance 1 second; refresh GUI            | WHITE displays `02:58`; BLACK still displays `03:00`                  | :x:          |
+| TC32: Just before expiration        | Start Blitz countdown; advance 179 seconds; refresh GUI                          | WHITE displays `00:01`                                                | :x:          |
+| TC33: Exactly at expiration         | Start Blitz countdown; advance 180 seconds; refresh GUI                          | WHITE displays `00:00`; BLACK displays `03:00`                        | :x:          |
+| TC34: Beyond expiration             | Start Blitz countdown; advance 181 seconds; refresh GUI                          | WHITE remains at `00:00`; no negative or invalid display              | :x:          |
+| TC35: Untimed game integration      | Start an Untimed game; advance time; refresh GUI                                 | Both labels remain `Untimed`; no countdown refresh timer is activated | :x:          |
