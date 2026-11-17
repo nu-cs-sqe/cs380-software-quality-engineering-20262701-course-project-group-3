@@ -55,16 +55,16 @@
 
 ### Method under test: `GameStatsView` countdown refresh and `Main.startGame()`
 
-| Test case                            | System under test                                                                 | Expected output                                                                | Implemented? |
-|--------------------------------------|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------|--------------|
-| TC26: Automatic countdown startup    | Start a Blitz game through `Main.startGame()`; allow time to elapse               | White's countdown starts automatically without user interaction                | :x:          |
-| TC27: Below first display change     | Start Blitz countdown; advance 999 milliseconds; refresh GUI                      | WHITE displays `03:00`; BLACK displays `03:00`                                 | :x:          |
-| TC28: First countdown update         | Start Blitz countdown; advance 1,000 milliseconds; trigger scheduled GUI refresh  | WHITE displays `02:59` automatically                                           | :x:          |
-| TC29: Black display unchanged        | Start Blitz countdown; advance 2 seconds; refresh GUI                             | WHITE displays `02:58`; BLACK displays `03:00`                                 | :x:          |
-| TC30: Paused countdown display       | Start; advance 1 second; pause; advance 5 more seconds; refresh GUI               | WHITE continues displaying `02:59`                                             | :x:          |
-| TC31: Resumed countdown display      | Pause at 179 seconds remaining; resume; advance 1 second; refresh GUI             | WHITE displays `02:58`; BLACK still displays `03:00`                           | :x:          |
-| TC32: Just before expiration         | Start Blitz countdown; advance 179 seconds; refresh GUI                           | WHITE displays `00:01`                                                         | :x:          |
-| TC33: Exactly at expiration          | Start Blitz countdown; advance 180 seconds; refresh GUI                           | WHITE displays `00:00`; BLACK displays `03:00`                                 | :x:          |
-| TC34: Beyond expiration              | Start Blitz countdown; advance 181 seconds; refresh GUI                           | WHITE remains at `00:00`; no negative or invalid display                       | :x:          |
-| TC35: Untimed game integration       | Start an Untimed game; advance time; refresh GUI                                  | Both labels remain `Untimed`; no countdown refresh timer is activated          | :x:          |
-| TC36: Window disposal stops updates  | Start a timed game; close or dispose of the game window                           | The GUI refresh timer stops and no further clock-label updates are scheduled   | :x:          |
+| Test case                            | System under test                                                                 | Expected output                                                                | Implemented?       |
+|--------------------------------------|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------|--------------------|
+| TC26: Automatic countdown startup    | Start a Blitz game through `Main.startGame()`; allow time to elapse               | White's countdown starts automatically without user interaction                | :white_check_mark: |
+| TC27: Below first display change     | Start Blitz countdown; advance 999 milliseconds; refresh GUI                      | WHITE displays `03:00`; BLACK displays `03:00`                                 | :white_check_mark: |
+| TC28: First countdown update         | Start Blitz countdown; advance 1,000 milliseconds; trigger scheduled GUI refresh  | WHITE displays `02:59` automatically                                           | :white_check_mark: |
+| TC29: Black display unchanged        | Start Blitz countdown; advance 2 seconds; refresh GUI                             | WHITE displays `02:58`; BLACK displays `03:00`                                 | :white_check_mark: |
+| TC30: Paused countdown display       | Start; advance 1 second; pause; advance 5 more seconds; refresh GUI               | WHITE continues displaying `02:59`                                             | :white_check_mark: |
+| TC31: Resumed countdown display      | Pause at 179 seconds remaining; resume; advance 1 second; refresh GUI             | WHITE displays `02:58`; BLACK still displays `03:00`                           | :white_check_mark: |
+| TC32: Just before expiration         | Start Blitz countdown; advance 179 seconds; refresh GUI                           | WHITE displays `00:01`                                                         | :white_check_mark: |
+| TC33: Exactly at expiration          | Start Blitz countdown; advance 180 seconds; refresh GUI                           | WHITE displays `00:00`; BLACK displays `03:00`                                 | :white_check_mark: |
+| TC34: Beyond expiration              | Start Blitz countdown; advance 181 seconds; refresh GUI                           | WHITE remains at `00:00`; no negative or invalid display                       | :white_check_mark: |
+| TC35: Untimed game integration       | Start an Untimed game; advance time; refresh GUI                                  | Both labels remain `Untimed`; no countdown refresh timer is activated          | :white_check_mark: |
+| TC36: Window disposal stops updates  | Start a timed game; close or dispose of the game window                           | The GUI refresh timer stops and no further clock-label updates are scheduled   | :white_check_mark: |

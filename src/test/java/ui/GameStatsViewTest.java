@@ -1,6 +1,7 @@
 
 package ui;
 
+import domain.Board;
 import domain.GameClock;
 import domain.TimeControl;
 import domain.piece.PieceColor;
@@ -9,6 +10,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+
+import domain.state.GameState;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import javax.swing.JPanel;
 import java.util.concurrent.atomic.AtomicLong;
@@ -292,6 +296,40 @@ class GameStatsViewTest {
             assertFalse(view.isClockUpdatesRunning());
             assertEquals("Time: Untimed", namedLabel(view, "whiteClockLabel"));
             assertEquals("Time: Untimed", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_WindowDisposal_StopsClockUpdates() {
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        SwingTestSupport.onEventThread(() -> {
+            AtomicLong time = new AtomicLong(0L);
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView statsView = new GameStatsView("Alex", "Taylor", clock);
+
+            BoardController controller = new BoardController(
+                    new Board(), new GameState("Alex", "Taylor"));
+            BoardView boardView = new BoardView(controller);
+
+            MainView window = new MainView(
+                    boardView, statsView, TimeControl.BLITZ_3_MIN);
+
+            try {
+                clock.start();
+                statsView.startClockUpdates();
+
+                assertTrue(statsView.isClockUpdatesRunning());
+
+                window.dispose();
+
+                assertFalse(statsView.isClockUpdatesRunning());
+            } finally {
+                window.dispose();
+                statsView.stopClockUpdates();
+            }
+
             return null;
         });
     }
