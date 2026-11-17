@@ -3,6 +3,7 @@ package domain;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import domain.piece.PieceColor;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class GameClockTest {
 
@@ -94,5 +95,16 @@ public class GameClockTest {
         GameClock clock = new GameClock(3);
 
         assertThrows(IllegalArgumentException.class, () -> clock.getRemainingSeconds(null));
+    }
+
+    @Test
+    void countdown_NotStarted_DoesNotDecreaseTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        time.set(5_000_000_000L);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
 }
