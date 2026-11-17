@@ -17,15 +17,22 @@ public final class Move {
     private final PieceType promotion;
     private final MoveType moveType;
     private final RookMovement rookMovement;
-
-    public Move(Location from, Location to, Piece movedPiece,
-                Piece capturedPiece, PieceType promotion, MoveType moveType) {
-        this(from, to, movedPiece, capturedPiece, promotion, moveType, null);
-    }
+    private final Location capturedLocation;
 
     public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType,
                 RookMovement rookMovement) {
+        this(from, to, movedPiece, capturedPiece, promotion,
+                moveType, rookMovement, null);
+    }
+    public Move(Location from, Location to, Piece movedPiece,
+                Piece capturedPiece, PieceType promotion, MoveType moveType) {
+        this(from, to, movedPiece, capturedPiece, promotion, moveType, null, null);
+    }
+
+    public Move(Location from, Location to, Piece movedPiece,
+                Piece capturedPiece, PieceType promotion, MoveType moveType,
+                RookMovement rookMovement, Location capturedLocation) {
         if (moveType == null) {
             throw new IllegalArgumentException("Move type cannot be null");
         }
@@ -61,6 +68,7 @@ public final class Move {
         this.promotion = promotion;
         this.moveType = moveType;
         this.rookMovement = rookMovement;
+        this.capturedLocation = capturedLocation;
     }
 
     public MoveType getMoveType() {
@@ -77,5 +85,9 @@ public final class Move {
 
     public Optional<RookMovement> getRookMovement() {
         return Optional.ofNullable(rookMovement);
+    }
+
+    public Optional<Location> getCapturedLocation() {
+        return Optional.ofNullable(capturedLocation);
     }
 }

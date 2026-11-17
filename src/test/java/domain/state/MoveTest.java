@@ -222,4 +222,19 @@ public class MoveTest {
         assertSame(rookFrom, move.getRookMovement().get().getFrom());
         assertSame(rookTo, move.getRookMovement().get().getTo());
     }
+
+    @Test
+    void getCapturedLocation_EnPassantMove_ReturnsCapturedPawnLocation() {
+        Location from = new Location(3, 4);
+        Location to = new Location(2, 5);
+        Location capturedLocation = new Location(3, 5);
+        Piece whitePawn = new Pawn(PieceColor.WHITE);
+        Piece blackPawn = new Pawn(PieceColor.BLACK);
+
+        Move move = new Move(from, to, whitePawn, blackPawn,
+                null, MoveType.EN_PASSANT, null, capturedLocation);
+
+        assertTrue(move.getCapturedLocation().isPresent());
+        assertSame(capturedLocation, move.getCapturedLocation().get());
+    }
 }
