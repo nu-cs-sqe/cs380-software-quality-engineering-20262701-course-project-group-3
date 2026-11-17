@@ -42,6 +42,10 @@ public final class GameStatsView implements GameStateListener {
     public JLabel currentPlayerLabel;
     public JLabel gameStatusLabel;
 
+    private final GameClock clock;
+    private final JLabel whiteClockLabel;
+    private final JLabel blackClockLabel;
+
     private final PlayerPanel whitePanel = new PlayerPanel(Color.WHITE);
     private final PlayerPanel blackPanel = new PlayerPanel(Color.BLACK);
     private final ScalingPanel historyPanel = new ScalingPanel(Color.WHITE) {
@@ -74,15 +78,15 @@ public final class GameStatsView implements GameStateListener {
             throw new IllegalArgumentException("Game clock cannot be null.");
         }
 
+        this.clock = clock;
+
         // Black (top)
-        JLabel blackClockLabel = new JLabel("Time: "
-                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
+        blackClockLabel = new JLabel("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
         blackClockLabel.setName("blackClockLabel");
         blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
 
         // White (bottom)
-        JLabel whiteClockLabel = new JLabel("Time: "
-                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        whiteClockLabel = new JLabel("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
         whiteClockLabel.setName("whiteClockLabel");
         whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
 
@@ -92,6 +96,15 @@ public final class GameStatsView implements GameStateListener {
         historyPanel.addFooterLabel(gameStatusLabel, 14);
         JTextArea historyArea = new JTextArea();   // Placeholder for real history
         historyPanel.addFlexible(historyArea, 14);
+    }
+
+    /**
+     * Refreshes both clock labels using the current remaining times.
+     * Must be called on the Swing Event Dispatch Thread.
+     */
+    void refreshClocks() {
+        whiteClockLabel.setText("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        blackClockLabel.setText("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
     }
 
     /**
@@ -217,7 +230,7 @@ public final class GameStatsView implements GameStateListener {
 
         /**
          * <u>applyScale</u>
-         * <p> Rescales all registered fonts and the padding to match the parent's size.
+         * <p> Rescales all registered fonts and padding to match the parent's size.
          * Does nothing if the scale changed by less than 1%.
          */
         private void applyScale() {
@@ -274,8 +287,8 @@ public final class GameStatsView implements GameStateListener {
 
     /**
      * <u>PlayerPanel</u>
-     * <p> A scaling panel for one player: name, clock, and captured pieces on separate lines.
-     * */
+     * <p> A panel whose labels and captured pieces are arranged vertically.
+     */
     private static class PlayerPanel extends ScalingPanel {
         final JPanel captured = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
 

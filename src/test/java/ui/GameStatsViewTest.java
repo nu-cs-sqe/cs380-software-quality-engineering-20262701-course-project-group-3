@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import org.junit.jupiter.api.Test;
 import javax.swing.JPanel;
+import java.util.concurrent.atomic.AtomicLong;
 
 class GameStatsViewTest {
 
@@ -92,6 +93,24 @@ class GameStatsViewTest {
                 assertEquals("Time: " + expected, namedLabel(view, "whiteClockLabel"));
                 assertEquals("Time: " + expected, namedLabel(view, "blackClockLabel"));
             }
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_BelowFirstDisplayChange_KeepsInitialTime() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(999_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 03:00", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
             return null;
         });
     }
