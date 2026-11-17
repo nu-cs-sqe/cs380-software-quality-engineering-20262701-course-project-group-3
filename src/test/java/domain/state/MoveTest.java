@@ -140,4 +140,15 @@ public class MoveTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Move(from, to, pawn, null, null, MoveType.EN_PASSANT));
     }
+
+    @Test
+    void constructor_EnPassantCapturesNonPawn_ThrowsIllegalArgumentException() {
+        Location from = new Location(3, 4);
+        Location to = new Location(2, 5);
+        Piece whitePawn = new Pawn(PieceColor.WHITE);
+        Piece blackKnight = new Knight(PieceColor.BLACK);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Move(from, to, whitePawn, blackKnight, null, MoveType.EN_PASSANT));
+    }
 }
