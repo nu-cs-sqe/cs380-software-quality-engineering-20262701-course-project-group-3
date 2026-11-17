@@ -11,17 +11,18 @@ public final class Move {
     private final Piece movedPiece;
     private final Piece capturedPiece;   // null if no capture
     private final PieceType promotion;   // null unless a pawn promoted
-    private final boolean castle;
-    private final boolean enPassant;
+    private final MoveType moveType;
 
-    public Move(Location from, Location to, Piece movedPiece, Piece capturedPiece,
-                PieceType promotion, boolean castle, boolean enPassant) {
+    public Move(Location from, Location to, Piece movedPiece, Piece capturedPiece, PieceType promotion, MoveType moveType) {
         this.from = from;
         this.to = to;
         this.movedPiece = movedPiece;
         this.capturedPiece = capturedPiece;
         this.promotion = promotion;
-        this.castle = castle;
-        this.enPassant = enPassant;
+        this.moveType = moveType;
+    }
+
+    public MoveType getMoveType() {
+        return moveType;
     }
 }
