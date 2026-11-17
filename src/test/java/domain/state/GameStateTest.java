@@ -18,7 +18,6 @@ class GameStateTest {
         assertEquals("A", gameState.getActivePlayerName());
     }
 
-
     @Test
     void getActivePlayerName_TypicalPlayerNames_ReturnsWhitePlayerName() {
         GameState gameState = new GameState("Alice", "Bob");

@@ -15,7 +15,8 @@ public final class Move {
     private final PieceType promotion;   // null unless a pawn promoted
     private final MoveType moveType;
 
-    public Move(Location from, Location to, Piece movedPiece, Piece capturedPiece, PieceType promotion, MoveType moveType) {
+    public Move(Location from, Location to, Piece movedPiece,
+                Piece capturedPiece, PieceType promotion, MoveType moveType) {
         this.from = from;
         this.to = to;
         this.movedPiece = movedPiece;
@@ -30,5 +31,9 @@ public final class Move {
 
     public Optional<Piece> capturedPiece() {
         return Optional.ofNullable(capturedPiece);
+    }
+
+    public Optional<PieceType> promotion() {
+        return Optional.ofNullable(promotion);
     }
 }
