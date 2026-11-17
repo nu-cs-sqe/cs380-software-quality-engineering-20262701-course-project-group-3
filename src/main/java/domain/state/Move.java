@@ -24,6 +24,9 @@ public final class Move {
         if (promotion == PieceType.KING || promotion == PieceType.PAWN) {
             throw new IllegalArgumentException("Invalid promotion piece");
         }
+        if (moveType == MoveType.CASTLE && promotion != null) {
+            throw new IllegalArgumentException("Castling cannot include promotion");
+        }
 
         this.from = from;
         this.to = to;
