@@ -33,4 +33,15 @@ public class MoveTest {
 
         assertEquals(MoveType.CASTLE, move.getMoveType());
     }
+
+    @Test
+    void getMoveType_EnPassantMove_ReturnsEnPassant() {
+        Location from = new Location(3, 4);
+        Location to = new Location(2, 5);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.EN_PASSANT);
+
+        assertEquals(MoveType.EN_PASSANT, move.getMoveType());
+    }
 }
