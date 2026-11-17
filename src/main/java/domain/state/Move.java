@@ -25,6 +25,7 @@ public final class Move {
         this(from, to, movedPiece, capturedPiece, promotion,
                 moveType, rookMovement, null);
     }
+
     public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType) {
         this(from, to, movedPiece, capturedPiece, promotion, moveType, null, null);
