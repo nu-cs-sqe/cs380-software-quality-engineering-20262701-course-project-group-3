@@ -21,6 +21,10 @@ public final class Move {
         if (promotion != null && !(movedPiece instanceof Pawn)) {
             throw new IllegalArgumentException("Only pawns can promote");
         }
+        if (promotion == PieceType.KING || promotion == PieceType.PAWN) {
+            throw new IllegalArgumentException("Invalid promotion piece");
+        }
+
         this.from = from;
         this.to = to;
         this.movedPiece = movedPiece;
