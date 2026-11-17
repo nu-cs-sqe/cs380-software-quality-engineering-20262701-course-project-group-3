@@ -159,6 +159,24 @@ class GameStatsViewTest {
         }
     }
 
+    @Test
+    void countdown_BlackDisplay_RemainsUnchanged() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(2_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 02:58", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {
             GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
