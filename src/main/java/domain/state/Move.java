@@ -2,10 +2,10 @@
 package domain.state;
 
 import domain.Location;
+import domain.piece.King;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.PieceType;
-import domain.piece.Pawn;
-import domain.piece.King;
 
 import java.util.Optional;
 
@@ -20,15 +20,15 @@ public final class Move {
     private final Location capturedLocation;
 
     public Move(Location from, Location to, Piece movedPiece,
+                Piece capturedPiece, PieceType promotion, MoveType moveType) {
+        this(from, to, movedPiece, capturedPiece, promotion, moveType, null, null);
+    }
+
+    public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType,
                 RookMovement rookMovement) {
         this(from, to, movedPiece, capturedPiece, promotion,
                 moveType, rookMovement, null);
-    }
-
-    public Move(Location from, Location to, Piece movedPiece,
-                Piece capturedPiece, PieceType promotion, MoveType moveType) {
-        this(from, to, movedPiece, capturedPiece, promotion, moveType, null, null);
     }
 
     public Move(Location from, Location to, Piece movedPiece,
@@ -37,30 +37,9 @@ public final class Move {
         if (moveType == null) {
             throw new IllegalArgumentException("Move type cannot be null");
         }
-        if (promotion != null && !(movedPiece instanceof Pawn)) {
-            throw new IllegalArgumentException("Only pawns can promote");
-        }
-        if (promotion == PieceType.KING || promotion == PieceType.PAWN) {
-            throw new IllegalArgumentException("Invalid promotion piece");
-        }
-        if (moveType == MoveType.CASTLE && promotion != null) {
-            throw new IllegalArgumentException("Castling cannot include promotion");
-        }
-        if (moveType == MoveType.CASTLE && capturedPiece != null) {
-            throw new IllegalArgumentException("Castling cannot capture pieces");
-        }
-        if (moveType == MoveType.EN_PASSANT && !(capturedPiece instanceof Pawn)) {
-            throw new IllegalArgumentException("En passant requires a captured pawn");
-        }
-        if (moveType == MoveType.EN_PASSANT && !(movedPiece instanceof Pawn)) {
-            throw new IllegalArgumentException("Only pawns can perform en passant");
-        }
-        if (moveType == MoveType.CASTLE && !(movedPiece instanceof King)) {
-            throw new IllegalArgumentException("Only kings can castle");
-        }
-        if (moveType == MoveType.EN_PASSANT && promotion != null) {
-            throw new IllegalArgumentException("En passant cannot include promotion");
-        }
+
+        validatePromotion(movedPiece, promotion);
+        validateSpecialMove(moveType, movedPiece, capturedPiece, promotion);
 
         this.from = from;
         this.to = to;
@@ -70,6 +49,51 @@ public final class Move {
         this.moveType = moveType;
         this.rookMovement = rookMovement;
         this.capturedLocation = capturedLocation;
+    }
+
+    private static void validatePromotion(Piece movedPiece, PieceType promotion) {
+        if (promotion == null) {
+            return;
+        }
+        if (!(movedPiece instanceof Pawn)) {
+            throw new IllegalArgumentException("Only pawns can promote");
+        }
+        if (promotion == PieceType.KING || promotion == PieceType.PAWN) {
+            throw new IllegalArgumentException("Invalid promotion piece");
+        }
+    }
+
+    private static void validateSpecialMove(
+            MoveType moveType, Piece movedPiece, Piece capturedPiece,
+            PieceType promotion) {
+        switch (moveType) {
+            case NORMAL:
+                break;
+            case CASTLE:
+                if (promotion != null) {
+                    throw new IllegalArgumentException("Castling cannot include promotion");
+                }
+                if (capturedPiece != null) {
+                    throw new IllegalArgumentException("Castling cannot capture pieces");
+                }
+                if (!(movedPiece instanceof King)) {
+                    throw new IllegalArgumentException("Only kings can castle");
+                }
+                break;
+            case EN_PASSANT:
+                if (!(capturedPiece instanceof Pawn)) {
+                    throw new IllegalArgumentException("En passant requires a captured pawn");
+                }
+                if (!(movedPiece instanceof Pawn)) {
+                    throw new IllegalArgumentException("Only pawns can perform en passant");
+                }
+                if (promotion != null) {
+                    throw new IllegalArgumentException("En passant cannot include promotion");
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported move type");
+        }
     }
 
     public MoveType getMoveType() {
