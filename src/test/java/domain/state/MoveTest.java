@@ -162,4 +162,14 @@ public class MoveTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Move(from, to, whiteKing, blackPawn, null, MoveType.EN_PASSANT));
     }
+
+    @Test
+    void constructor_CastlingWithNonKingMover_ThrowsIllegalArgumentException() {
+        Location from = new Location(7, 7);
+        Location to = new Location(7, 5);
+        Piece rook = new Rook(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Move(from, to, rook, null, null, MoveType.CASTLE));
+    }
 }

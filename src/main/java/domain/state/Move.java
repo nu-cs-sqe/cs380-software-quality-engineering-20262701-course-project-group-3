@@ -5,6 +5,7 @@ import domain.Location;
 import domain.piece.Piece;
 import domain.piece.PieceType;
 import domain.piece.Pawn;
+import domain.piece.King;
 
 import java.util.Optional;
 
@@ -35,6 +36,9 @@ public final class Move {
         }
         if (moveType == MoveType.EN_PASSANT && !(movedPiece instanceof Pawn)) {
             throw new IllegalArgumentException("Only pawns can perform en passant");
+        }
+        if (moveType == MoveType.CASTLE && !(movedPiece instanceof King)) {
+            throw new IllegalArgumentException("Only kings can castle");
         }
 
         this.from = from;
