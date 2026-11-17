@@ -2,11 +2,8 @@
 package domain.state;
 
 import domain.Location;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.PieceColor;
+import domain.piece.*;
 import org.junit.jupiter.api.Test;
-import domain.piece.King;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -78,5 +75,17 @@ public class MoveTest {
         Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
 
         assertTrue(move.promotion().isEmpty());
+    }
+
+    @Test
+    void promotion_PawnPromotesToQueen_ReturnsQueen() {
+        Location from = new Location(1, 4);
+        Location to = new Location(0, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, PieceType.QUEEN, MoveType.NORMAL);
+
+        assertTrue(move.promotion().isPresent());
+        assertEquals(PieceType.QUEEN, move.promotion().get());
     }
 }
