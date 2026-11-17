@@ -33,6 +33,9 @@ public final class Move {
         if (moveType == MoveType.EN_PASSANT && !(capturedPiece instanceof Pawn)) {
             throw new IllegalArgumentException("En passant requires a captured pawn");
         }
+        if (moveType == MoveType.EN_PASSANT && !(movedPiece instanceof Pawn)) {
+            throw new IllegalArgumentException("Only pawns can perform en passant");
+        }
 
         this.from = from;
         this.to = to;
