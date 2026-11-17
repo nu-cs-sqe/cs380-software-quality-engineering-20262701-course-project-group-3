@@ -10,6 +10,8 @@ public final class GameClock {
     private final long whiteRemainingSeconds;
     private final long blackRemainingSeconds;
     private final LongSupplier nanoTimeSource;
+    private boolean running;
+    private long startedAtNanos;
 
     public GameClock(int minutesPerPlayer) {
         this(minutesPerPlayer, System::nanoTime);
@@ -40,6 +42,25 @@ public final class GameClock {
         if (color == null) {
             throw new IllegalArgumentException("Color cannot be null.");
         }
-        return color == PieceColor.WHITE ? whiteRemainingSeconds : blackRemainingSeconds;
+
+        if (color == PieceColor.BLACK || !running) {
+            return color == PieceColor.WHITE
+                    ? whiteRemainingSeconds
+                    : blackRemainingSeconds;
+        }
+
+        long elapsedNanos = nanoTimeSource.getAsLong() - startedAtNanos;
+        long elapsedSeconds = elapsedNanos / 1_000_000_000L;
+
+        return whiteRemainingSeconds - elapsedSeconds;
+    }
+
+    public void start() {
+        if (!isTimed() || running) {
+            return;
+        }
+
+        startedAtNanos = nanoTimeSource.getAsLong();
+        running = true;
     }
 }

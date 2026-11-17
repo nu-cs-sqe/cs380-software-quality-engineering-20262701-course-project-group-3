@@ -107,4 +107,16 @@ public class GameClockTest {
         assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
         assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
+
+    @Test
+    void countdown_Start_DecreasesWhiteOnly() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(2_000_000_000L);
+
+        assertEquals(178L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
 }
