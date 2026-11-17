@@ -19,6 +19,7 @@ import java.awt.FlowLayout;
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
+import javax.swing.Timer;
 
 /**
  * <u>GameStatsView</u>
@@ -45,6 +46,7 @@ public final class GameStatsView implements GameStateListener {
     private final GameClock clock;
     private final JLabel whiteClockLabel;
     private final JLabel blackClockLabel;
+    private Timer clockRefreshTimer;
 
     private final PlayerPanel whitePanel = new PlayerPanel(Color.WHITE);
     private final PlayerPanel blackPanel = new PlayerPanel(Color.BLACK);
@@ -57,6 +59,24 @@ public final class GameStatsView implements GameStateListener {
         }
     };
     static final double HISTORY_TO_BOARD_RATIO = 0.5; // history width relative to board side
+
+    void startClockUpdates() {
+        if (!clock.isTimed()) {
+            return;
+        }
+
+        if (clockRefreshTimer == null) {
+            clockRefreshTimer = new Timer(200, event -> refreshClocks());
+        }
+
+        clockRefreshTimer.start();
+    }
+
+    void stopClockUpdates() {
+        if (clockRefreshTimer != null) {
+            clockRefreshTimer.stop();
+        }
+    }
 
     /**
      * <u>boardSide</u>

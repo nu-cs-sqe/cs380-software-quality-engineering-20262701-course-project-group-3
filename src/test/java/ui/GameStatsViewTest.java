@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test;
 import javax.swing.JPanel;
 import java.util.concurrent.atomic.AtomicLong;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 class GameStatsViewTest {
 
     private static List<Component> allComponents(GameStatsView view) {
@@ -115,6 +118,47 @@ class GameStatsViewTest {
         });
     }
 
+    @Test
+    void countdown_FirstScheduledRefresh_UpdatesWhiteClockAutomatically()
+            throws InterruptedException {
+        AtomicLong time = new AtomicLong(0L);
+        CountDownLatch updated = new CountDownLatch(1);
+
+        GameStatsView view = SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView stats = new GameStatsView("Alex", "Taylor", clock);
+
+            JLabel label = findNamedLabel(stats, "whiteClockLabel");
+
+            label.addPropertyChangeListener("text", event -> {
+                if ("Time: 02:59".equals(event.getNewValue())) {
+                    updated.countDown();
+                }
+            });
+
+            clock.start();
+            time.set(1_000_000_000L);
+            stats.startClockUpdates();
+
+            return stats;
+        });
+
+        try {
+            assertTrue(updated.await(3, TimeUnit.SECONDS));
+
+            SwingTestSupport.onEventThread(() -> {
+                assertEquals("Time: 02:59",
+                        namedLabel(view, "whiteClockLabel"));
+                return null;
+            });
+        } finally {
+            SwingTestSupport.onEventThread(() -> {
+                view.stopClockUpdates();
+                return null;
+            });
+        }
+    }
+
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {
             GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
@@ -124,13 +168,18 @@ class GameStatsViewTest {
         });
     }
 
-    private String namedLabel(GameStatsView view, String name) {
+    private JLabel findNamedLabel(GameStatsView view, String name) {
         for (Component component : allComponents(view)) {
             if (component instanceof JLabel && name.equals(component.getName())) {
-                return ((JLabel) component).getText();
+                return (JLabel) component;
             }
         }
+
         throw new AssertionError("Could not find clock label: " + name);
+    }
+
+    private String namedLabel(GameStatsView view, String name) {
+        return findNamedLabel(view, name).getText();
     }
 
     private boolean hasLabelContaining(GameStatsView view, String text) {

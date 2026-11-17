@@ -32,5 +32,6 @@ public class Main {
         BoardView boardView = new BoardView(controller);
         MainView mainView = new MainView(boardView, statsView, timeControl);
         mainView.setVisible(true);
+        statsView.startClockUpdates();
     }
 }
