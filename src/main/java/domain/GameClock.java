@@ -18,7 +18,7 @@ public final class GameClock {
         this(minutesPerPlayer, System::nanoTime);
     }
 
-    GameClock(int minutesPerPlayer, LongSupplier nanoTimeSource) {
+    public GameClock(int minutesPerPlayer, LongSupplier nanoTimeSource) {
         if (minutesPerPlayer < 0) {
             throw new IllegalArgumentException(
                     "Minutes per player cannot be negative.");
