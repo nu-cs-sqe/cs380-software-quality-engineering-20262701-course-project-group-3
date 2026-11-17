@@ -184,4 +184,15 @@ public class GameClockTest {
 
         assertEquals(0L, clock.getRemainingSeconds(PieceColor.WHITE));
     }
+
+    @Test
+    void countdown_BeyondExpiration_RemainsZero() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(181_000_000_000L);
+
+        assertEquals(0L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
 }

@@ -52,7 +52,7 @@ public final class GameClock {
         long elapsedNanos = nanoTimeSource.getAsLong() - startedAtNanos;
         long elapsedSeconds = elapsedNanos / 1_000_000_000L;
 
-        return whiteRemainingSeconds - elapsedSeconds;
+        return Math.max(0L, whiteRemainingSeconds - elapsedSeconds);
     }
 
     public void start() {
