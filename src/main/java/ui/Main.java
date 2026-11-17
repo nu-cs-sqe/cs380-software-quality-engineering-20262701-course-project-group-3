@@ -26,7 +26,8 @@ public class Main {
         GameState gameState = new GameState(player1Name, player2Name);
         BoardController controller = new BoardController(board, gameState);
 
-        GameClock clock = createStartedClock(timeControl, System::nanoTime);        GameStatsView statsView = new GameStatsView(player1Name, player2Name, clock);
+        GameClock clock = createStartedClock(timeControl, System::nanoTime);
+        GameStatsView statsView = new GameStatsView(player1Name, player2Name, clock);
         controller.addListener(statsView);
 
         BoardView boardView = new BoardView(controller);

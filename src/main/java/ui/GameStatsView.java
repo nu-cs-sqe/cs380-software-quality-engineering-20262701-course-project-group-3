@@ -101,12 +101,14 @@ public final class GameStatsView implements GameStateListener {
         this.clock = clock;
 
         // Black (top)
-        blackClockLabel = new JLabel("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
+        blackClockLabel = new JLabel("Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
         blackClockLabel.setName("blackClockLabel");
         blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
 
         // White (bottom)
-        whiteClockLabel = new JLabel("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        whiteClockLabel = new JLabel("Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
         whiteClockLabel.setName("whiteClockLabel");
         whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
 
@@ -123,8 +125,10 @@ public final class GameStatsView implements GameStateListener {
      * Must be called on the Swing Event Dispatch Thread.
      */
     void refreshClocks() {
-        whiteClockLabel.setText("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
-        blackClockLabel.setText("Time: " + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
+        whiteClockLabel.setText("Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        blackClockLabel.setText("Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
     }
 
     /**
