@@ -250,4 +250,23 @@ public class GameClockTest {
         assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
         assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
+
+    @Test
+    void countdown_RepeatedStartAndPause_DoNotDoubleCountTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(500_000_000L);
+        clock.start();
+
+        time.set(1_000_000_000L);
+        clock.pause();
+
+        time.set(6_000_000_000L);
+        clock.pause();
+
+        assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
 }
