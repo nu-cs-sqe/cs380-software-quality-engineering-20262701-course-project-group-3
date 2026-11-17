@@ -132,6 +132,13 @@ public final class GameStatsView implements GameStateListener {
     }
 
     /**
+     * Returns whether the GUI clock refresh timer is running.
+     */
+    boolean isClockUpdatesRunning() {
+        return clockRefreshTimer != null && clockRefreshTimer.isRunning();
+    }
+
+    /**
      * <u>createContentPanel</u>
      * <p> Assembles the board, player information, and history panels.
      */

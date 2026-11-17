@@ -1,10 +1,6 @@
 
 package ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import domain.GameClock;
 import domain.TimeControl;
 import domain.piece.PieceColor;
@@ -19,6 +15,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameStatsViewTest {
 
@@ -272,6 +270,28 @@ class GameStatsViewTest {
 
             assertEquals("Time: 00:00", namedLabel(view, "whiteClockLabel"));
             assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_UntimedGame_DoesNotStartClockUpdates() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(0, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            view.startClockUpdates();
+
+            time.set(10_000_000_000L);
+            view.refreshClocks();
+
+            assertFalse(clock.isTimed());
+            assertFalse(view.isClockUpdatesRunning());
+            assertEquals("Time: Untimed", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: Untimed", namedLabel(view, "blackClockLabel"));
             return null;
         });
     }
