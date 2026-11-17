@@ -40,6 +40,9 @@ public final class Move {
         if (moveType == MoveType.CASTLE && !(movedPiece instanceof King)) {
             throw new IllegalArgumentException("Only kings can castle");
         }
+        if (moveType == MoveType.EN_PASSANT && promotion != null) {
+            throw new IllegalArgumentException("En passant cannot include promotion");
+        }
 
         this.from = from;
         this.to = to;
