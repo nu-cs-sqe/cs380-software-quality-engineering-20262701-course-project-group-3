@@ -27,6 +27,9 @@ public final class Move {
         if (moveType == MoveType.CASTLE && promotion != null) {
             throw new IllegalArgumentException("Castling cannot include promotion");
         }
+        if (moveType == MoveType.CASTLE && capturedPiece != null) {
+            throw new IllegalArgumentException("Castling cannot capture pieces");
+        }
 
         this.from = from;
         this.to = to;

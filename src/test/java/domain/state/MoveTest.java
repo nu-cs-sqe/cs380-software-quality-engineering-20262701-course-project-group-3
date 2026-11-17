@@ -118,4 +118,15 @@ public class MoveTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Move(from, to, pawn, null, PieceType.QUEEN, MoveType.CASTLE));
     }
+
+    @Test
+    void constructor_CastlingWithCapture_ThrowsIllegalArgumentException() {
+        Location from = new Location(7, 4);
+        Location to = new Location(7, 6);
+        Piece king = new King(PieceColor.WHITE);
+        Piece blackPawn = new Pawn(PieceColor.BLACK);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Move(from, to, king, blackPawn, null, MoveType.CASTLE));
+    }
 }
