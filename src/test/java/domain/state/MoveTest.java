@@ -55,4 +55,17 @@ public class MoveTest {
 
         assertTrue(move.capturedPiece().isEmpty());
     }
+
+    @Test
+    void capturedPiece_ValidCapture_ReturnsCapturedPiece() {
+        Location from = new Location(3, 4);
+        Location to = new Location(2, 5);
+        Piece whitePawn = new Pawn(PieceColor.WHITE);
+        Piece blackPawn = new Pawn(PieceColor.BLACK);
+
+        Move move = new Move(from, to, whitePawn, blackPawn, null, MoveType.NORMAL);
+
+        assertTrue(move.capturedPiece().isPresent());
+        assertSame(blackPawn, move.capturedPiece().get());
+    }
 }
