@@ -30,6 +30,9 @@ public final class Move {
         if (moveType == MoveType.CASTLE && capturedPiece != null) {
             throw new IllegalArgumentException("Castling cannot capture pieces");
         }
+        if (moveType == MoveType.EN_PASSANT && capturedPiece == null) {
+            throw new IllegalArgumentException("En passant requires a captured pawn");
+        }
 
         this.from = from;
         this.to = to;

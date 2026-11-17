@@ -35,9 +35,10 @@ public class MoveTest {
     void getMoveType_EnPassantMove_ReturnsEnPassant() {
         Location from = new Location(3, 4);
         Location to = new Location(2, 5);
-        Piece pawn = new Pawn(PieceColor.WHITE);
+        Piece whitePawn = new Pawn(PieceColor.WHITE);
+        Piece blackPawn = new Pawn(PieceColor.BLACK);
 
-        Move move = new Move(from, to, pawn, null, null, MoveType.EN_PASSANT);
+        Move move = new Move(from, to, whitePawn, blackPawn, null, MoveType.EN_PASSANT);
 
         assertEquals(MoveType.EN_PASSANT, move.getMoveType());
     }
@@ -128,5 +129,15 @@ public class MoveTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> new Move(from, to, king, blackPawn, null, MoveType.CASTLE));
+    }
+
+    @Test
+    void constructor_EnPassantWithoutCapture_ThrowsIllegalArgumentException() {
+        Location from = new Location(3, 4);
+        Location to = new Location(2, 5);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> new Move(from, to, pawn, null, null, MoveType.EN_PASSANT));
     }
 }
