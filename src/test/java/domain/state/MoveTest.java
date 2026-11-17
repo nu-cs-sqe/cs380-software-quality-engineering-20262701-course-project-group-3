@@ -6,6 +6,7 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
 import org.junit.jupiter.api.Test;
+import domain.piece.King;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,5 +21,16 @@ public class MoveTest {
         Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
 
         assertEquals(MoveType.NORMAL, move.getMoveType());
+    }
+
+    @Test
+    void getMoveType_CastlingMove_ReturnsCastle() {
+        Location from = new Location(7, 4);
+        Location to = new Location(7, 6);
+        Piece king = new King(PieceColor.WHITE);
+
+        Move move = new Move(from, to, king, null, null, MoveType.CASTLE);
+
+        assertEquals(MoveType.CASTLE, move.getMoveType());
     }
 }
