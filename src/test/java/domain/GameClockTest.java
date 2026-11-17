@@ -269,4 +269,20 @@ public class GameClockTest {
         assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
         assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
+
+    @Test
+    void countdown_UntimedGame_DoesNotActivateCountdown() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(0, time::get);
+
+        clock.start();
+        time.set(10_000_000_000L);
+        clock.pause();
+
+        time.set(20_000_000_000L);
+
+        assertFalse(clock.isTimed());
+        assertEquals(-1L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(-1L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
 }
