@@ -43,6 +43,9 @@ public final class Move {
         if (moveType == MoveType.EN_PASSANT && promotion != null) {
             throw new IllegalArgumentException("En passant cannot include promotion");
         }
+        if (moveType == null) {
+            throw new IllegalArgumentException("Move type cannot be null");
+        }
 
         this.from = from;
         this.to = to;
