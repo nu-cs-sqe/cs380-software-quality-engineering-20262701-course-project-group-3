@@ -1,6 +1,8 @@
 package ui;
 
 import domain.GameClock;
+import domain.locale.I18n;
+
 import java.util.Locale;
 
 public final class ClockTimeFormatter {
@@ -9,7 +11,7 @@ public final class ClockTimeFormatter {
 
     public static String format(long remainingSeconds) {
         if (remainingSeconds == GameClock.UNLIMITED_SECONDS) {
-            return "Untimed";
+            return I18n.get().t("clockTimeFormatter.untimed");
         }
 
         if (remainingSeconds < 0) {

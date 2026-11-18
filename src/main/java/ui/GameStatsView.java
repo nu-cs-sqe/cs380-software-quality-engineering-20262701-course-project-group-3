@@ -1,6 +1,7 @@
 package ui;
 
 import domain.GameClock;
+import domain.locale.I18n;
 import domain.piece.PieceColor;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -77,19 +78,19 @@ public class GameStatsView implements GameStateListener {
         }
 
         // Black (top)
-        JLabel blackClockLabel = new JLabel("Time: "
-                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
+        JLabel blackClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
+                ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         blackClockLabel.setName("blackClockLabel");
         blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
 
         // White (bottom)
-        JLabel whiteClockLabel = new JLabel("Time: "
-                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        JLabel whiteClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
+                ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         whiteClockLabel.setName("whiteClockLabel");
         whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
 
         currentPlayerLabel = new JLabel();
-        gameStatusLabel = new JLabel("Game Status: In progress");
+        gameStatusLabel = new JLabel(I18n.get().t("gameStatsView.gameStatusLabel", "In progress"));
         historyPanel.addFooterLabel(currentPlayerLabel, 14);
         historyPanel.addFooterLabel(gameStatusLabel, 14);
         JTextArea historyArea = new JTextArea();   // Placeholder for real history
@@ -133,7 +134,7 @@ public class GameStatsView implements GameStateListener {
      * <p> Sets the game status to the provided input.
      */
     public void setGameStatus(String status) {
-        gameStatusLabel.setText("Game Status: " + status);
+        gameStatusLabel.setText(I18n.get().t("gameStatsView.gameStatusLabel", status));
     }
 
     /**
@@ -142,7 +143,7 @@ public class GameStatsView implements GameStateListener {
      */
     @Override
     public void onTurnChanged(String activePlayerName) {
-        currentPlayerLabel.setText("Current Player: " + activePlayerName);
+        currentPlayerLabel.setText(I18n.get().t("gameStatsView.currentPlayerLabel", activePlayerName));
     }
 
     /**
@@ -298,7 +299,7 @@ public class GameStatsView implements GameStateListener {
             style(nameLabel, 10, textColor);
             style(clockLabel, 10, textColor);
 
-            JLabel capturedTitle = new JLabel("Captured:");
+            JLabel capturedTitle = new JLabel(I18n.get().t("gameStatsView.capturedLabel"));
             style(capturedTitle, 10, textColor);
             captured.add(capturedTitle);
             captured.setAlignmentX(Component.LEFT_ALIGNMENT);

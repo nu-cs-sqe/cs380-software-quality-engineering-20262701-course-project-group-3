@@ -1,6 +1,8 @@
 package ui;
 
 import domain.TimeControl;
+import domain.locale.I18n;
+
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -46,10 +48,10 @@ public class MainView extends JFrame {
      */
     private void configureMainView(TimeControl timeControl) {
         String duration = timeControl.getMinutesPerPlayer() == 0
-                ? "Untimed"
-                : timeControl.getMinutesPerPlayer() + " min";
+                ? I18n.get().t("main.untimedDuration")
+                : I18n.get().t("main.duration", timeControl.getMinutesPerPlayer());
 
-        setTitle("Yiji's Chess Game GUI Example :)! - " + duration);
+        setTitle(I18n.get().t("main.title", duration));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 800);
         setLocationRelativeTo(null);
