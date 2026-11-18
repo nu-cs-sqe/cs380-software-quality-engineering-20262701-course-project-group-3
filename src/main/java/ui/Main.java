@@ -3,6 +3,7 @@ package ui;
 import domain.Board;
 import domain.GameClock;
 import domain.TimeControl;
+import domain.locale.I18n;
 import domain.state.GameState;
 import javax.swing.SwingUtilities;
 import java.util.Locale;
@@ -16,6 +17,7 @@ public class Main {
     }
 
     private static void showWelcome(Locale locale) {
+        I18n.get().setLocale(locale);
         new WelcomeView(Main::startGame).setVisible(true);
     }
 

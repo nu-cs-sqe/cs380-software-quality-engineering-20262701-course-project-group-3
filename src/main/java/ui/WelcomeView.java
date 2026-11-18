@@ -3,6 +3,7 @@ package ui;
 
 import domain.PlayerNameValidator;
 import domain.ValidationException;
+import domain.locale.I18n;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -22,11 +23,6 @@ import java.util.Map;
 public class WelcomeView extends JFrame {
 
     private final GameStartHandler onStartGame;
-
-    private static final String NAME_RULES_TEXT =
-            "Names must be 1 to 26 characters long, include at least one letter or number, "
-                    + "and may only contain letters, numbers, spaces, underscores, and periods.";
-
     private JTextField player1NameField;
     private JTextField player2NameField;
     private JLabel player1ErrorLabel;
@@ -36,7 +32,7 @@ public class WelcomeView extends JFrame {
     public WelcomeView(GameStartHandler onStartGame) {
         this.onStartGame = onStartGame;
 
-        setTitle("Welcome Screen!");
+        setTitle(I18n.get().t("welcome.title"));
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -53,7 +49,7 @@ public class WelcomeView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Welcome message (row 0)
-        JLabel welcomeLabel = new JLabel("Welcome to our Chess Game!", SwingConstants.CENTER);
+        JLabel welcomeLabel = new JLabel(I18n.get().t("welcome.welcomeLabel"), SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
         welcomeLabel.setForeground(Color.WHITE);
         gbc.gridx = 0;
@@ -73,7 +69,7 @@ public class WelcomeView extends JFrame {
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 2;
-        JLabel player1NameLabel = new JLabel("Player 1 Name:");
+        JLabel player1NameLabel = new JLabel(I18n.get().t("welcome.player1NameLabel"));
         player1NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         player1NameLabel.setForeground(Color.WHITE);
         welcomePanel.add(player1NameLabel, gbc);
@@ -102,7 +98,7 @@ public class WelcomeView extends JFrame {
         // Player 2 Name Input (row 4)
         gbc.gridx = 0;
         gbc.gridy = 4;
-        JLabel player2NameLabel = new JLabel("Player 2 Name:");
+        JLabel player2NameLabel = new JLabel(I18n.get().t("welcome.player2NameLabel"));
         player2NameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         player2NameLabel.setForeground(Color.WHITE);
         welcomePanel.add(player2NameLabel, gbc);
@@ -118,7 +114,7 @@ public class WelcomeView extends JFrame {
                 player2NameLabel.getPreferredSize().width)
                 + errorWidth + 20;
         rulesLabel.setText("<html><div style='width:" + rulesWidth + "px; text-align:center'>"
-                + NAME_RULES_TEXT + "</div></html>");
+                + I18n.get().t("welcome.nameRules") + "</div></html>");
 
         // Player 2 error (row 5)
         player2ErrorLabel = createErrorLabel();
@@ -130,7 +126,7 @@ public class WelcomeView extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 6;
 
-        JLabel timeControlLabel = new JLabel("Time Control:");
+        JLabel timeControlLabel = new JLabel(I18n.get().t("welcome.timeControlLabel"));
         timeControlLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         timeControlLabel.setForeground(Color.WHITE);
         welcomePanel.add(timeControlLabel, gbc);
@@ -140,7 +136,7 @@ public class WelcomeView extends JFrame {
         welcomePanel.add(timeControlSelector, gbc);
 
         // Start Game Button (row 7)
-        JButton startGameButton = new JButton("Start Game");
+        JButton startGameButton = new JButton(I18n.get().t("welcome.startGame"));
         startGameButton.setFont(new Font("Arial", Font.BOLD, 20));
         startGameButton.setOpaque(true);
         startGameButton.setBackground(Color.WHITE);

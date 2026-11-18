@@ -1,6 +1,8 @@
 package ui;
 
 import domain.TimeControl;
+import domain.locale.I18n;
+
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
@@ -38,13 +40,13 @@ public final class TimeControlSelector extends JComboBox<TimeControl> {
     private static String displayName(TimeControl control) {
         switch (control) {
             case UNTIMED:
-                return "Untimed";
+                return I18n.get().t("welcome.timeControlUntimed");
             case BLITZ_3_MIN:
-                return "Blitz (3 min)";
+                return I18n.get().t("welcome.timeControlBlitz");
             case RAPID_10_MIN:
-                return "Rapid (10 min)";
+                return I18n.get().t("welcome.timeControlRapid");
             case CLASSICAL_60_MIN:
-                return "Classical (60 min)";
+                return I18n.get().t("welcome.timeControlClassical");
             default:
                 throw new IllegalArgumentException("Unsupported time control: " + control);
         }
