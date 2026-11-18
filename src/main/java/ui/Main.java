@@ -5,13 +5,18 @@ import domain.GameClock;
 import domain.TimeControl;
 import domain.state.GameState;
 import javax.swing.SwingUtilities;
+import java.util.Locale;
 
 public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new WelcomeView(Main::startGame).setVisible(true);
+            new LanguageSelectView(Main::showWelcome).setVisible(true);
         });
+    }
+
+    private static void showWelcome(Locale locale) {
+        new WelcomeView(Main::startGame).setVisible(true);
     }
 
     private static void startGame(String player1Name, String player2Name, TimeControl timeControl) {
