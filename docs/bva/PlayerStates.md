@@ -15,13 +15,13 @@
 |--------------------------------------|--------------------------------------------------------------------------------|-----------------|--------------|
 | TC01: Initial state                  | Call: `new PlayerState().getCastleKingsideEligible()`                          | Returns `true`  | ✅           |
 | TC02: After kingside revoked         | Call: `getCastleKingsideEligible()` after `revokeKingsideCastling()`           | Returns `false` | ✅           |
-| TC03: Unaffected by queenside revoke | Call: `getCastleKingsideEligible()` after `revokeQueensideCastling()`          | Returns `true`  | ❌           |
+| TC03: Unaffected by queenside revoke | Call: `getCastleKingsideEligible()` after `revokeQueensideCastling()`          | Returns `true`  | ✅           |
 
 ### Method under test: `getCastleQueensideEligible`
 
 |                                      | System under test                                                              | Expected output | Implemented? |
 |--------------------------------------|--------------------------------------------------------------------------------|-----------------|--------------|
-| TC01: Initial state                  | Call: `new PlayerState().getCastleQueensideEligible()`                         | Returns `true`  | ❌           |
+| TC01: Initial state                  | Call: `new PlayerState().getCastleQueensideEligible()`                         | Returns `true`  | ✅           |
 | TC02: After queenside revoked        | Call: `getCastleQueensideEligible()` after `revokeQueensideCastling()`         | Returns `false` | ❌           |
 | TC03: Unaffected by kingside revoke  | Call: `getCastleQueensideEligible()` after `revokeKingsideCastling()`          | Returns `true`  | ❌           |
 

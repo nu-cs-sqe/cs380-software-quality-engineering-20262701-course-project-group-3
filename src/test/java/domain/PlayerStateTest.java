@@ -38,4 +38,11 @@ public class PlayerStateTest {
 
         assertTrue(playerState.getCastleKingsideEligible());
     }
+
+    @Test
+    public void getCastleQueensideEligibleTC01_InitialState() {
+        PlayerState playerState = new PlayerState();
+
+        assertTrue(playerState.getCastleQueensideEligible());
+    }
 }
