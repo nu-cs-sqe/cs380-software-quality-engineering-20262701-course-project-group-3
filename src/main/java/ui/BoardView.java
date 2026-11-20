@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardView extends JPanel {
+public final class BoardView extends JPanel {
     private static final int BOARD_SIZE = 8;
     private static final int PREFERRED_TILE_SIZE = 50; // initial window size
     private static final Color LIGHT_SQUARE_COLOR = new Color(240, 217, 181);
@@ -41,7 +41,6 @@ public class BoardView extends JPanel {
         setPreferredSize(new Dimension(preferredSide, preferredSide));
         loadPieceSprites();
         this.boardController = boardController;
-        boardController.setBoardView(this);
         addMouseListener(new BoardMouseListener());
     }
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardController {
-    private BoardView boardView;
     private final Board board;
     private final GameState gameState;
 
@@ -18,10 +17,6 @@ public class BoardController {
     public BoardController(Board board, GameState gameState) {
         this.board = board;
         this.gameState = gameState;
-    }
-
-    void setBoardView(BoardView boardView) {
-        this.boardView = boardView;
     }
 
     public void addListener(GameStateListener listener) {
