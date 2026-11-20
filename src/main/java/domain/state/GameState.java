@@ -35,10 +35,6 @@ public class GameState {
         return activeColor == PieceColor.WHITE ? whitePlayerName : blackPlayerName;
     }
 
-    public Progress getProgress() {
-        return progress;
-    }
-
     public List<Move> getMoveHistory() {
         return List.copyOf(moveHistory);
     }

@@ -102,14 +102,14 @@ public final class GameStatsView implements GameStateListener {
         this.clock = clock;
 
         // Black (top)
-        JLabel blackClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
+        blackClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
                 ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         blackClockLabel.setName("blackClockLabel");
         JLabel player2Label = new JLabel(I18n.get().t("gameStatsView.player2Name", player2Name));
         blackPanel.init(player2Label, blackClockLabel);
 
         // White (bottom)
-        JLabel whiteClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
+        whiteClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
                 ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         whiteClockLabel.setName("whiteClockLabel");
         JLabel player1Label = new JLabel(I18n.get().t("gameStatsView.player1Name", player1Name));
