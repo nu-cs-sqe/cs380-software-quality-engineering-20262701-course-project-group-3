@@ -3,6 +3,7 @@ package domain;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import domain.piece.PieceColor;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class GameClockTest {
 
@@ -94,5 +95,194 @@ public class GameClockTest {
         GameClock clock = new GameClock(3);
 
         assertThrows(IllegalArgumentException.class, () -> clock.getRemainingSeconds(null));
+    }
+
+    @Test
+    void countdown_NotStarted_DoesNotDecreaseTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        time.set(5_000_000_000L);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_Start_DecreasesWhiteOnly() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(2_000_000_000L);
+
+        assertEquals(178L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_ZeroElapsedTime_KeepsInitialTime() {
+        AtomicLong time = new AtomicLong(42_000_000_000L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_BelowOneSecond_KeepsInitialTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(999_000_000L);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_ExactlyOneSecond_DecreasesWhiteTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(1_000_000_000L);
+
+        assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_JustAboveOneSecond_Keeps179Seconds() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(1_001_000_000L);
+
+        assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_JustBeforeExpiration_KeepsOneSecond() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(179_999_000_000L);
+
+        assertEquals(1L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_ExactlyAtExpiration_ReachesZero() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(180_000_000_000L);
+
+        assertEquals(0L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_BeyondExpiration_RemainsZero() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(181_000_000_000L);
+
+        assertEquals(0L, clock.getRemainingSeconds(PieceColor.WHITE));
+    }
+
+    @Test
+    void countdown_BlackTimer_RemainsUnchanged() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(181_000_000_000L);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_PauseBeforeStart_DoesNotDecreaseTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.pause();
+        time.set(5_000_000_000L);
+
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_PauseActiveCountdown_FreezesRemainingTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(1_000_000_000L);
+
+        clock.pause();
+        time.set(11_000_000_000L);
+
+        assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_ResumePreservesFractionalElapsedTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(500_000_000L);
+        clock.pause();
+
+        time.set(10_500_000_000L);
+        clock.start();
+        time.set(11_000_000_000L);
+
+        assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_RepeatedStartAndPause_DoNotDoubleCountTime() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(3, time::get);
+
+        clock.start();
+        time.set(500_000_000L);
+        clock.start();
+
+        time.set(1_000_000_000L);
+        clock.pause();
+
+        time.set(6_000_000_000L);
+        clock.pause();
+
+        assertEquals(179L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(180L, clock.getRemainingSeconds(PieceColor.BLACK));
+    }
+
+    @Test
+    void countdown_UntimedGame_DoesNotActivateCountdown() {
+        AtomicLong time = new AtomicLong(0L);
+        GameClock clock = new GameClock(0, time::get);
+
+        clock.start();
+        time.set(10_000_000_000L);
+        clock.pause();
+
+        time.set(20_000_000_000L);
+
+        assertFalse(clock.isTimed());
+        assertEquals(-1L, clock.getRemainingSeconds(PieceColor.WHITE));
+        assertEquals(-1L, clock.getRemainingSeconds(PieceColor.BLACK));
     }
 }
