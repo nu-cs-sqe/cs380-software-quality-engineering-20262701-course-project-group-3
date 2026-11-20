@@ -4,6 +4,8 @@ package ui;
 import domain.GameClock;
 import domain.locale.I18n;
 import domain.piece.PieceColor;
+import domain.state.Progress;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -174,8 +176,12 @@ public final class GameStatsView implements GameStateListener {
      * <u>onGameProgressChanged</u>
      * <p> Updates the current status label when the game status changes
      */
-    public void onGameProgressChanged(String gameProgress) {
-        gameStatusLabel.setText(I18n.get().t("gameStatsView.gameStatusLabel", gameProgress));
+    public void onGameProgressChanged(Progress gameProgress) {
+        String gameProgressString = gameProgress == Progress.COMPLETE
+                ? I18n.get().t("gameState.complete")
+                : I18n.get().t("gameState.inProgress");
+
+        gameStatusLabel.setText(I18n.get().t("gameStatsView.gameStatusLabel", gameProgressString));
     }
 
     /**

@@ -39,6 +39,10 @@ public class GameState {
         return List.copyOf(moveHistory);
     }
 
+    public Progress getProgress() {
+        return progress;
+    }
+
     public int getCapturedPieceCount(PieceColor color, PieceType type) {
         switch (color) {
             case WHITE:
@@ -48,11 +52,5 @@ public class GameState {
             default:
                 throw new IllegalArgumentException("Invalid piece color");
         }
-    }
-
-    public String getProgress() {
-        return progress == Progress.PLAYING
-            ? I18n.get().t("gameState.inProgress")
-            : I18n.get().t("gameState.complete");
     }
 }
