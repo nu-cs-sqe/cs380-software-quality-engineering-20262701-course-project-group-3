@@ -51,7 +51,7 @@ public class PlayerNameValidator {
         if (name.isEmpty()) {
             errors.put(field, I18n.get().t("welcome.errorEmpty"));
         } else if (name.length() > MAX_LENGTH) {
-            errors.put(field, I18n.get().t("welcome.errorTooLong"));
+            errors.put(field, I18n.get().t("welcome.errorTooLong", MAX_LENGTH));
         }
     }
 
