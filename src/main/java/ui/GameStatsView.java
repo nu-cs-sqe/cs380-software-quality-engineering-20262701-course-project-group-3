@@ -145,7 +145,8 @@ public class GameStatsView implements GameStateListener {
      */
     @Override
     public void onTurnChanged(String activePlayerName) {
-        currentPlayerLabel.setText(I18n.get().t("gameStatsView.currentPlayerLabel", activePlayerName));
+        currentPlayerLabel.setText(I18n.get()
+                .t("gameStatsView.currentPlayerLabel", activePlayerName));
     }
 
     /**

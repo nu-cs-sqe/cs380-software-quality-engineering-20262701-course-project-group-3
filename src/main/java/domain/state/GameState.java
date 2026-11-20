@@ -36,6 +36,8 @@ public class GameState {
     }
 
     public String getProgress() {
-        return progress == Progress.PLAYING ? I18n.get().t("gameState.inProgress") : I18n.get().t("gameState.complete");
+        return progress == Progress.PLAYING
+            ? I18n.get().t("gameState.inProgress")
+            : I18n.get().t("gameState.complete");
     }
 }

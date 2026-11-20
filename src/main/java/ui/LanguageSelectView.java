@@ -68,7 +68,9 @@ public class LanguageSelectView extends JFrame {
 
         continueButton.addActionListener(e -> {
             LocaleComboBoxItem item = (LocaleComboBoxItem) localeBox.getSelectedItem();
-            if (item == null) return;
+            if (item == null) {
+                return;
+            }
             setVisible(false);
             dispose();
             onSelected.accept(item.getLocale());

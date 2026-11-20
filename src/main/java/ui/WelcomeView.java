@@ -49,7 +49,8 @@ public class WelcomeView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Welcome message (row 0)
-        JLabel welcomeLabel = new JLabel(I18n.get().t("welcome.welcomeLabel"), SwingConstants.CENTER);
+        JLabel welcomeLabel = new JLabel(I18n.get()
+                .t("welcome.welcomeLabel"), SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
         welcomeLabel.setForeground(Color.WHITE);
         gbc.gridx = 0;

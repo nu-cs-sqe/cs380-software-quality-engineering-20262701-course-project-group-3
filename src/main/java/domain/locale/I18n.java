@@ -12,7 +12,8 @@ public final class I18n {
     private Locale locale = Locale.ENGLISH;
     private ResourceBundle bundle = ResourceBundle.getBundle(BASE_NAME, locale);
 
-    private I18n() {}
+    private I18n() {
+    }
 
     public static I18n get() {
         return INSTANCE;
