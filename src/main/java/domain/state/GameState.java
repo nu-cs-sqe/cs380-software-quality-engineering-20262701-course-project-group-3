@@ -13,7 +13,7 @@ public class GameState {
     private final String blackPlayerName;
     private PieceColor activeColor = PieceColor.WHITE;
 
-    private Progress progress = Progress.PLAYING;
+    private Status status = Status.PLAYING;
 
     private final List<Move> moveHistory = new ArrayList<Move>();
 
@@ -38,8 +38,8 @@ public class GameState {
         return List.copyOf(moveHistory);
     }
 
-    public Progress getProgress() {
-        return progress;
+    public Status getStatus() {
+        return status;
     }
 
     public int getCapturedPieceCount(PieceColor color, PieceType type) {
