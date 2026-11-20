@@ -7,11 +7,13 @@
 
 |                                | System under test         | Expected output                                    | Implemented? |
 |--------------------------------|---------------------------|----------------------------------------------------|--------------|
-| TC01: New player can castle    | Call: `new PlayerState()` | Kingside and queenside eligibility are both `true` | ❌           |
+| TC01: New player can castle    | Call: `new PlayerState()` | Kingside and queenside eligibility are both `true` | ✅           |
+
+### Method under test: `getCastleKingsideEligible`
 
 |                                      | System under test                                                              | Expected output | Implemented? |
 |--------------------------------------|--------------------------------------------------------------------------------|-----------------|--------------|
-| TC01: Initial state                  | Call: `new PlayerState().getCastleKingsideEligible()`                          | Returns `true`  | ❌           |
+| TC01: Initial state                  | Call: `new PlayerState().getCastleKingsideEligible()`                          | Returns `true`  | ✅           |
 | TC02: After kingside revoked         | Call: `getCastleKingsideEligible()` after `revokeKingsideCastling()`           | Returns `false` | ❌           |
 | TC03: Unaffected by queenside revoke | Call: `getCastleKingsideEligible()` after `revokeQueensideCastling()`          | Returns `true`  | ❌           |
 
