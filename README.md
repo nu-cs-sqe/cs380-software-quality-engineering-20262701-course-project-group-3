@@ -36,7 +36,7 @@ Report: `build/reports/pitest/index.html`
 Mutation testing currently targets the `domain` packages and excludes Swing UI classes. No minimum mutation coverage threshold is enforced.
 ### Others
 - **Checkstyle:** Configured with team-specific rules in `config/checkstyle/`. Both `checkstyleMain` and `checkstyleTest` pass.
-- **SpotBugs:** Configured to analyze production and test code. Run `./gradlew.bat spotbugsMain spotbugsTest` to generate HTML reports under `build/reports/spotbugs/`. Only high-priority warnings are reported and treated as build failures. Medium-priority findings are reviewed and addressed as necessary. Before applying this threshold, the analysis identified two remaining medium-priority warnings: an intentional MVC controller reference in `BoardView` and an unused game-progress field in `GameState` reserved for upcoming functionality.
+- **SpotBugs:** Configured to analyze production and test code. Run `./gradlew.bat spotbugsMain spotbugsTest` to generate HTML reports under `build/reports/spotbugs/`. Only high-priority warnings are reported and treated as build failures. Medium-priority findings are reviewed and addressed as necessary. Before applying this threshold, the analysis identified two remaining medium-priority warnings: an intentional MVC controller reference in `BoardView` and an unused game-status field in `GameState` reserved for upcoming functionality.
 - **TDD Violation:** `GameState` was merged into `main` without corresponding tests, violating the required TDD workflow. This historical violation was identified in the [Week 7 instructor code review (PR #23)](https://github.com/nu-cs-sqe/cs380-software-quality-engineering-20262701-course-project-group-3/pull/23).
 
 ## Acknowledgements
