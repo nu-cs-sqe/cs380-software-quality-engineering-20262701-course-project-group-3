@@ -38,5 +38,5 @@
 |                                  | System under test                                                        | Expected output                                                | Implemented? |
 |----------------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------|--------------|
 | TC01: Revoke from eligible       | Call: `revokeQueensideCastling()` on a new `PlayerState`                 | Queenside eligibility is `false`; kingside remains `true`      | ✅           |
-| TC02: Revoke already revoked     | Call: `revokeQueensideCastling()` twice                                  | Queenside eligibility stays `false`; no exception thrown       | ❌           |
+| TC02: Revoke already revoked     | Call: `revokeQueensideCastling()` twice                                  | Queenside eligibility stays `false`; no exception thrown       | ✅           |
 | TC03: Revoke both sides          | Call: `revokeQueensideCastling()` then `revokeKingsideCastling()`        | Both eligibility flags are `false`                             | ❌           |
