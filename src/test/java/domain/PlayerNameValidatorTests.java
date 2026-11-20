@@ -1,10 +1,19 @@
 package domain;
 
+import domain.locale.I18n;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerNameValidatorTests {
+    @BeforeEach
+    void setUp() {
+        I18n.get().setLocale(Locale.ENGLISH);
+    }
+
     @Test
     public void validateLength_EmptyName(){
         String player1Name = "";
@@ -12,8 +21,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateLength(player1Name, player2Name));
 
-        assertEquals("Player name cannot be empty.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name cannot be empty.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorEmpty"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorEmpty"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -47,8 +56,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateLength(player1Name, player2Name));
 
-        assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorTooLong", 26), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorTooLong", 26), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -58,7 +67,7 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateLength(player1Name, player2Name));
 
-        assertEquals("Player name cannot contain more than 26 characters.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorTooLong", 26), e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
@@ -69,8 +78,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -80,7 +89,7 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_1));
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
@@ -92,7 +101,7 @@ public class PlayerNameValidatorTests {
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
         assertNull(e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -110,8 +119,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -121,8 +130,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -132,8 +141,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must only contain alphanumeric characters, spaces, underscores, or periods.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorInvalidCharacters"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -175,8 +184,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateCharacters(player1Name, player2Name));
 
-        assertEquals("Player name must contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player name must contain at least one alphanumeric character.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorNoAlphanumeric"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorNoAlphanumeric"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -194,8 +203,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateDuplicate(player1Name, player2Name));
 
-        assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorDuplicate"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorDuplicate"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test
@@ -205,8 +214,8 @@ public class PlayerNameValidatorTests {
 
         ValidationException e = assertThrows(ValidationException.class, () -> PlayerNameValidator.validateDuplicate(player1Name, player2Name));
 
-        assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_1));
-        assertEquals("Player names cannot match.", e.getErrors().get(ValidationException.Field.PLAYER_2));
+        assertEquals(I18n.get().t("welcome.errorDuplicate"), e.getErrors().get(ValidationException.Field.PLAYER_1));
+        assertEquals(I18n.get().t("welcome.errorDuplicate"), e.getErrors().get(ValidationException.Field.PLAYER_2));
     }
 
     @Test

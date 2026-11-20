@@ -2,7 +2,10 @@
 package ui;
 
 import domain.GameClock;
+import domain.locale.I18n;
 import domain.piece.PieceColor;
+import domain.state.Progress;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -101,19 +104,21 @@ public final class GameStatsView implements GameStateListener {
         this.clock = clock;
 
         // Black (top)
-        blackClockLabel = new JLabel("Time: "
-                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
+        blackClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
+                ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         blackClockLabel.setName("blackClockLabel");
-        blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
+        JLabel player2Label = new JLabel(I18n.get().t("gameStatsView.player2Name", player2Name));
+        blackPanel.init(player2Label, blackClockLabel);
 
         // White (bottom)
-        whiteClockLabel = new JLabel("Time: "
-                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        whiteClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
+                ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         whiteClockLabel.setName("whiteClockLabel");
-        whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
+        JLabel player1Label = new JLabel(I18n.get().t("gameStatsView.player1Name", player1Name));
+        whitePanel.init(player1Label, whiteClockLabel);
 
         currentPlayerLabel = new JLabel();
-        gameStatusLabel = new JLabel("Game Status: In progress");
+        gameStatusLabel = new JLabel();
         historyPanel.addFooterLabel(currentPlayerLabel, 14);
         historyPanel.addFooterLabel(gameStatusLabel, 14);
         JTextArea historyArea = new JTextArea();   // Placeholder for real history
@@ -168,11 +173,15 @@ public final class GameStatsView implements GameStateListener {
     }
 
     /**
-     * <u>getHistoryPanel</u>
-     * <p> Sets the game status to the provided input.
+     * <u>onGameProgressChanged</u>
+     * <p> Updates the current status label when the game status changes
      */
-    public void setGameStatus(String status) {
-        gameStatusLabel.setText("Game Status: " + status);
+    public void onGameProgressChanged(Progress gameProgress) {
+        String gameProgressString = gameProgress == Progress.COMPLETE
+                ? I18n.get().t("gameState.complete")
+                : I18n.get().t("gameState.inProgress");
+
+        gameStatusLabel.setText(I18n.get().t("gameStatsView.gameStatusLabel", gameProgressString));
     }
 
     /**
@@ -181,7 +190,8 @@ public final class GameStatsView implements GameStateListener {
      */
     @Override
     public void onTurnChanged(String activePlayerName) {
-        currentPlayerLabel.setText("Current Player: " + activePlayerName);
+        currentPlayerLabel.setText(I18n.get()
+                .t("gameStatsView.currentPlayerLabel", activePlayerName));
     }
 
     /**
@@ -340,7 +350,7 @@ public final class GameStatsView implements GameStateListener {
             style(nameLabel, 10, textColor);
             style(clockLabel, 10, textColor);
 
-            JLabel capturedTitle = new JLabel("Captured:");
+            JLabel capturedTitle = new JLabel(I18n.get().t("gameStatsView.capturedLabel"));
             style(capturedTitle, 10, textColor);
             captured.add(capturedTitle);
             captured.setAlignmentX(Component.LEFT_ALIGNMENT);

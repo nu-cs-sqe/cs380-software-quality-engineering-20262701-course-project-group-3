@@ -3,18 +3,25 @@ package ui;
 import domain.Board;
 import domain.GameClock;
 import domain.TimeControl;
+import domain.locale.I18n;
 import domain.state.GameState;
 import javax.swing.SwingUtilities;
+import java.util.Locale;
 import java.util.function.LongSupplier;
 
 public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new WelcomeView(Main::startGame).setVisible(true);
+            new LanguageSelectView(Main::showWelcome).setVisible(true);
         });
     }
 
+    private static void showWelcome(Locale locale) {
+        I18n.get().setLocale(locale);
+        new WelcomeView(Main::startGame).setVisible(true);
+    }
+  
     static GameClock createStartedClock(TimeControl timeControl, LongSupplier nanoTimeSource) {
         GameClock clock = new GameClock(timeControl.getMinutesPerPlayer(), nanoTimeSource);
         clock.start();
