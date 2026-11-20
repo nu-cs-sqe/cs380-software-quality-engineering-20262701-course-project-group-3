@@ -2,5 +2,18 @@ package domain.state;
 
 public class PlayerState {
     private boolean castleKingsideEligible;
-    private boolean castleQueensideEligilbe;
+    private boolean castleQueensideEligible;
+
+    public PlayerState() {
+        this.castleKingsideEligible = true;
+        this.castleQueensideEligible = true;
+    }
+
+    public boolean getCastleKingsideEligible() {
+        return castleKingsideEligible;
+    }
+
+    public boolean getCastleQueensideEligible() {
+        return castleQueensideEligible;
+    }
 }
