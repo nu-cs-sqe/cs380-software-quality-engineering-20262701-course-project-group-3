@@ -68,4 +68,15 @@ public class Board {
         return snapshot;
     }
 
+    public Board emptyBoard() {
+        return new Board();
+    }
+
+    public void setPiece(Location location, Piece piece) {
+
+    }
+
+    public Piece getPiece(Location location) {
+        return new Pawn(WHITE);
+    }
 }
