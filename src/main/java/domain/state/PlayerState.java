@@ -20,4 +20,7 @@ public class PlayerState {
     public void revokeKingsideCastling() {
         castleKingsideEligible = false;
     }
+
+    public void revokeQueensideCastling() {
+    }
 }
