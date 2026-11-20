@@ -61,4 +61,13 @@ public class PlayerStateTest {
 
         assertTrue(playerState.getCastleQueensideEligible());
     }
+
+    @Test
+    public void revokeKingsideCastlingTC01_RevokeFromEligible() {
+        PlayerState playerState = new PlayerState();
+        playerState.revokeKingsideCastling();
+
+        assertFalse(playerState.getCastleKingsideEligible());
+        assertTrue(playerState.getCastleQueensideEligible());
+    }
 }
