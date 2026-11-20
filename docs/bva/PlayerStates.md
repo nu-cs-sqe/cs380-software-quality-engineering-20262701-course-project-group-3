@@ -22,7 +22,7 @@
 |                                      | System under test                                                              | Expected output | Implemented? |
 |--------------------------------------|--------------------------------------------------------------------------------|-----------------|--------------|
 | TC01: Initial state                  | Call: `new PlayerState().getCastleQueensideEligible()`                         | Returns `true`  | ✅           |
-| TC02: After queenside revoked        | Call: `getCastleQueensideEligible()` after `revokeQueensideCastling()`         | Returns `false` | ❌           |
+| TC02: After queenside revoked        | Call: `getCastleQueensideEligible()` after `revokeQueensideCastling()`         | Returns `false` | ✅           |
 | TC03: Unaffected by kingside revoke  | Call: `getCastleQueensideEligible()` after `revokeKingsideCastling()`          | Returns `true`  | ❌           |
 
 ### Method under test: `revokeKingsideCastling`
