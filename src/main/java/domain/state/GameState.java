@@ -1,6 +1,5 @@
 package domain.state;
 
-import domain.locale.I18n;
 import domain.piece.PieceColor;
 import domain.piece.PieceType;
 
