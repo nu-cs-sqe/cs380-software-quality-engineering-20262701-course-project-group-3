@@ -25,7 +25,7 @@ public class BoardController {
         // sync state changes for each added listener
         // fine for now because each listener should only be added once when the game initialized
         listener.onTurnChanged(gameState.getActivePlayerName());
-        listener.onGameProgressChanged(gameState.getProgress());
+        listener.onGameStatusChanged(gameState.getStatus());
     }
 
     private void fireTurnChanged() {
