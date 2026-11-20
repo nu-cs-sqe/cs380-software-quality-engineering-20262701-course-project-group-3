@@ -81,16 +81,18 @@ public class GameStatsView implements GameStateListener {
         JLabel blackClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
                 ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         blackClockLabel.setName("blackClockLabel");
-        blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
+        JLabel player2Label = new JLabel(I18n.get().t("gameStatsView.player2Name", player2Name));
+        blackPanel.init(player2Label, blackClockLabel);
 
         // White (bottom)
         JLabel whiteClockLabel = new JLabel(I18n.get().t("gameStatsView.clockLabel",
                 ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK))));
         whiteClockLabel.setName("whiteClockLabel");
-        whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
+        JLabel player1Label = new JLabel(I18n.get().t("gameStatsView.player1Name", player1Name));
+        whitePanel.init(player1Label, whiteClockLabel);
 
         currentPlayerLabel = new JLabel();
-        gameStatusLabel = new JLabel(I18n.get().t("gameStatsView.gameStatusLabel", "In progress"));
+        gameStatusLabel = new JLabel();
         historyPanel.addFooterLabel(currentPlayerLabel, 14);
         historyPanel.addFooterLabel(gameStatusLabel, 14);
         JTextArea historyArea = new JTextArea();   // Placeholder for real history
@@ -130,11 +132,11 @@ public class GameStatsView implements GameStateListener {
     }
 
     /**
-     * <u>getHistoryPanel</u>
-     * <p> Sets the game status to the provided input.
+     * <u>onGameProgressChanged</u>
+     * <p> Updates the current status label when the game status changes
      */
-    public void setGameStatus(String status) {
-        gameStatusLabel.setText(I18n.get().t("gameStatsView.gameStatusLabel", status));
+    public void onGameProgressChanged(String gameProgress) {
+        gameStatusLabel.setText(I18n.get().t("gameStatsView.gameStatusLabel", gameProgress));
     }
 
     /**

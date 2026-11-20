@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.locale.I18n;
 import domain.piece.PieceColor;
 import domain.piece.PieceType;
 
@@ -32,5 +33,9 @@ public class GameState {
 
     public String getActivePlayerName(){
         return activeColor == PieceColor.WHITE ? player1Name : player2Name;
+    }
+
+    public String getProgress() {
+        return progress == Progress.PLAYING ? I18n.get().t("gameState.inProgress") : I18n.get().t("gameState.complete");
     }
 }
