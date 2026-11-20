@@ -2,6 +2,8 @@ package domain;
 
 import domain.state.PlayerState;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerStateTest {
@@ -19,5 +21,13 @@ public class PlayerStateTest {
         PlayerState playerState = new PlayerState();
 
         assertTrue(playerState.getCastleKingsideEligible());
+    }
+
+    @Test
+    public void getCastleKingsideEligibleTC02_KingsideRevoke() {
+        PlayerState playerState = new PlayerState();
+        playerState.revokeKingsideCastling();
+
+        assertFalse(playerState.getCastleKingsideEligible());
     }
 }

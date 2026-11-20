@@ -16,4 +16,8 @@ public class PlayerState {
     public boolean getCastleQueensideEligible() {
         return castleQueensideEligible;
     }
+
+    public void revokeKingsideCastling() {
+
+    }
 }
