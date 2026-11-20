@@ -109,4 +109,14 @@ public class PlayerStateTest {
         assertTrue(playerState.getCastleKingsideEligible());
         assertFalse(playerState.getCastleQueensideEligible());
     }
+
+    @Test
+    public void revokeQueensideCastlingTC02_RevokeBoth() {
+        PlayerState playerState = new PlayerState();
+        playerState.revokeKingsideCastling();
+        playerState.revokeQueensideCastling();
+
+        assertFalse(playerState.getCastleKingsideEligible());
+        assertFalse(playerState.getCastleQueensideEligible());
+    }
 }
