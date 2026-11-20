@@ -1,3 +1,4 @@
+
 package ui;
 
 import domain.GameClock;
@@ -17,6 +18,8 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
+import java.awt.BorderLayout;
+import javax.swing.Timer;
 
 /**
  * <u>GameStatsView</u>
@@ -27,14 +30,10 @@ import javax.swing.JTextArea;
  *   <li> History panel (right of the board)
  * </ul>
  * <p> All text and padding scale with the window size so the panels stay consistent
- * with {@link BoardView}. This class is NOT itself a Swing component. Callers retrieve
- * the panels with <ul>
- *   <li> {@link #getBlackPanel()}
- *   <li> {@link #getWhitePanel()}
- *   <li> {@link #getHistoryPanel()}
- * </ul>
+ * with {@link BoardView}. This class is NOT itself a Swing component. Callers use
+ * {@link #createContentPanel(Component)} to assemble the game display.
  */
-public class GameStatsView implements GameStateListener {
+public final class GameStatsView implements GameStateListener {
 
     private static final int BASE_SIZE = 400;
     private static final double MIN_SCALE = 0.5;
@@ -43,6 +42,11 @@ public class GameStatsView implements GameStateListener {
 
     public JLabel currentPlayerLabel;
     public JLabel gameStatusLabel;
+
+    private final GameClock clock;
+    private final JLabel whiteClockLabel;
+    private final JLabel blackClockLabel;
+    private Timer clockRefreshTimer;
 
     private final PlayerPanel whitePanel = new PlayerPanel(Color.WHITE);
     private final PlayerPanel blackPanel = new PlayerPanel(Color.BLACK);
@@ -55,6 +59,24 @@ public class GameStatsView implements GameStateListener {
         }
     };
     static final double HISTORY_TO_BOARD_RATIO = 0.5; // history width relative to board side
+
+    void startClockUpdates() {
+        if (!clock.isTimed()) {
+            return;
+        }
+
+        if (clockRefreshTimer == null) {
+            clockRefreshTimer = new Timer(200, event -> refreshClocks());
+        }
+
+        clockRefreshTimer.start();
+    }
+
+    void stopClockUpdates() {
+        if (clockRefreshTimer != null) {
+            clockRefreshTimer.stop();
+        }
+    }
 
     /**
      * <u>boardSide</u>
@@ -76,14 +98,16 @@ public class GameStatsView implements GameStateListener {
             throw new IllegalArgumentException("Game clock cannot be null.");
         }
 
+        this.clock = clock;
+
         // Black (top)
-        JLabel blackClockLabel = new JLabel("Time: "
+        blackClockLabel = new JLabel("Time: "
                 + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
         blackClockLabel.setName("blackClockLabel");
         blackPanel.init(new JLabel("Player 2: " + player2Name), blackClockLabel);
 
         // White (bottom)
-        JLabel whiteClockLabel = new JLabel("Time: "
+        whiteClockLabel = new JLabel("Time: "
                 + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
         whiteClockLabel.setName("whiteClockLabel");
         whitePanel.init(new JLabel("Player 1: " + player1Name), whiteClockLabel);
@@ -97,19 +121,42 @@ public class GameStatsView implements GameStateListener {
     }
 
     /**
-     * <u>getBlackPanel</u>
-     * <p> Returns the black player's panel to place above the board.
+     * Refreshes both clock labels using the current remaining times.
+     * Must be called on the Swing Event Dispatch Thread.
      */
-    public JPanel getBlackPanel() {
-        return blackPanel;
+    void refreshClocks() {
+        whiteClockLabel.setText("Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.WHITE)));
+        blackClockLabel.setText("Time: "
+                + ClockTimeFormatter.format(clock.getRemainingSeconds(PieceColor.BLACK)));
     }
 
     /**
-     * <u>getWhitePanel</u>
-     * <p> Returns the white player's panel to place below the board.
+     * Returns whether the GUI clock refresh timer is running.
      */
-    public JPanel getWhitePanel() {
-        return whitePanel;
+    boolean isClockUpdatesRunning() {
+        return clockRefreshTimer != null && clockRefreshTimer.isRunning();
+    }
+
+    /**
+     * <u>createContentPanel</u>
+     * <p> Assembles the board, player information, and history panels.
+     */
+    public JPanel createContentPanel(Component boardView) {
+        JPanel content = new JPanel(new BorderLayout());
+
+        content.add(blackPanel, BorderLayout.NORTH);
+
+        JPanel center = new JPanel(
+                new MainView.BoardWithHistoryLayout(boardView, historyPanel)
+        );
+        center.add(boardView);
+        center.add(historyPanel);
+        content.add(center, BorderLayout.CENTER);
+
+        content.add(whitePanel, BorderLayout.SOUTH);
+
+        return content;
     }
 
     /**
@@ -118,14 +165,6 @@ public class GameStatsView implements GameStateListener {
      */
     public JPanel getCapturedPanel(PieceColor color) {
         return color == PieceColor.WHITE ? whitePanel.captured : blackPanel.captured;
-    }
-
-    /**
-     * <u>getHistoryPanel</u>
-     * <p> Returns the history panel to be placed on the right of board.
-     */
-    public JPanel getHistoryPanel() {
-        return historyPanel;
     }
 
     /**
@@ -155,12 +194,7 @@ public class GameStatsView implements GameStateListener {
     private static class ScalingPanel extends JPanel {
         private final List<JComponent> labels = new ArrayList<>();
         private final List<Integer> baseSizes = new ArrayList<>();
-        private final ComponentAdapter parentListener = new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                applyScale();
-            }
-        };
+        private transient ComponentAdapter parentListener;
 
         private double lastScale = -1;
         protected final Color textColor;
@@ -203,6 +237,14 @@ public class GameStatsView implements GameStateListener {
             super.addNotify();
             Container parent = getParent();
             if (parent != null) {
+                if (parentListener == null) {
+                    parentListener = new ComponentAdapter() {
+                        @Override
+                        public void componentResized(ComponentEvent e) {
+                            applyScale();
+                        }
+                    };
+                }
                 parent.addComponentListener(parentListener);
                 applyScale();
             }
@@ -211,7 +253,7 @@ public class GameStatsView implements GameStateListener {
         @Override
         public void removeNotify() {
             Container parent = getParent();
-            if (parent != null) {
+            if (parent != null && parentListener != null) {
                 parent.removeComponentListener(parentListener);
             }
             super.removeNotify();
@@ -219,7 +261,7 @@ public class GameStatsView implements GameStateListener {
 
         /**
          * <u>applyScale</u>
-         * <p> Rescales all registered fonts and the padding to match the parent's size.
+         * <p> Rescales all registered fonts and padding to match the parent's size.
          * Does nothing if the scale changed by less than 1%.
          */
         private void applyScale() {
@@ -276,8 +318,8 @@ public class GameStatsView implements GameStateListener {
 
     /**
      * <u>PlayerPanel</u>
-     * <p> A scaling panel for one player: name, clock, and captured pieces on separate lines.
-     * */
+     * <p> A panel whose labels and captured pieces are arranged vertically.
+     */
     private static class PlayerPanel extends ScalingPanel {
         final JPanel captured = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
 
@@ -309,4 +351,3 @@ public class GameStatsView implements GameStateListener {
         }
     }
 }
-

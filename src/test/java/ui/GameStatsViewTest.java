@@ -1,10 +1,7 @@
 
 package ui;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import domain.Board;
 import domain.GameClock;
 import domain.TimeControl;
 import domain.piece.PieceColor;
@@ -13,16 +10,22 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
+
+import domain.state.GameState;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
+import javax.swing.JPanel;
+import java.util.concurrent.atomic.AtomicLong;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameStatsViewTest {
 
     private static List<Component> allComponents(GameStatsView view) {
-        List<Component> result = new ArrayList<>();
-        result.addAll(collect(view.getBlackPanel()));
-        result.addAll(collect(view.getWhitePanel()));
-        result.addAll(collect(view.getHistoryPanel()));
-        return result;
+        return collect(view.createContentPanel(new JPanel()));
     }
 
     private static List<Component> collect(Container root) {
@@ -99,6 +102,238 @@ class GameStatsViewTest {
         });
     }
 
+    @Test
+    void countdown_BelowFirstDisplayChange_KeepsInitialTime() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(999_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 03:00", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_FirstScheduledRefresh_UpdatesWhiteClockAutomatically()
+            throws InterruptedException {
+        AtomicLong time = new AtomicLong(0L);
+        CountDownLatch updated = new CountDownLatch(1);
+
+        GameStatsView view = SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView stats = new GameStatsView("Alex", "Taylor", clock);
+
+            JLabel label = findNamedLabel(stats, "whiteClockLabel");
+
+            label.addPropertyChangeListener("text", event -> {
+                if ("Time: 02:59".equals(event.getNewValue())) {
+                    updated.countDown();
+                }
+            });
+
+            clock.start();
+            time.set(1_000_000_000L);
+            stats.startClockUpdates();
+
+            return stats;
+        });
+
+        try {
+            assertTrue(updated.await(3, TimeUnit.SECONDS));
+
+            SwingTestSupport.onEventThread(() -> {
+                assertEquals("Time: 02:59",
+                        namedLabel(view, "whiteClockLabel"));
+                return null;
+            });
+        } finally {
+            SwingTestSupport.onEventThread(() -> {
+                view.stopClockUpdates();
+                return null;
+            });
+        }
+    }
+
+    @Test
+    void countdown_BlackDisplay_RemainsUnchanged() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(2_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 02:58", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_PausedDisplay_KeepsRemainingTime() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(1_000_000_000L);
+            clock.pause();
+
+            time.set(6_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 02:59", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_ResumedDisplay_ContinuesCountdown() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(1_000_000_000L);
+            clock.pause();
+
+            time.set(6_000_000_000L);
+            clock.start();
+
+            time.set(7_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 02:58", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_JustBeforeExpiration_DisplaysOneSecond() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(179_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 00:01", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_ExactlyAtExpiration_DisplaysZero() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(180_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 00:00", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_BeyondExpiration_DisplaysZero() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            time.set(181_000_000_000L);
+            view.refreshClocks();
+
+            assertEquals("Time: 00:00", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: 03:00", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_UntimedGame_DoesNotStartClockUpdates() {
+        AtomicLong time = new AtomicLong(0L);
+
+        SwingTestSupport.onEventThread(() -> {
+            GameClock clock = new GameClock(0, time::get);
+            GameStatsView view = new GameStatsView("Alex", "Taylor", clock);
+
+            clock.start();
+            view.startClockUpdates();
+
+            time.set(10_000_000_000L);
+            view.refreshClocks();
+
+            assertFalse(clock.isTimed());
+            assertFalse(view.isClockUpdatesRunning());
+            assertEquals("Time: Untimed", namedLabel(view, "whiteClockLabel"));
+            assertEquals("Time: Untimed", namedLabel(view, "blackClockLabel"));
+            return null;
+        });
+    }
+
+    @Test
+    void countdown_WindowDisposal_StopsClockUpdates() {
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        SwingTestSupport.onEventThread(() -> {
+            AtomicLong time = new AtomicLong(0L);
+            GameClock clock = new GameClock(3, time::get);
+            GameStatsView statsView = new GameStatsView("Alex", "Taylor", clock);
+
+            BoardController controller = new BoardController(
+                    new Board(), new GameState("Alex", "Taylor"));
+            BoardView boardView = new BoardView(controller);
+
+            MainView window = new MainView(
+                    boardView, statsView, TimeControl.BLITZ_3_MIN);
+
+            try {
+                clock.start();
+                statsView.startClockUpdates();
+
+                assertTrue(statsView.isClockUpdatesRunning());
+
+                window.dispose();
+
+                assertFalse(statsView.isClockUpdatesRunning());
+            } finally {
+                window.dispose();
+                statsView.stopClockUpdates();
+            }
+
+            return null;
+        });
+    }
+
     private void assertInitialTimes(int minutes, String expected) {
         SwingTestSupport.onEventThread(() -> {
             GameStatsView view = new GameStatsView("Alex", "Taylor", new GameClock(minutes));
@@ -108,13 +343,18 @@ class GameStatsViewTest {
         });
     }
 
-    private String namedLabel(GameStatsView view, String name) {
+    private JLabel findNamedLabel(GameStatsView view, String name) {
         for (Component component : allComponents(view)) {
             if (component instanceof JLabel && name.equals(component.getName())) {
-                return ((JLabel) component).getText();
+                return (JLabel) component;
             }
         }
+
         throw new AssertionError("Could not find clock label: " + name);
+    }
+
+    private String namedLabel(GameStatsView view, String name) {
+        return findNamedLabel(view, name).getText();
     }
 
     private boolean hasLabelContaining(GameStatsView view, String text) {

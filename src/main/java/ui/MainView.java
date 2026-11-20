@@ -1,13 +1,13 @@
+
 package ui;
 
 import domain.TimeControl;
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
+import javax.swing.JFrame;
 
 /**
  * <u>MainView</u>
@@ -19,30 +19,36 @@ import java.awt.LayoutManager;
  */
 public class MainView extends JFrame {
 
+    private final GameStatsView gameStatsView;
+
     /**
      * <u>MainView</u>
      * <p> Creates the window and places the board and the stats panels in it.
      */
-    public MainView(BoardView boardView, GameStatsView gameStatsView, TimeControl timeControl) {
+    public MainView(BoardView boardView,
+                    GameStatsView gameStatsView,
+                    TimeControl timeControl) {
+        this.gameStatsView = gameStatsView;
 
         configureMainView(timeControl);
-
-        add(gameStatsView.getBlackPanel(), BorderLayout.NORTH);
-
-        JPanel historyPanel = gameStatsView.getHistoryPanel();
-        JPanel center = new JPanel(new BoardWithHistoryLayout(boardView, historyPanel));
-        center.add(boardView);
-        center.add(historyPanel);
-        add(center, BorderLayout.CENTER);
-
-        add(gameStatsView.getWhitePanel(), BorderLayout.SOUTH);
-
+        add(gameStatsView.createContentPanel(boardView), BorderLayout.CENTER);
         validate();
     }
 
     /**
+     * Stops clock updates before disposing of the game window.
+     */
+    @Override
+    public void dispose() {
+        if (gameStatsView != null) {
+            gameStatsView.stopClockUpdates();
+        }
+        super.dispose();
+    }
+
+    /**
      * <u>configureMainView</u>
-     * <p> Sets the window title , close behavior, size, and position.
+     * <p> Sets the window title, close behavior, size, and position.
      */
     private void configureMainView(TimeControl timeControl) {
         String duration = timeControl.getMinutesPerPlayer() == 0
@@ -61,7 +67,7 @@ public class MainView extends JFrame {
      * directly to its right. The history panel matches the board's height and fills
      * the rest of the width.
      */
-    private static class BoardWithHistoryLayout implements LayoutManager {
+    static class BoardWithHistoryLayout implements LayoutManager {
         private final Component board;
         private final Component history;
 
@@ -76,15 +82,17 @@ public class MainView extends JFrame {
 
         /**
          * <u>layoutContainer</u>
-         * <p> Sizes the board as the largest square that fits , centers it vertically,
+         * <p> Sizes the board as the largest square that fits, centers it vertically,
          * and gives the history panel the same height and all remaining width.
          */
         @Override
         public void layoutContainer(Container parent) {
-            int side = GameStatsView.boardSide(parent.getWidth(), parent.getHeight());
+            int side = GameStatsView.boardSide(
+                    parent.getWidth(), parent.getHeight());
             int y = (parent.getHeight() - side) / 2;
             board.setBounds(0, y, side, side);
-            // same top and height as the board, width fills everything to the right
+
+            // Same top and height as the board, width fills everything to the right.
             history.setBounds(side, y, parent.getWidth() - side, side);
         }
 
@@ -108,12 +116,14 @@ public class MainView extends JFrame {
             return new Dimension(0, 0);
         }
 
-        /** NOT USED: Just here to fulfill interface requirements */
-        @Override public void addLayoutComponent(String name, Component comp) {
+        /** NOT USED: Just here to fulfill interface requirements. */
+        @Override
+        public void addLayoutComponent(String name, Component comp) {
         }
 
-        /** NOT USED: Just here to fulfill interface requirements */
-        @Override public void removeLayoutComponent(Component comp) {
+        /** NOT USED: Just here to fulfill interface requirements. */
+        @Override
+        public void removeLayoutComponent(Component comp) {
         }
     }
 }
