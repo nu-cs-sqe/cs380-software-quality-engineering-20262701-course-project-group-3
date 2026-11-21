@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardTest {
 
     @Test
-    public void BoardTC01_Initialization() {
+    void BoardTC01_Initialization() {
         Board board = new Board();
         Piece[][] snapshot = board.getSnapshot();
 
@@ -68,7 +68,7 @@ public class BoardTest {
     }
 
     @Test
-    public void emptyBoardTC01_Initialization() {
+    void emptyBoardTC01_Initialization() {
         Board board = Board.emptyBoard();
         Piece[][] snapshot = board.getSnapshot();
 
@@ -159,5 +159,15 @@ public class BoardTest {
 
         assertInstanceOf(Pawn.class, retrievedPiece);
         assertEquals(WHITE, retrievedPiece.getColor());
+    }
+
+    @Test
+    void getPieceTC02_RetrieveEmptySquare() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(4, 4);
+
+        Piece retrievedPiece = board.getPiece(location);
+
+        assertNull(retrievedPiece);
     }
 }
