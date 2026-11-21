@@ -116,4 +116,20 @@ public class BoardTest {
         assertEquals(WHITE, snapshot[0][0].getColor());
     }
 
+    @Test
+    void setPieceTC03_AtOppositeCorner() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(7, 7);
+        Knight knight = new Knight(BLACK);
+
+        board.setPiece(location, knight);
+
+        Piece[][] snapshot = board.getSnapshot();
+
+        assertInstanceOf(Knight.class, snapshot[7][7]);
+        assertEquals(BLACK, snapshot[7][7].getColor());
+    }
+
+
+
 }
