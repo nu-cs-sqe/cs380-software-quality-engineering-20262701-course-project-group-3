@@ -101,4 +101,19 @@ public class BoardTest {
         assertInstanceOf(Pawn.class, snapshot[4][4]);
         assertEquals(WHITE, snapshot[4][4].getColor());
     }
+
+    @Test
+    void setPieceTC02_AtCorner() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(0, 0);
+        Rook rook = new Rook(WHITE);
+
+        board.setPiece(location, rook);
+
+        Piece[][] snapshot = board.getSnapshot();
+
+        assertInstanceOf(Rook.class, snapshot[0][0]);
+        assertEquals(WHITE, snapshot[0][0].getColor());
+    }
+
 }
