@@ -85,6 +85,6 @@ public class Board {
     }
 
     public Piece getPiece(Location location) {
-        return new Pawn(WHITE);
+        return pieces[location.getX()][location.getY()];
     }
 }
