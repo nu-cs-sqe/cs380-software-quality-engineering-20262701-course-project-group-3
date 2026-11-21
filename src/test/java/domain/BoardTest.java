@@ -296,4 +296,23 @@ public class BoardTest {
             }
         }
     }
+
+    @Test
+    void getSnapshotTC03_SnapshotIndependence() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(4, 4);
+
+        Pawn pawn = new Pawn(WHITE);
+        board.setPiece(location, pawn);
+
+        // Get a snapshot and modify the returned array
+        Piece[][] snapshot = board.getSnapshot();
+        snapshot[4][4] = new Rook(BLACK);
+
+        // Verify the original board remains unchanged
+        Piece originalPiece = board.getPiece(location);
+
+        assertInstanceOf(Pawn.class, originalPiece);
+        assertEquals(WHITE, originalPiece.getColor());
+    }
 }
