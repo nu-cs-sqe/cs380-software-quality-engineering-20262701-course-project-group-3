@@ -198,4 +198,21 @@ public class BoardTest {
         assertInstanceOf(Knight.class, retrievedPiece);
         assertEquals(BLACK, retrievedPiece.getColor());
     }
+
+    @Test
+    void getPieceTC05_RetrievePieceAfterReplacement() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(4, 4);
+
+        Pawn firstPiece = new Pawn(WHITE);
+        Rook secondPiece = new Rook(BLACK);
+
+        board.setPiece(location, firstPiece);
+        board.setPiece(location, secondPiece);
+
+        Piece retrievedPiece = board.getPiece(location);
+
+        assertInstanceOf(Rook.class, retrievedPiece);
+        assertEquals(BLACK, retrievedPiece.getColor());
+    }
 }
