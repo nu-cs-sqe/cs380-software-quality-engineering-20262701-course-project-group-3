@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.piece.PieceColor;
 import domain.piece.PieceType;
-import domain.state.GameState;
 import org.junit.jupiter.api.Test;
 
 class GameStateTest {
@@ -33,10 +32,10 @@ class GameStateTest {
     }
 
     @Test
-    void getProgress_NewGame_ReturnsPlaying() {
+    void getStatus_NewGame_ReturnsPlaying() {
         GameState gameState = new GameState("Alice", "Bob");
 
-        assertEquals(Progress.PLAYING, gameState.getProgress());
+        assertEquals(Status.PLAYING, gameState.getStatus());
     }
 
     @Test

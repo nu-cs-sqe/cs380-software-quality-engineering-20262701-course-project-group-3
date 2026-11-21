@@ -17,6 +17,6 @@ These cases concern initialization mentioned by the instructor. They should be t
 
 |                               | System under test       | Expected output                                          | Implemented?       |
 |-------------------------------|-------------------------|----------------------------------------------------------|--------------------|
-| TC04: Initial progress        | Create a new GameState  | Progress is `PLAYING`                                    | :white_check_mark: |
+| TC04: Initial status          | Create a new GameState  | Status is `PLAYING`                                      | :white_check_mark: |
 | TC05: Initial move history    | Create a new GameState  | Move history is empty                                    | :white_check_mark: |
 | TC06: Initial captured pieces | Create a new GameState  | White and Black have zero captures for every `PieceType` | :white_check_mark: |
