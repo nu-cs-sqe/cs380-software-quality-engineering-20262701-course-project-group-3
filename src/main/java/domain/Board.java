@@ -81,7 +81,7 @@ public class Board {
     }
 
     public void setPiece(Location location, Piece piece) {
-
+        pieces[location.getX()][location.getY()] = piece;
     }
 
     public Piece getPiece(Location location) {
