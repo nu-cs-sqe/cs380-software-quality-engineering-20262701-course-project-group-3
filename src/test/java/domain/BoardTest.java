@@ -315,4 +315,24 @@ public class BoardTest {
         assertInstanceOf(Pawn.class, originalPiece);
         assertEquals(WHITE, originalPiece.getColor());
     }
+
+    @Test
+    void getSnapshotTC04_SnapshotPieceIndependence() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(4, 4);
+        Pawn pawn = new Pawn(WHITE);
+
+        board.setPiece(location, pawn);
+
+        // Get a snapshot of the board
+        Piece[][] snapshot = board.getSnapshot();
+
+        // Verify the snapshot contains a copy, not the original object
+        Piece snapshotPiece = snapshot[4][4];
+        Piece originalPiece = board.getPiece(location);
+
+        assertNotSame(originalPiece, snapshotPiece);
+        assertInstanceOf(Pawn.class, snapshotPiece);
+        assertEquals(WHITE, snapshotPiece.getColor());
+    }
 }

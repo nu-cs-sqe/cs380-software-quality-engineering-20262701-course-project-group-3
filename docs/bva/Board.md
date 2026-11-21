@@ -41,4 +41,4 @@
 | TC01: Snapshot of standard board  | Call: `getSnapshot()` on a standard board                                  | Returns a copy containing the same piece positions as the original board                      | ✅           |
 | TC02: Snapshot of empty board     | Call: `getSnapshot()` on an empty board                                    | Returns an 8×8 array containing only `null` values                                            | ✅           |
 | TC03: Snapshot independence       | Call: `getSnapshot()` and modify the returned array                        | Original board remains unchanged                                                              | ✅           |
-| TC04: Snapshot piece independence | Call: `getSnapshot()` and compare pieces in corresponding occupied squares | Snapshot contains copies of the original pieces rather than references to the original pieces | ❌           |
+| TC04: Snapshot piece independence | Call: `getSnapshot()` and compare pieces in corresponding occupied squares | Snapshot contains copies of the original pieces rather than references to the original pieces | ✅           |
