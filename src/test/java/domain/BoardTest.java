@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardTest {
 
     @Test
-    public void Board() {
+    public void BoardTC01_Initialization() {
         Board board = new Board();
         Piece[][] snapshot = board.getSnapshot();
 
@@ -63,6 +63,27 @@ public class BoardTest {
         for (int row = 2; row <= 5; row++) {
             for (int col = 0; col < 8; col++) {
                 assertNull(snapshot[row][col]);
+            }
+        }
+    }
+
+    @Test
+    void emptyBoardTC01_Initialization() {
+        Board board = Board.emptyBoard();
+        Piece[][] snapshot = board.getSnapshot();
+
+        // Verify board dimensions
+        assertEquals(8, snapshot.length);
+
+        for (Piece[] row : snapshot) {
+            assertEquals(8, row.length);
+        }
+
+        // Verify every square is empty
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                assertNull(snapshot[row][col],
+                        "Expected square at (" + row + ", " + col + ") to be empty");
             }
         }
     }

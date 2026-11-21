@@ -7,15 +7,13 @@
 
 |                                     | System under test   | Expected output                                                                        | Implemented? |
 |-------------------------------------|---------------------|----------------------------------------------------------------------------------------|--------------|
-| TC01: Standard board initialization | Call: `new Board()` | Creates an 8×8 board with all 32 pieces in their standard starting positions           | ❌           |
-| TC02: Initial pawn positions        | Call: `new Board()` | White pawns occupy row 6 and Black pawns occupy row 1                                  | ❌           |
-| TC03: Initial back-rank positions   | Call: `new Board()` | All rooks, knights, bishops, queens, and kings occupy their correct starting positions | ❌           |
+| TC01: Standard board initialization | Call: `new Board()` | Creates an 8×8 board with all 32 pieces in their standard starting positions           | ✅           |
 
 ### Constructor: `Board.emptyBoard()`
 
 |                                  | System under test          | Expected output                                | Implemented? |
 |----------------------------------|----------------------------|------------------------------------------------|--------------|
-| TC01: Empty board initialization | Call: `Board.emptyBoard()` | Creates an 8×8 board with all 64 squares empty | ⬜           |
+| TC01: Empty board initialization | Call: `Board.emptyBoard()` | Creates an 8×8 board with all 64 squares empty | ❌           |
 
 ### Method under test: `setPiece(Location location, Piece piece)`
 
