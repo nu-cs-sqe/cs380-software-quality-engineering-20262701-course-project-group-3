@@ -184,4 +184,18 @@ public class BoardTest {
         assertInstanceOf(Rook.class, retrievedPiece);
         assertEquals(WHITE, retrievedPiece.getColor());
     }
+
+    @Test
+    void getPieceTC04_RetrieveOppositeCornerPiece() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(7, 7);
+        Knight knight = new Knight(BLACK);
+
+        board.setPiece(location, knight);
+
+        Piece retrievedPiece = board.getPiece(location);
+
+        assertInstanceOf(Knight.class, retrievedPiece);
+        assertEquals(BLACK, retrievedPiece.getColor());
+    }
 }
