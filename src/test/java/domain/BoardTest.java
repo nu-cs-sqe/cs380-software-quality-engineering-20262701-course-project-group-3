@@ -170,4 +170,18 @@ public class BoardTest {
 
         assertNull(retrievedPiece);
     }
+
+    @Test
+    void getPieceTC03_RetrieveCornerPiece() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(0, 0);
+        Rook rook = new Rook(WHITE);
+
+        board.setPiece(location, rook);
+
+        Piece retrievedPiece = board.getPiece(location);
+
+        assertInstanceOf(Rook.class, retrievedPiece);
+        assertEquals(WHITE, retrievedPiece.getColor());
+    }
 }

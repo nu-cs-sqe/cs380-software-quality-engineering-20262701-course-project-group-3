@@ -29,8 +29,8 @@
 |                                        | System under test                                                 | Expected output                                 | Implemented? |
 |----------------------------------------|-------------------------------------------------------------------|-------------------------------------------------|--------------|
 | TC01: Retrieve existing piece          | Call: `getPiece(location)` after placing a piece at that location | Returns the piece occupying that location       | ✅           |
-| TC02: Retrieve empty square            | Call: `getPiece(location)` on an unoccupied square                | Returns `null`                                  | ❌           |
-| TC03: Retrieve corner piece            | Call: `getPiece(location)` for a piece at `(0, 0)`                | Returns the piece occupying the corner          | ❌           |
+| TC02: Retrieve empty square            | Call: `getPiece(location)` on an unoccupied square                | Returns `null`                                  | ✅           |
+| TC03: Retrieve corner piece            | Call: `getPiece(location)` for a piece at `(0, 0)`                | Returns the piece occupying the corner          | ✅           |
 | TC04: Retrieve opposite corner piece   | Call: `getPiece(location)` for a piece at `(7, 7)`                | Returns the piece occupying the opposite corner | ❌           |
 | TC05: Retrieve piece after replacement | Call: `getPiece(location)` after replacing an existing piece      | Returns the newly placed piece                  | ❌           |
 
