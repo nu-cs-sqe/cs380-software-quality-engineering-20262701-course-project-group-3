@@ -19,7 +19,15 @@ public class Board {
     private Piece[][] pieces;
 
     public Board(){
-        initializeBoard();
+        this(true);
+    }
+
+    private Board(boolean initialize) {
+        pieces = new Piece[TOTAL_ROWS][TOTAL_COLS];
+
+        if (initialize) {
+            initializeBoard();
+        }
     }
 
     private void initializeBoard(){
@@ -68,4 +76,15 @@ public class Board {
         return snapshot;
     }
 
+    public static Board emptyBoard() {
+        return new Board(false);
+    }
+
+    public void setPiece(Location location, Piece piece) {
+        pieces[location.getX()][location.getY()] = piece;
+    }
+
+    public Piece getPiece(Location location) {
+        return pieces[location.getX()][location.getY()];
+    }
 }
