@@ -13,7 +13,7 @@
 
 |                                  | System under test          | Expected output                                | Implemented? |
 |----------------------------------|----------------------------|------------------------------------------------|--------------|
-| TC01: Empty board initialization | Call: `Board.emptyBoard()` | Creates an 8×8 board with all 64 squares empty | ❌           |
+| TC01: Empty board initialization | Call: `Board.emptyBoard()` | Creates an 8×8 board with all 64 squares empty | ✅           |
 
 ### Method under test: `setPiece(Location location, Piece piece)`
 

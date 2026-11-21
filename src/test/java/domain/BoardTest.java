@@ -68,7 +68,7 @@ public class BoardTest {
     }
 
     @Test
-    void emptyBoardTC01_Initialization() {
+    public void emptyBoardTC01_Initialization() {
         Board board = Board.emptyBoard();
         Piece[][] snapshot = board.getSnapshot();
 
@@ -86,5 +86,19 @@ public class BoardTest {
                         "Expected square at (" + row + ", " + col + ") to be empty");
             }
         }
+    }
+
+    @Test
+    void setPieceTC01_InCenter() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(4, 4);
+        Pawn pawn = new Pawn(WHITE);
+
+        board.setPiece(location, pawn);
+
+        Piece[][] snapshot = board.getSnapshot();
+
+        assertInstanceOf(Pawn.class, snapshot[4][4]);
+        assertEquals(WHITE, snapshot[4][4].getColor());
     }
 }
