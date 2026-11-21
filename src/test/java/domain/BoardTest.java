@@ -130,6 +130,21 @@ public class BoardTest {
         assertEquals(BLACK, snapshot[7][7].getColor());
     }
 
+    @Test
+    void setPieceTC04_replaceExistingPiece() {
+        Board board = Board.emptyBoard();
+        Location location = new Location(4, 4);
 
+        Pawn firstPiece = new Pawn(WHITE);
+        Rook secondPiece = new Rook(BLACK);
+
+        board.setPiece(location, firstPiece);
+        board.setPiece(location, secondPiece);
+
+        Piece[][] snapshot = board.getSnapshot();
+
+        assertInstanceOf(Rook.class, snapshot[4][4]);
+        assertEquals(BLACK, snapshot[4][4].getColor());
+    }
 
 }
