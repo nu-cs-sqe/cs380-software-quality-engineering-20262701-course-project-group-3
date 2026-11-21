@@ -19,17 +19,16 @@
 
 |                                      | System under test                                         | Expected output                                        | Implemented? |
 |--------------------------------------|-----------------------------------------------------------|--------------------------------------------------------|--------------|
-| TC01: Place piece in center          | Call: `setPiece(new Location(4, 4), new Pawn(WHITE))`     | Pawn is placed at the specified location               | ❌           |
-| TC02: Place piece at corner          | Call: `setPiece(new Location(0, 0), new Rook(WHITE))`     | Rook is placed at the corner square                    | ❌           |
-| TC03: Place piece at opposite corner | Call: `setPiece(new Location(7, 7), new Knight(BLACK))`   | Knight is placed at the opposite corner                | ❌           |
-| TC04: Replace existing piece         | Call: Place a second piece at a location already occupied | The new piece replaces the previously placed piece     | ❌           |
-| TC05: Place piece at board boundary  | Call: Place a piece at the last valid row and column      | Piece is successfully placed at the specified location | ❌           |
+| TC01: Place piece in center          | Call: `setPiece(new Location(4, 4), new Pawn(WHITE))`     | Pawn is placed at the specified location               | ✅           |
+| TC02: Place piece at corner          | Call: `setPiece(new Location(0, 0), new Rook(WHITE))`     | Rook is placed at the corner square                    | ✅           |
+| TC03: Place piece at opposite corner | Call: `setPiece(new Location(7, 7), new Knight(BLACK))`   | Knight is placed at the opposite corner                | ✅           |
+| TC04: Replace existing piece         | Call: Place a second piece at a location already occupied | The new piece replaces the previously placed piece     | ✅           |
 
 ### Method under test: `getPiece(Location location)`
 
 |                                        | System under test                                                 | Expected output                                 | Implemented? |
 |----------------------------------------|-------------------------------------------------------------------|-------------------------------------------------|--------------|
-| TC01: Retrieve existing piece          | Call: `getPiece(location)` after placing a piece at that location | Returns the piece occupying that location       | ❌           |
+| TC01: Retrieve existing piece          | Call: `getPiece(location)` after placing a piece at that location | Returns the piece occupying that location       | ✅           |
 | TC02: Retrieve empty square            | Call: `getPiece(location)` on an unoccupied square                | Returns `null`                                  | ❌           |
 | TC03: Retrieve corner piece            | Call: `getPiece(location)` for a piece at `(0, 0)`                | Returns the piece occupying the corner          | ❌           |
 | TC04: Retrieve opposite corner piece   | Call: `getPiece(location)` for a piece at `(7, 7)`                | Returns the piece occupying the opposite corner | ❌           |
