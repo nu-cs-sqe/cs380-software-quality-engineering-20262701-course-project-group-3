@@ -274,4 +274,26 @@ public class BoardTest {
             }
         }
     }
+
+    @Test
+    void getSnapshotTC02_EmptyBoard() {
+        Board board = Board.emptyBoard();
+
+        Piece[][] snapshot = board.getSnapshot();
+
+        // Verify board dimensions
+        assertEquals(8, snapshot.length);
+
+        for (Piece[] row : snapshot) {
+            assertEquals(8, row.length);
+        }
+
+        // Verify every square is empty
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                assertNull(snapshot[row][col],
+                        "Expected square at (" + row + ", " + col + ") to be empty");
+            }
+        }
+    }
 }
