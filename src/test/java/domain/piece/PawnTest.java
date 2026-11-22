@@ -2,6 +2,7 @@ package domain.piece;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import domain.Board;
 import domain.Location;
@@ -273,6 +274,27 @@ public class PawnTest {
         assertDestinations(pawn, board, "e5", "e4");
     }
 
+    @Test
+    void getPseudoLegalDestinations_StandardStartingBoard_ReturnsTwoMovesForEveryPawn() {
+        Board board = new Board();
+        Piece[][] originalPieces = captureBoardReferences(board);
+
+        for (int column = 0; column < 8; column++) {
+            String file = String.valueOf((char) ('a' + column));
+
+            Pawn whitePawn = (Pawn) board.getPiece(location(file + "2"));
+            Pawn blackPawn = (Pawn) board.getPiece(location(file + "7"));
+
+            assertDestinations(
+                    whitePawn, board, file + "2", file + "3", file + "4");
+
+            assertDestinations(
+                    blackPawn, board, file + "7", file + "6", file + "5");
+        }
+
+        assertBoardReferencesUnchanged(board, originalPieces);
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);
@@ -301,5 +323,30 @@ public class PawnTest {
 
         assertEquals(expectedSquares.length, destinations.size());
         assertEquals(Set.of(expectedSquares), actualSquares);
+    }
+
+    private static Piece[][] captureBoardReferences(Board board) {
+        Piece[][] references = new Piece[8][8];
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                references[row][column] =
+                        board.getPiece(new Location(row, column));
+            }
+        }
+
+        return references;
+    }
+
+    private static void assertBoardReferencesUnchanged(
+            Board board, Piece[][] originals) {
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                assertSame(
+                        originals[row][column],
+                        board.getPiece(new Location(row, column)));
+            }
+        }
     }
 }
