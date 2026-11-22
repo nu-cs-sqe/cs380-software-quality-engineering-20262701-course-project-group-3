@@ -208,6 +208,15 @@ public class PawnTest {
         assertDestinations(pawn, board, "a5", "a4", "b4");
     }
 
+    @Test
+    void getPseudoLegalDestinations_BlackPawnOnRightFile_ExcludesOffBoardDiagonal() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "h5", PieceColor.BLACK);
+        board.setPiece(location("g4"), new Knight(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "h5", "g4", "h4");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);
