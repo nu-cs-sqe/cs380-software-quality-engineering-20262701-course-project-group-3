@@ -28,7 +28,12 @@ public class Pawn extends Piece {
         int startingRow = getColor() == PieceColor.WHITE ? 6 : 1;
 
         if (from.getX() == startingRow) {
-            destinations.add(new Location(from.getX() + 2 * direction, from.getY()));
+            Location secondSquare =
+                    new Location(from.getX() + 2 * direction, from.getY());
+
+            if (board.getPiece(secondSquare) == null) {
+                destinations.add(secondSquare);
+            }
         }
 
         return destinations;
