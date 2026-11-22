@@ -100,6 +100,16 @@ public class PawnTest {
         assertDestinations(pawn, board, "e7", "e6");
     }
 
+    @Test
+    void getPseudoLegalDestinations_WhiteLeftEnemyRightFriendly_IncludesOnlyLeftCapture() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+        board.setPiece(location("d5"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f5"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e4", "d5", "e5");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);

@@ -43,6 +43,19 @@ public class Pawn extends Piece {
             }
         }
 
+        int captureColumn = from.getY() - 1;
+
+        if (captureColumn >= 0) {
+            Location leftCapture = new Location(
+                    from.getX() + forwardDirection, captureColumn);
+
+            Piece target = board.getPiece(leftCapture);
+
+            if (target != null && target.getColor() != getColor()) {
+                destinations.add(leftCapture);
+            }
+        }
+
         return destinations;
     }
 
