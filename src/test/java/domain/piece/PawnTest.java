@@ -150,6 +150,17 @@ public class PawnTest {
         assertDestinations(pawn, board, "e5", "e4", "f4");
     }
 
+    @Test
+    void getPseudoLegalDestinations_ForwardBlockedBothCapturesAvailable_ReturnsOnlyCaptures() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+        board.setPiece(location("e4"), new Rook(PieceColor.WHITE));
+        board.setPiece(location("d4"), new Knight(PieceColor.WHITE));
+        board.setPiece(location("f4"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e5", "d4", "f4");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);
