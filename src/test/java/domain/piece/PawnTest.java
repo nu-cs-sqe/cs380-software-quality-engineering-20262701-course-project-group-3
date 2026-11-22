@@ -3,6 +3,8 @@ package domain.piece;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.Board;
 import domain.Location;
@@ -330,6 +332,21 @@ public class PawnTest {
 
         assertEquals(PieceColor.WHITE, pawn.getColor());
         assertEquals(PieceType.PAWN, pawn.getType());
+    }
+
+    @Test
+    void makeCopy_WhitePawn_ReturnsIndependentPawnWithMatchingProperties() {
+        Pawn original = new Pawn(PieceColor.WHITE);
+
+        Piece copy = original.makeCopy();
+
+        assertNotSame(original, copy);
+        assertTrue(copy instanceof Pawn);
+        assertEquals(PieceType.PAWN, copy.getType());
+        assertEquals(PieceColor.WHITE, copy.getColor());
+
+        assertEquals(PieceColor.WHITE, original.getColor());
+        assertEquals(PieceType.PAWN, original.getType());
     }
 
     private static Pawn placePawn(Board board, String square, PieceColor color) {
