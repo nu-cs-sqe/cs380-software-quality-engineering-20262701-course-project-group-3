@@ -317,6 +317,14 @@ public class PawnTest {
     }
 
     @Test
+    void constructor_BlackPawn_InitializesColorAndType() {
+        Pawn pawn = new Pawn(PieceColor.BLACK);
+
+        assertEquals(PieceColor.BLACK, pawn.getColor());
+        assertEquals(PieceType.PAWN, pawn.getType());
+    }
+
+    @Test
     void constructor_WhitePawn_InitializesColorAndType() {
         Pawn pawn = new Pawn(PieceColor.WHITE);
 
