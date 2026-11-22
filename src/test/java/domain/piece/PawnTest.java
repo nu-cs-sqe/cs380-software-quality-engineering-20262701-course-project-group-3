@@ -60,6 +60,16 @@ public class PawnTest {
         assertDestinations(pawn, board, "e6", "e5");
     }
 
+    @Test
+    void getPseudoLegalDestinations_WhitePawnFirstSquareBlocked_ReturnsNoDestinations() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e2", PieceColor.WHITE);
+
+        board.setPiece(location("e3"), new Knight(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e2");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);

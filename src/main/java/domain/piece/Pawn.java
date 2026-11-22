@@ -18,8 +18,13 @@ public class Pawn extends Piece {
         int direction = getColor() == PieceColor.WHITE ? -1 : 1;
         List<Location> destinations = new ArrayList<>();
 
-        destinations.add(new Location(from.getX() + direction, from.getY()));
+        Location firstSquare = new Location(from.getX() + direction, from.getY());
 
+        if (board.getPiece(firstSquare) != null) {
+            return destinations;
+        }
+
+        destinations.add(firstSquare);
         int startingRow = getColor() == PieceColor.WHITE ? 6 : 1;
 
         if (from.getX() == startingRow) {
