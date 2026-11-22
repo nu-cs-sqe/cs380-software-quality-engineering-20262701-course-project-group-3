@@ -349,6 +349,21 @@ public class PawnTest {
         assertEquals(PieceType.PAWN, original.getType());
     }
 
+    @Test
+    void makeCopy_BlackPawn_ReturnsIndependentPawnWithMatchingProperties() {
+        Pawn original = new Pawn(PieceColor.BLACK);
+
+        Piece copy = original.makeCopy();
+
+        assertNotSame(original, copy);
+        assertTrue(copy instanceof Pawn);
+        assertEquals(PieceType.PAWN, copy.getType());
+        assertEquals(PieceColor.BLACK, copy.getColor());
+
+        assertEquals(PieceColor.BLACK, original.getColor());
+        assertEquals(PieceType.PAWN, original.getType());
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);

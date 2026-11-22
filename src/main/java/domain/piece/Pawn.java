@@ -37,7 +37,8 @@ public class Pawn extends Piece {
         return destinations;
     }
 
-    private List<Location> getForwardDestinations(Board board, Location from, int direction) {
+    private List<Location> getForwardDestinations(
+            Board board, Location from, int direction) {
         List<Location> destinations = new ArrayList<>();
         Location oneStepForward = new Location(from.getX() + direction, from.getY());
 
@@ -59,7 +60,6 @@ public class Pawn extends Piece {
 
     private void addCaptureIfAvailable(
             Board board, Location square, List<Location> destinations) {
-
         if (square.getY() < 0 || square.getY() >= BOARD_SIZE) {
             return;
         }

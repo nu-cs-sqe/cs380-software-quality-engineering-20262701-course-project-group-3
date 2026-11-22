@@ -51,14 +51,14 @@ A diagonal is included only when it is on the board and contains an enemy piece.
 
 ### Method under test: `Pawn(PieceColor color)`, `getColor()`, and `getType()`
 
-| Test case                         | System under test                                                        | Expected output                            | Implemented? |
-|-----------------------------------|--------------------------------------------------------------------------|--------------------------------------------|--------------|
-| TC31: White pawn initialization   | Call: `new Pawn(PieceColor.WHITE)`; query `getColor()` and `getType()`   | Returns `WHITE` and `PAWN`, respectively   | :x:          |
-| TC32: Black pawn initialization   | Call: `new Pawn(PieceColor.BLACK)`; query `getColor()` and `getType()`   | Returns `BLACK` and `PAWN`, respectively   | :x:          |
+| Test case                         | System under test                                                        | Expected output                            | Implemented?       |
+|-----------------------------------|--------------------------------------------------------------------------|--------------------------------------------|--------------------|
+| TC31: White pawn initialization   | Call: `new Pawn(PieceColor.WHITE)`; query `getColor()` and `getType()`   | Returns `WHITE` and `PAWN`, respectively   | :white_check_mark: |
+| TC32: Black pawn initialization   | Call: `new Pawn(PieceColor.BLACK)`; query `getColor()` and `getType()`   | Returns `BLACK` and `PAWN`, respectively   | :white_check_mark: |
 
 ### Method under test: `makeCopy()`
 
-| Test case               | System under test                         | Expected output                                                                | Implemented? |
-|-------------------------|-------------------------------------------|--------------------------------------------------------------------------------|--------------|
-| TC33: Copy White pawn   | Create `Pawn(WHITE)`; call `makeCopy()`   | Distinct `Pawn` instance with type `PAWN`, color `WHITE`; original unchanged   | :x:          |
-| TC34: Copy Black pawn   | Create `Pawn(BLACK)`; call `makeCopy()`   | Distinct `Pawn` instance with type `PAWN`, color `BLACK`; original unchanged   | :x:          |
+| Test case               | System under test                         | Expected output                                                                | Implemented?       |
+|-------------------------|-------------------------------------------|--------------------------------------------------------------------------------|--------------------|
+| TC33: Copy White pawn   | Create `Pawn(WHITE)`; call `makeCopy()`   | Distinct `Pawn` instance with type `PAWN`, color `WHITE`; original unchanged   | :white_check_mark: |
+| TC34: Copy Black pawn   | Create `Pawn(BLACK)`; call `makeCopy()`   | Distinct `Pawn` instance with type `PAWN`, color `BLACK`; original unchanged   | :white_check_mark: |
