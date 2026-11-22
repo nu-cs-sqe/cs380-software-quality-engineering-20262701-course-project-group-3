@@ -171,6 +171,16 @@ public class PawnTest {
         assertDestinations(pawn, board, "e2", "d3", "e3", "e4", "f3");
     }
 
+    @Test
+    void getPseudoLegalDestinations_BlackStartingRankWithTwoCaptures_ReturnsFourMoves() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e7", PieceColor.BLACK);
+        board.setPiece(location("d6"), new Knight(PieceColor.WHITE));
+        board.setPiece(location("f6"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e7", "d6", "e6", "e5", "f6");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);
