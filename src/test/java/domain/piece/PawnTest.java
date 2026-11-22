@@ -233,6 +233,14 @@ public class PawnTest {
         assertDestinations(pawn, board, "h2", "h1");
     }
 
+    @Test
+    void getPseudoLegalDestinations_WhitePawnOnFinalRank_ReturnsNoDestinations() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "a8", PieceColor.WHITE);
+
+        assertDestinations(pawn, board, "a8");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);

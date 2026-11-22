@@ -24,8 +24,13 @@ public class Pawn extends Piece {
      */
     public List<Location> getPseudoLegalDestinations(Board board, Location from) {
         int forwardDirection = getColor() == PieceColor.WHITE ? -1 : 1;
-        List<Location> destinations = getForwardDestinations(board, from, forwardDirection);
         int nextRow = from.getX() + forwardDirection;
+
+        if (nextRow < 0 || nextRow >= BOARD_SIZE) {
+            return List.of();
+        }
+
+        List<Location> destinations = getForwardDestinations(board, from, forwardDirection);
 
         addCaptureIfAvailable(board, new Location(nextRow, from.getY() - 1), destinations);
         addCaptureIfAvailable(board, new Location(nextRow, from.getY() + 1), destinations);
