@@ -14,6 +14,8 @@ public class Pawn extends Piece {
     }
 
     public List<Location> getPseudoLegalDestinations(Board board, Location from) {
-        return List.of(new Location(from.getX() - 1, from.getY()));
+        int direction = getColor() == PieceColor.WHITE ? -1 : 1;
+
+        return List.of(new Location(from.getX() + direction, from.getY()));
     }
 }
