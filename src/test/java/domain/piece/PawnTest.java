@@ -261,6 +261,18 @@ public class PawnTest {
         assertDestinations(pawn, board, "e4", "e5");
     }
 
+    @Test
+    void getPseudoLegalDestinations_BlackPawnWithBackwardAndSidewaysEnemies_ReturnsOnlyForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+
+        for (String square : List.of("d6", "e6", "f6", "d5", "f5")) {
+            board.setPiece(location(square), new Knight(PieceColor.WHITE));
+        }
+
+        assertDestinations(pawn, board, "e5", "e4");
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);
