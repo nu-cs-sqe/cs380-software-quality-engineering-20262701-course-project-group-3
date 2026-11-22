@@ -295,6 +295,27 @@ public class PawnTest {
         assertBoardReferencesUnchanged(board, originalPieces);
     }
 
+    @Test
+    void getPseudoLegalDestinations_RepeatedCalls_DoesNotModifyBoard() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+
+        board.setPiece(location("d5"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f5"), new Bishop(PieceColor.WHITE));
+        board.setPiece(location("e5"), new Rook(PieceColor.BLACK));
+        board.setPiece(location("a1"), new Rook(PieceColor.WHITE));
+
+        Piece[][] originalPieces = captureBoardReferences(board);
+
+        assertDestinations(pawn, board, "e4", "d5");
+        assertDestinations(pawn, board, "e4", "d5");
+
+        assertBoardReferencesUnchanged(board, originalPieces);
+
+        assertEquals(PieceColor.WHITE, pawn.getColor());
+        assertEquals(PieceType.PAWN, pawn.getType());
+    }
+
     private static Pawn placePawn(Board board, String square, PieceColor color) {
         Pawn pawn = new Pawn(color);
         board.setPiece(location(square), pawn);
