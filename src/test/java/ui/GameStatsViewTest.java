@@ -310,7 +310,7 @@ class GameStatsViewTest {
             GameStatsView statsView = new GameStatsView("Alex", "Taylor", clock);
 
             BoardController controller = new BoardController(
-                    new Board(), new GameState("Alex", "Taylor"));
+                    new Board(true), new GameState("Alex", "Taylor"));
             BoardView boardView = new BoardView(controller);
 
             MainView window = new MainView(

@@ -11,7 +11,7 @@ public class BoardTest {
 
     @Test
     void BoardTC01_Initialization() {
-        Board board = new Board();
+        Board board = new Board(true);
         Piece[][] snapshot = board.getSnapshot();
 
         // Verify board dimensions
@@ -68,8 +68,8 @@ public class BoardTest {
     }
 
     @Test
-    void emptyBoardTC01_Initialization() {
-        Board board = Board.emptyBoard();
+    void BoardTC02_EmptyInitialization() {
+        Board board = new Board(false);
         Piece[][] snapshot = board.getSnapshot();
 
         // Verify board dimensions
@@ -90,7 +90,7 @@ public class BoardTest {
 
     @Test
     void setPieceTC01_InCenter() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
         Pawn pawn = new Pawn(WHITE);
 
@@ -104,7 +104,7 @@ public class BoardTest {
 
     @Test
     void setPieceTC02_AtCorner() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(0, 0);
         Rook rook = new Rook(WHITE);
 
@@ -118,7 +118,7 @@ public class BoardTest {
 
     @Test
     void setPieceTC03_AtOppositeCorner() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(7, 7);
         Knight knight = new Knight(BLACK);
 
@@ -132,7 +132,7 @@ public class BoardTest {
 
     @Test
     void setPieceTC04_replaceExistingPiece() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
 
         Pawn firstPiece = new Pawn(WHITE);
@@ -149,7 +149,7 @@ public class BoardTest {
 
     @Test
     void getPieceTC01_RetrieveExistingPiece() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
         Pawn pawn = new Pawn(WHITE);
 
@@ -163,7 +163,7 @@ public class BoardTest {
 
     @Test
     void getPieceTC02_RetrieveEmptySquare() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
 
         Piece retrievedPiece = board.getPiece(location);
@@ -173,7 +173,7 @@ public class BoardTest {
 
     @Test
     void getPieceTC03_RetrieveCornerPiece() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(0, 0);
         Rook rook = new Rook(WHITE);
 
@@ -187,7 +187,7 @@ public class BoardTest {
 
     @Test
     void getPieceTC04_RetrieveOppositeCornerPiece() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(7, 7);
         Knight knight = new Knight(BLACK);
 
@@ -201,7 +201,7 @@ public class BoardTest {
 
     @Test
     void getPieceTC05_RetrievePieceAfterReplacement() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
 
         Pawn firstPiece = new Pawn(WHITE);
@@ -218,7 +218,7 @@ public class BoardTest {
 
     @Test
     void getSnapshotTC01_StandardBoard() {
-        Board board = new Board();
+        Board board = new Board(true);
 
         Piece[][] snapshot = board.getSnapshot();
 
@@ -277,7 +277,7 @@ public class BoardTest {
 
     @Test
     void getSnapshotTC02_EmptyBoard() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
 
         Piece[][] snapshot = board.getSnapshot();
 
@@ -299,7 +299,7 @@ public class BoardTest {
 
     @Test
     void getSnapshotTC03_SnapshotIndependence() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
 
         Pawn pawn = new Pawn(WHITE);
@@ -318,7 +318,7 @@ public class BoardTest {
 
     @Test
     void getSnapshotTC04_SnapshotPieceIndependence() {
-        Board board = Board.emptyBoard();
+        Board board = new Board(false);
         Location location = new Location(4, 4);
         Pawn pawn = new Pawn(WHITE);
 

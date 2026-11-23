@@ -3,17 +3,12 @@
 
 **Scope:** The `Board` class stores chess pieces in an 8×8 grid. It is responsible for initializing the standard starting position and providing access to pieces on specific squares. It should also support constructing empty boards so that individual piece movement can be tested under different board configurations.
 
-### Constructor: `Board()`
+### Constructor: `Board(boolean initialize)`
 
-|                                     | System under test   | Expected output                                                                        | Implemented? |
-|-------------------------------------|---------------------|----------------------------------------------------------------------------------------|--------------|
-| TC01: Standard board initialization | Call: `new Board()` | Creates an 8×8 board with all 32 pieces in their standard starting positions           | ✅           |
-
-### Constructor: `Board.emptyBoard()`
-
-|                                  | System under test          | Expected output                                | Implemented? |
-|----------------------------------|----------------------------|------------------------------------------------|--------------|
-| TC01: Empty board initialization | Call: `Board.emptyBoard()` | Creates an 8×8 board with all 64 squares empty | ✅           |
+|                                     | System under test        | Expected output                                                                        | Implemented? |
+|-------------------------------------|--------------------------|----------------------------------------------------------------------------------------|--------------|
+| TC01: Standard board initialization | Call: `new Board(true)`  | Creates an 8×8 board with all 32 pieces in their standard starting positions           | ✅           |
+| TC02: Empty board initialization    | Call: `new Board(false)` | Creates an 8×8 board with all 64 squares empty                                         | ✅           |
 
 ### Method under test: `setPiece(Location location, Piece piece)`
 
