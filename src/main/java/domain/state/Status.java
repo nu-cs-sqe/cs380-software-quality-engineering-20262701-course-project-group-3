@@ -1,6 +1,6 @@
 package domain.state;
 
-public enum Progress {
+public enum Status {
     PLAYING,
     COMPLETE;
 }
