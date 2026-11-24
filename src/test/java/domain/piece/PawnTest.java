@@ -1,0 +1,421 @@
+package domain.piece;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import domain.Board;
+import domain.Location;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+
+public class PawnTest {
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnOffStartingRank_ReturnsOneForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+
+        assertDestinations(pawn, board, "e4", "e5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnOffStartingRank_ReturnsOneForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+
+        assertDestinations(pawn, board, "e5", "e4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnOnStartingRank_ReturnsTwoForwardSquares() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e2", PieceColor.WHITE);
+
+        assertDestinations(pawn, board, "e2", "e3", "e4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnOnStartingRank_ReturnsTwoForwardSquares() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e7", PieceColor.BLACK);
+
+        assertDestinations(pawn, board, "e7", "e6", "e5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnPastStartingRank_ReturnsOneForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e3", PieceColor.WHITE);
+
+        assertDestinations(pawn, board, "e3", "e4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnPastStartingRank_ReturnsOneForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e6", PieceColor.BLACK);
+
+        assertDestinations(pawn, board, "e6", "e5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnFirstSquareBlocked_ReturnsNoDestinations() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e2", PieceColor.WHITE);
+
+        board.setPiece(location("e3"), new Knight(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e2");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnSecondSquareBlocked_ReturnsOnlyFirstSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e2", PieceColor.WHITE);
+
+        board.setPiece(location("e4"), new Rook(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "e2", "e3");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnFirstSquareBlocked_ReturnsNoDestinations() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e7", PieceColor.BLACK);
+
+        board.setPiece(location("e6"), new Knight(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e7");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnSecondSquareBlocked_ReturnsOnlyFirstSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e7", PieceColor.BLACK);
+
+        board.setPiece(location("e5"), new Rook(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "e7", "e6");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhiteLeftEnemyRightFriendly_IncludesOnlyLeftCapture() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+        board.setPiece(location("d5"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f5"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e4", "d5", "e5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhiteRightEnemyLeftFriendly_IncludesOnlyRightCapture() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+        board.setPiece(location("d5"), new Knight(PieceColor.WHITE));
+        board.setPiece(location("f5"), new Bishop(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "e4", "e5", "f5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhiteBothDiagonalEnemies_IncludesBothCaptures() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+        board.setPiece(location("d5"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f5"), new Bishop(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "e4", "d5", "e5", "f5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackLeftEnemyRightFriendly_IncludesOnlyLeftCapture() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+        board.setPiece(location("d4"), new Knight(PieceColor.WHITE));
+        board.setPiece(location("f4"), new Bishop(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "e5", "d4", "e4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackRightEnemyLeftFriendly_IncludesOnlyRightCapture() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+        board.setPiece(location("d4"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f4"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e5", "e4", "f4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_ForwardBlockedBothCapturesAvailable_ReturnsOnlyCaptures() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+        board.setPiece(location("e4"), new Rook(PieceColor.WHITE));
+        board.setPiece(location("d4"), new Knight(PieceColor.WHITE));
+        board.setPiece(location("f4"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e5", "d4", "f4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhiteStartingRankWithTwoCaptures_ReturnsFourMoves() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e2", PieceColor.WHITE);
+        board.setPiece(location("d3"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f3"), new Bishop(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "e2", "d3", "e3", "e4", "f3");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackStartingRankWithTwoCaptures_ReturnsFourMoves() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e7", PieceColor.BLACK);
+        board.setPiece(location("d6"), new Knight(PieceColor.WHITE));
+        board.setPiece(location("f6"), new Bishop(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "e7", "d6", "e6", "e5", "f6");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnOnLeftFile_ExcludesOffBoardDiagonal() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "a4", PieceColor.WHITE);
+        board.setPiece(location("b5"), new Knight(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "a4", "a5", "b5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnOnRightFile_ExcludesOffBoardDiagonal() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "h4", PieceColor.WHITE);
+        board.setPiece(location("g5"), new Knight(PieceColor.BLACK));
+
+        assertDestinations(pawn, board, "h4", "g5", "h5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnOnLeftFile_ExcludesOffBoardDiagonal() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "a5", PieceColor.BLACK);
+        board.setPiece(location("b4"), new Knight(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "a5", "a4", "b4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnOnRightFile_ExcludesOffBoardDiagonal() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "h5", PieceColor.BLACK);
+        board.setPiece(location("g4"), new Knight(PieceColor.WHITE));
+
+        assertDestinations(pawn, board, "h5", "g4", "h4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnBeforePromotion_ReturnsFinalRankSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "a7", PieceColor.WHITE);
+
+        assertDestinations(pawn, board, "a7", "a8");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnBeforePromotion_ReturnsFinalRankSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "h2", PieceColor.BLACK);
+
+        assertDestinations(pawn, board, "h2", "h1");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnOnFinalRank_ReturnsNoDestinations() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "a8", PieceColor.WHITE);
+
+        assertDestinations(pawn, board, "a8");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnOnFinalRank_ReturnsNoDestinations() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "h1", PieceColor.BLACK);
+
+        assertDestinations(pawn, board, "h1");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_WhitePawnWithBackwardAndSidewaysEnemies_ReturnsOnlyForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+
+        for (String square : List.of("d3", "e3", "f3", "d4", "f4")) {
+            board.setPiece(location(square), new Knight(PieceColor.BLACK));
+        }
+
+        assertDestinations(pawn, board, "e4", "e5");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_BlackPawnWithBackwardAndSidewaysEnemies_ReturnsOnlyForwardSquare() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e5", PieceColor.BLACK);
+
+        for (String square : List.of("d6", "e6", "f6", "d5", "f5")) {
+            board.setPiece(location(square), new Knight(PieceColor.WHITE));
+        }
+
+        assertDestinations(pawn, board, "e5", "e4");
+    }
+
+    @Test
+    void getPseudoLegalDestinations_StandardStartingBoard_ReturnsTwoMovesForEveryPawn() {
+        Board board = new Board();
+        Piece[][] originalPieces = captureBoardReferences(board);
+
+        for (int column = 0; column < 8; column++) {
+            String file = String.valueOf((char) ('a' + column));
+
+            Pawn whitePawn = (Pawn) board.getPiece(location(file + "2"));
+            Pawn blackPawn = (Pawn) board.getPiece(location(file + "7"));
+
+            assertDestinations(
+                    whitePawn, board, file + "2", file + "3", file + "4");
+
+            assertDestinations(
+                    blackPawn, board, file + "7", file + "6", file + "5");
+        }
+
+        assertBoardReferencesUnchanged(board, originalPieces);
+    }
+
+    @Test
+    void getPseudoLegalDestinations_RepeatedCalls_DoesNotModifyBoard() {
+        Board board = Board.emptyBoard();
+        Pawn pawn = placePawn(board, "e4", PieceColor.WHITE);
+
+        board.setPiece(location("d5"), new Knight(PieceColor.BLACK));
+        board.setPiece(location("f5"), new Bishop(PieceColor.WHITE));
+        board.setPiece(location("e5"), new Rook(PieceColor.BLACK));
+        board.setPiece(location("a1"), new Rook(PieceColor.WHITE));
+
+        Piece[][] originalPieces = captureBoardReferences(board);
+
+        assertDestinations(pawn, board, "e4", "d5");
+        assertDestinations(pawn, board, "e4", "d5");
+
+        assertBoardReferencesUnchanged(board, originalPieces);
+
+        assertEquals(PieceColor.WHITE, pawn.getColor());
+        assertEquals(PieceType.PAWN, pawn.getType());
+    }
+
+    @Test
+    void constructor_BlackPawn_InitializesColorAndType() {
+        Pawn pawn = new Pawn(PieceColor.BLACK);
+
+        assertEquals(PieceColor.BLACK, pawn.getColor());
+        assertEquals(PieceType.PAWN, pawn.getType());
+    }
+
+    @Test
+    void constructor_WhitePawn_InitializesColorAndType() {
+        Pawn pawn = new Pawn(PieceColor.WHITE);
+
+        assertEquals(PieceColor.WHITE, pawn.getColor());
+        assertEquals(PieceType.PAWN, pawn.getType());
+    }
+
+    @Test
+    void makeCopy_WhitePawn_ReturnsIndependentPawnWithMatchingProperties() {
+        Pawn original = new Pawn(PieceColor.WHITE);
+
+        Piece copy = original.makeCopy();
+
+        assertNotSame(original, copy);
+        assertTrue(copy instanceof Pawn);
+        assertEquals(PieceType.PAWN, copy.getType());
+        assertEquals(PieceColor.WHITE, copy.getColor());
+
+        assertEquals(PieceColor.WHITE, original.getColor());
+        assertEquals(PieceType.PAWN, original.getType());
+    }
+
+    @Test
+    void makeCopy_BlackPawn_ReturnsIndependentPawnWithMatchingProperties() {
+        Pawn original = new Pawn(PieceColor.BLACK);
+
+        Piece copy = original.makeCopy();
+
+        assertNotSame(original, copy);
+        assertTrue(copy instanceof Pawn);
+        assertEquals(PieceType.PAWN, copy.getType());
+        assertEquals(PieceColor.BLACK, copy.getColor());
+
+        assertEquals(PieceColor.BLACK, original.getColor());
+        assertEquals(PieceType.PAWN, original.getType());
+    }
+
+    private static Pawn placePawn(Board board, String square, PieceColor color) {
+        Pawn pawn = new Pawn(color);
+        board.setPiece(location(square), pawn);
+        return pawn;
+    }
+
+    private static Location location(String square) {
+        int column = square.charAt(0) - 'a';
+        int row = 8 - Character.digit(square.charAt(1), 10);
+        return new Location(row, column);
+    }
+
+    private static void assertDestinations(
+            Pawn pawn, Board board, String from, String... expectedSquares) {
+
+        List<Location> destinations =
+                pawn.getPseudoLegalDestinations(board, location(from));
+        assertNotNull(destinations);
+
+        Set<String> actualSquares = new HashSet<>();
+        for (Location destination : destinations) {
+            String square = "" + (char) ('a' + destination.getY())
+                    + (8 - destination.getX());
+            actualSquares.add(square);
+        }
+
+        assertEquals(expectedSquares.length, destinations.size());
+        assertEquals(Set.of(expectedSquares), actualSquares);
+    }
+
+    private static Piece[][] captureBoardReferences(Board board) {
+        Piece[][] references = new Piece[8][8];
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                references[row][column] =
+                        board.getPiece(new Location(row, column));
+            }
+        }
+
+        return references;
+    }
+
+    private static void assertBoardReferencesUnchanged(
+            Board board, Piece[][] originals) {
+
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                assertSame(
+                        originals[row][column],
+                        board.getPiece(new Location(row, column)));
+            }
+        }
+    }
+}
