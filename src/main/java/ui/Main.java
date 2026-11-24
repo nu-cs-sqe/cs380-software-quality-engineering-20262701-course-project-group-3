@@ -29,7 +29,7 @@ public class Main {
     }
 
     private static void startGame(String player1Name, String player2Name, TimeControl timeControl) {
-        Board board = new Board();
+        Board board = new Board(true);
         GameState gameState = new GameState(player1Name, player2Name);
         BoardController controller = new BoardController(board, gameState);
 
