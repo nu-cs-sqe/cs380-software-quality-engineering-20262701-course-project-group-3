@@ -96,4 +96,7 @@
 | TC34: Two En Passant Moves       | Construct two En Passant moves with identical fields | Moves asserted as equal     | :white_check_mark: |
 | TC35: Two different Normal Moves | Construct two moves, differing in From locations     | Moves asserted as not equal | :white_check_mark: |
 
-
+### Method under test: `toString()`
+|                   | System under test     | Expected output                   | Implemented?       |
+|-------------------|-----------------------|-----------------------------------|--------------------|
+| TC36: Null Fields | Construct normal move | Prints correctly formatted string | :white_check_mark: |

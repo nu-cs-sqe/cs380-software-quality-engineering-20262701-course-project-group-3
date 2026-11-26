@@ -440,4 +440,14 @@ public class MoveTest {
 
         assertNotEquals(firstMove, secondMove);
     }
+
+    @Test
+    void toString_NullFields() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        assertEquals("Move{from=(6,4), to=(5,4), movedPiece=White Pawn, capturedPiece=null, promotion=null, moveType=Normal, rookMovement=null, capturedLocation=null}", move.toString());
+    }
 }
