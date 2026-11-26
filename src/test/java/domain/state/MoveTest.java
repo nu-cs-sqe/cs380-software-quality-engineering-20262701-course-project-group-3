@@ -450,4 +450,34 @@ public class MoveTest {
 
         assertEquals("Move{from=(6,4), to=(5,4), movedPiece=White Pawn, capturedPiece=null, promotion=null, moveType=Normal, rookMovement=null, capturedLocation=null}", move.toString());
     }
+
+    @Test
+    void hashCode_IdenticalFields() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(6, 4);
+        Location secondTo = new Location(5, 4);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertEquals(firstMove.hashCode(), secondMove.hashCode());
+    }
+
+    @Test
+    void hashCode_NonIdenticalFields() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(4, 6);
+        Location secondTo = new Location(4, 5);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertNotEquals(firstMove.hashCode(), secondMove.hashCode());
+    }
 }

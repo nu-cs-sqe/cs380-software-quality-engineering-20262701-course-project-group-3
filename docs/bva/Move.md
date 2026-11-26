@@ -88,15 +88,21 @@
 
 ### Method under test: `equals()`
 
-|                                  | System under test                                    | Expected output             | Implemented?       |
-|----------------------------------|------------------------------------------------------|-----------------------------|--------------------|
-| TC31: Two Normal Moves           | Construct two normal moves with identical fields     | Moves asserted as equal     | :white_check_mark: |
-| TC32: Two Promotion Moves        | Construct two promotion moves with identical fields  | Moves asserted as equal     | :white_check_mark: |
-| TC33: Two Castling Moves         | Construct two castling moves with identical fields   | Moves asserted as equal     | :white_check_mark: |
-| TC34: Two En Passant Moves       | Construct two En Passant moves with identical fields | Moves asserted as equal     | :white_check_mark: |
-| TC35: Two different Normal Moves | Construct two moves, differing in From locations     | Moves asserted as not equal | :white_check_mark: |
+|                                  | System under test                                       | Expected output             | Implemented?       |
+|----------------------------------|---------------------------------------------------------|-----------------------------|--------------------|
+| TC31: Two Normal Moves           | Construct two normal moves with identical fields        | Moves asserted as equal     | :white_check_mark: |
+| TC32: Two Promotion Moves        | Construct two promotion moves with identical fields     | Moves asserted as equal     | :white_check_mark: |
+| TC33: Two Castling Moves         | Construct two castling moves with identical fields      | Moves asserted as equal     | :white_check_mark: |
+| TC34: Two En Passant Moves       | Construct two En Passant moves with identical fields    | Moves asserted as equal     | :white_check_mark: |
+| TC35: Two different Normal Moves | Construct two moves, differing in From and To locations | Moves asserted as not equal | :white_check_mark: |
 
 ### Method under test: `toString()`
 |                   | System under test     | Expected output                   | Implemented?       |
 |-------------------|-----------------------|-----------------------------------|--------------------|
 | TC36: Null Fields | Construct normal move | Prints correctly formatted string | :white_check_mark: |
+
+### Method under test: `hashCode()`
+|                        | System under test                                       | Expected output                  | Implemented?       |
+|------------------------|---------------------------------------------------------|----------------------------------|--------------------|
+| TC37: Identical fields | Construct two normal moves with identical fields        | Hash Codes asserted as equal     | :white_check_mark: |
+| TC38: Identical fields | Construct two moves, differing in From and To locations | Hash Codes asserted as not equal | :white_check_mark: |
