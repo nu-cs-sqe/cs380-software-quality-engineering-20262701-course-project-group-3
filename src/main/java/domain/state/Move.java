@@ -34,22 +34,23 @@ public final class Move {
 
     public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType,
-                RookMovement rookMovement, Location capturedLocation) {
-        if (moveType == null) {
-            throw new IllegalArgumentException("Move type cannot be null");
-        }
+                RookMovement rookMovement, Location capturedLocation)
+            throws IllegalArgumentException {
+        this.from = Optional.ofNullable(from)
+                .orElseThrow(() -> new IllegalArgumentException("From location must not be null"));
+        this.to = Optional.ofNullable(to)
+                .orElseThrow(() -> new IllegalArgumentException("To location must not be null"));
+        this.movedPiece = Optional.ofNullable(movedPiece)
+                .orElseThrow(() -> new IllegalArgumentException("Moved piece must not be null"));
+        this.moveType = Optional.ofNullable(moveType)
+                .orElseThrow(() -> new IllegalArgumentException("Move type must not be null"));
+        this.capturedPiece = capturedPiece;
+        this.promotion = promotion;
+        this.rookMovement = rookMovement;
+        this.capturedLocation = capturedLocation;
 
         validatePromotion(movedPiece, promotion);
         validateSpecialMove(moveType, movedPiece, capturedPiece, promotion);
-
-        this.from = from;
-        this.to = to;
-        this.movedPiece = movedPiece;
-        this.capturedPiece = capturedPiece;
-        this.promotion = promotion;
-        this.moveType = moveType;
-        this.rookMovement = rookMovement;
-        this.capturedLocation = capturedLocation;
     }
 
     private static void validatePromotion(Piece movedPiece, PieceType promotion) {

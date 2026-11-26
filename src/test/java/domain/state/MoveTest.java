@@ -206,6 +206,36 @@ public class MoveTest {
     }
 
     @Test
+    void constructor_NullFromLocation_ThrowsIllegalArgumentException() {
+        Location from = new Location(6, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Move(from, null, pawn, null, null, MoveType.NORMAL);
+        });
+    }
+
+    @Test
+    void constructor_NullToLocation_ThrowsIllegalArgumentException() {
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Move(null, to, pawn, null, null, MoveType.NORMAL);
+        });
+    }
+
+    @Test
+    void constructor_NullMovedPiece_ThrowsIllegalArgumentException() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Move(from, to, null, null, null, MoveType.NORMAL);
+        });
+    }
+
+    @Test
     void getRookMovement_CastlingMove_ReturnsRookLocations() {
         Location from = new Location(7, 4);
         Location to = new Location(7, 6);
@@ -236,5 +266,101 @@ public class MoveTest {
 
         assertTrue(move.getCapturedLocation().isPresent());
         assertSame(capturedLocation, move.getCapturedLocation().get());
+    }
+
+    @Test
+    void getFrom_ValidFromLocation() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        Location expectedFromLocation = new Location(6, 4);
+        assertEquals(expectedFromLocation, move.getFrom());
+    }
+
+    @Test
+    void getFrom_ValidToLocation() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        Location expectedToLocation = new Location(5, 4);
+        assertEquals(expectedToLocation, move.getTo());
+    }
+
+    @Test
+    void getMovedPiece_Pawn() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Pawn(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Rook() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece rook = new Rook(PieceColor.WHITE);
+
+        Move move = new Move(from, to, rook, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Rook(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Knight() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece knight = new Knight(PieceColor.WHITE);
+
+        Move move = new Move(from, to, knight, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Knight(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Bishop() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece bishop = new Bishop(PieceColor.WHITE);
+
+        Move move = new Move(from, to, bishop, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Bishop(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Queen() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece queen = new Queen(PieceColor.WHITE);
+
+        Move move = new Move(from, to, queen, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Queen(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_King() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece king = new King(PieceColor.WHITE);
+
+        Move move = new Move(from, to, king, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new King(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
     }
 }
