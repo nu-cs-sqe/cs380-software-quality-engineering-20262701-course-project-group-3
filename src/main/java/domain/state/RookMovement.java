@@ -20,4 +20,19 @@ public final class RookMovement {
     public Location getTo() {
         return to;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        RookMovement other = (RookMovement) obj;
+
+        return from.equals(other.from) && to.equals(other.to);
+    }
 }
