@@ -7,6 +7,7 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.PieceType;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public final class Move {
@@ -140,10 +141,14 @@ public final class Move {
 
         Move other = (Move) obj;
 
-        return from.equals(other.from) && to.equals(other.to) && movedPiece.equals(other.movedPiece) &&
-                capturedPiece.equals(other.capturedPiece) && promotion == other.promotion &&
-                moveType == other.moveType && rookMovement.equals(other.rookMovement) &&
-                capturedLocation.equals(other.capturedLocation);
+        return from.equals(other.from)
+                && to.equals(other.to)
+                && movedPiece.equals(other.movedPiece)
+                && Objects.equals(capturedPiece, other.capturedPiece)
+                && promotion == other.promotion
+                && moveType == other.moveType
+                && Objects.equals(rookMovement, other.rookMovement)
+                && Objects.equals(capturedLocation, other.capturedLocation);
     }
 
     @Override
