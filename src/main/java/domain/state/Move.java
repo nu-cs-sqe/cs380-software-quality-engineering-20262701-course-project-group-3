@@ -159,4 +159,10 @@ public final class Move {
                 from, to, movedPiece, capturedPiece, promotion,
                 moveType, rookMovement, capturedLocation);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to, movedPiece, capturedPiece, promotion,
+                moveType, rookMovement, capturedLocation);
+    }
 }

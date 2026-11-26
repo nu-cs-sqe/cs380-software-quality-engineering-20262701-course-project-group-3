@@ -40,4 +40,9 @@ public final class RookMovement {
     public String toString() {
         return String.format("RookMovement{from=%s, to=%s}", from, to);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to);
+    }
 }

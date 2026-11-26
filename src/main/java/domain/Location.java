@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Location {
     private final int x;
     private final int y;
@@ -35,5 +37,10 @@ public class Location {
     @Override
     public String toString() {
         return String.format("(%d, %d)", x, y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
