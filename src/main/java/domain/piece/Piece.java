@@ -23,4 +23,19 @@ public abstract class Piece {
     public String toString() {
         return String.format("%s %s", color.name(), type.name());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Piece other = (Piece) obj;
+
+        return type == other.type && color == other.color;
+    }
 }
