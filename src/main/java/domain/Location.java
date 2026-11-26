@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Location {
     private final int x;
     private final int y;
@@ -15,5 +17,30 @@ public class Location {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Location other = (Location) obj;
+
+        return x == other.x && y == other.y;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("(%d,%d)", x, y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

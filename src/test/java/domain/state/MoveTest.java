@@ -51,7 +51,7 @@ public class MoveTest {
 
         Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
 
-        assertTrue(move.capturedPiece().isEmpty());
+        assertTrue(move.getCapturedPiece().isEmpty());
     }
 
     @Test
@@ -63,8 +63,8 @@ public class MoveTest {
 
         Move move = new Move(from, to, whitePawn, blackPawn, null, MoveType.NORMAL);
 
-        assertTrue(move.capturedPiece().isPresent());
-        assertSame(blackPawn, move.capturedPiece().get());
+        assertTrue(move.getCapturedPiece().isPresent());
+        assertSame(blackPawn, move.getCapturedPiece().get());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class MoveTest {
 
         Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
 
-        assertTrue(move.promotion().isEmpty());
+        assertTrue(move.getPromotion().isEmpty());
     }
 
     @Test
@@ -86,8 +86,8 @@ public class MoveTest {
 
         Move move = new Move(from, to, pawn, null, PieceType.QUEEN, MoveType.NORMAL);
 
-        assertTrue(move.promotion().isPresent());
-        assertEquals(PieceType.QUEEN, move.promotion().get());
+        assertTrue(move.getPromotion().isPresent());
+        assertEquals(PieceType.QUEEN, move.getPromotion().get());
     }
 
     @Test
@@ -206,6 +206,36 @@ public class MoveTest {
     }
 
     @Test
+    void constructor_NullFromLocation_ThrowsIllegalArgumentException() {
+        Location from = new Location(6, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Move(from, null, pawn, null, null, MoveType.NORMAL);
+        });
+    }
+
+    @Test
+    void constructor_NullToLocation_ThrowsIllegalArgumentException() {
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Move(null, to, pawn, null, null, MoveType.NORMAL);
+        });
+    }
+
+    @Test
+    void constructor_NullMovedPiece_ThrowsIllegalArgumentException() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Move(from, to, null, null, null, MoveType.NORMAL);
+        });
+    }
+
+    @Test
     void getRookMovement_CastlingMove_ReturnsRookLocations() {
         Location from = new Location(7, 4);
         Location to = new Location(7, 6);
@@ -236,5 +266,218 @@ public class MoveTest {
 
         assertTrue(move.getCapturedLocation().isPresent());
         assertSame(capturedLocation, move.getCapturedLocation().get());
+    }
+
+    @Test
+    void getFrom_ValidFromLocation() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        Location expectedFromLocation = new Location(6, 4);
+        assertEquals(expectedFromLocation, move.getFrom());
+    }
+
+    @Test
+    void getFrom_ValidToLocation() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        Location expectedToLocation = new Location(5, 4);
+        assertEquals(expectedToLocation, move.getTo());
+    }
+
+    @Test
+    void getMovedPiece_Pawn() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Pawn(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Rook() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece rook = new Rook(PieceColor.WHITE);
+
+        Move move = new Move(from, to, rook, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Rook(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Knight() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece knight = new Knight(PieceColor.WHITE);
+
+        Move move = new Move(from, to, knight, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Knight(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Bishop() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece bishop = new Bishop(PieceColor.WHITE);
+
+        Move move = new Move(from, to, bishop, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Bishop(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_Queen() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece queen = new Queen(PieceColor.WHITE);
+
+        Move move = new Move(from, to, queen, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new Queen(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void getMovedPiece_King() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece king = new King(PieceColor.WHITE);
+
+        Move move = new Move(from, to, king, null, null, MoveType.NORMAL);
+
+        Piece expectedMovedPiece = new King(PieceColor.WHITE);
+        assertEquals(expectedMovedPiece, move.getMovedPiece());
+    }
+
+    @Test
+    void equals_EqualNormalMoves() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(6, 4);
+        Location secondTo = new Location(5, 4);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_EqualPromotionMoves() {
+        Location firstFrom = new Location(1, 4);
+        Location firstTo = new Location(0, 4);
+        Piece firstPawn = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPawn, null, PieceType.QUEEN, MoveType.NORMAL);
+
+        Location secondFrom = new Location(1, 4);
+        Location secondTo = new Location(0, 4);
+        Piece secondPawn = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPawn, null, PieceType.QUEEN, MoveType.NORMAL);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_EqualCastlingMoves() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstKing = new King(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstKing, null, null, MoveType.CASTLE);
+
+        Location secondFrom = new Location(6, 4);
+        Location secondTo = new Location(5, 4);
+        Piece secondKing = new King(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondKing, null, null, MoveType.CASTLE);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_EqualEnPassantMoves() {
+        Location firstFrom = new Location(3, 4);
+        Location firstTo = new Location(2, 5);
+        Piece firstWhitePawn = new Pawn(PieceColor.WHITE);
+        Piece firstBlackPawn = new Pawn(PieceColor.BLACK);
+        Move firstMove = new Move(firstFrom, firstTo, firstWhitePawn, firstBlackPawn, null, MoveType.EN_PASSANT);
+
+        Location secondFrom = new Location(3, 4);
+        Location secondTo = new Location(2, 5);
+        Piece secondWhitePawn = new Pawn(PieceColor.WHITE);
+        Piece secondBlackPawn = new Pawn(PieceColor.BLACK);
+        Move secondMove = new Move(secondFrom, secondTo, secondWhitePawn, secondBlackPawn, null, MoveType.EN_PASSANT);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_UnequalMoves() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(4, 6);
+        Location secondTo = new Location(4, 5);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertNotEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void toString_NullFields() {
+        Location from = new Location(6, 4);
+        Location to = new Location(5, 4);
+        Piece pawn = new Pawn(PieceColor.WHITE);
+        Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
+
+        assertEquals("Move{from=(6,4), to=(5,4), movedPiece=White Pawn, capturedPiece=null, promotion=null, moveType=Normal, rookMovement=null, capturedLocation=null}", move.toString());
+    }
+
+    @Test
+    void hashCode_IdenticalFields() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(6, 4);
+        Location secondTo = new Location(5, 4);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertEquals(firstMove.hashCode(), secondMove.hashCode());
+    }
+
+    @Test
+    void hashCode_NonIdenticalFields() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(4, 6);
+        Location secondTo = new Location(4, 5);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertNotEquals(firstMove.hashCode(), secondMove.hashCode());
     }
 }

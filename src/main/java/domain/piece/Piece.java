@@ -1,5 +1,7 @@
 package domain.piece;
 
+import java.util.Objects;
+
 public abstract class Piece {
     private final PieceType type;
     private final PieceColor color;
@@ -21,6 +23,26 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return String.format("%s %s", color.name(), type.name());
+        return String.format("%s %s", color, type);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Piece other = (Piece) obj;
+
+        return type == other.type && color == other.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, color);
     }
 }

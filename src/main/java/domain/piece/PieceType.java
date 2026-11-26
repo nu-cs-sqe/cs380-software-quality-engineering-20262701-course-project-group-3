@@ -8,9 +8,14 @@ public enum PieceType {
     QUEEN("Queen"),
     KING("King");
 
-    private final String name;
+    private final String label;
 
-    PieceType(String name) {
-        this.name = name;
+    PieceType(String label) {
+        this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return this.label;
     }
 }

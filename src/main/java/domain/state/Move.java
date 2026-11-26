@@ -7,6 +7,7 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.PieceType;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public final class Move {
@@ -33,22 +34,23 @@ public final class Move {
 
     public Move(Location from, Location to, Piece movedPiece,
                 Piece capturedPiece, PieceType promotion, MoveType moveType,
-                RookMovement rookMovement, Location capturedLocation) {
-        if (moveType == null) {
-            throw new IllegalArgumentException("Move type cannot be null");
-        }
+                RookMovement rookMovement, Location capturedLocation)
+            throws IllegalArgumentException {
+        this.from = Optional.ofNullable(from)
+                .orElseThrow(() -> new IllegalArgumentException("From location must not be null"));
+        this.to = Optional.ofNullable(to)
+                .orElseThrow(() -> new IllegalArgumentException("To location must not be null"));
+        this.movedPiece = Optional.ofNullable(movedPiece)
+                .orElseThrow(() -> new IllegalArgumentException("Moved piece must not be null"));
+        this.moveType = Optional.ofNullable(moveType)
+                .orElseThrow(() -> new IllegalArgumentException("Move type must not be null"));
+        this.capturedPiece = capturedPiece;
+        this.promotion = promotion;
+        this.rookMovement = rookMovement;
+        this.capturedLocation = capturedLocation;
 
         validatePromotion(movedPiece, promotion);
         validateSpecialMove(moveType, movedPiece, capturedPiece, promotion);
-
-        this.from = from;
-        this.to = to;
-        this.movedPiece = movedPiece;
-        this.capturedPiece = capturedPiece;
-        this.promotion = promotion;
-        this.moveType = moveType;
-        this.rookMovement = rookMovement;
-        this.capturedLocation = capturedLocation;
     }
 
     private static void validatePromotion(Piece movedPiece, PieceType promotion) {
@@ -96,15 +98,27 @@ public final class Move {
         }
     }
 
+    public Location getFrom() {
+        return from;
+    }
+
+    public Location getTo() {
+        return to;
+    }
+
+    public Piece getMovedPiece() {
+        return movedPiece;
+    }
+
     public MoveType getMoveType() {
         return moveType;
     }
 
-    public Optional<Piece> capturedPiece() {
+    public Optional<Piece> getCapturedPiece() {
         return Optional.ofNullable(capturedPiece);
     }
 
-    public Optional<PieceType> promotion() {
+    public Optional<PieceType> getPromotion() {
         return Optional.ofNullable(promotion);
     }
 
@@ -114,5 +128,42 @@ public final class Move {
 
     public Optional<Location> getCapturedLocation() {
         return Optional.ofNullable(capturedLocation);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Move other = (Move) obj;
+
+        return from.equals(other.from)
+                && to.equals(other.to)
+                && movedPiece.equals(other.movedPiece)
+                && Objects.equals(capturedPiece, other.capturedPiece)
+                && promotion == other.promotion
+                && moveType == other.moveType
+                && Objects.equals(rookMovement, other.rookMovement)
+                && Objects.equals(capturedLocation, other.capturedLocation);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Move{from=%s, to=%s, movedPiece=%s, capturedPiece=%s, promotion=%s, "
+                        + "moveType=%s, rookMovement=%s, capturedLocation=%s}",
+                from, to, movedPiece, capturedPiece, promotion,
+                moveType, rookMovement, capturedLocation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to, movedPiece, capturedPiece, promotion,
+                moveType, rookMovement, capturedLocation);
     }
 }
