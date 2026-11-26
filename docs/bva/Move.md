@@ -85,3 +85,15 @@
 | TC28: Moved Bishop | Construct a move with `Piece.BISHOP;` call `getMovedPiece()` | Return `Piece.BISHOP` | :white_check_mark: |
 | TC29: Moved Queen  | Construct a move with `Piece.QUEEN;` call `getMovedPiece()`  | Return `Piece.QUEEN`  | :white_check_mark: |
 | TC30: Moved King   | Construct a move with `Piece.KING;` call `getMovedPiece()`   | Return `Piece.KING`   | :white_check_mark: |
+
+### Method under test: `equals()`
+
+|                                  | System under test                                    | Expected output             | Implemented?       |
+|----------------------------------|------------------------------------------------------|-----------------------------|--------------------|
+| TC31: Two Normal Moves           | Construct two normal moves with identical fields     | Moves asserted as equal     | :white_check_mark: |
+| TC32: Two Promotion Moves        | Construct two promotion moves with identical fields  | Moves asserted as equal     | :white_check_mark: |
+| TC33: Two Castling Moves         | Construct two castling moves with identical fields   | Moves asserted as equal     | :white_check_mark: |
+| TC34: Two En Passant Moves       | Construct two En Passant moves with identical fields | Moves asserted as equal     | :white_check_mark: |
+| TC35: Two different Normal Moves | Construct two moves, differing in From locations     | Moves asserted as not equal | :white_check_mark: |
+
+

@@ -363,4 +363,81 @@ public class MoveTest {
         Piece expectedMovedPiece = new King(PieceColor.WHITE);
         assertEquals(expectedMovedPiece, move.getMovedPiece());
     }
+
+    @Test
+    void equals_EqualNormalMoves() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(6, 4);
+        Location secondTo = new Location(5, 4);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_EqualPromotionMoves() {
+        Location firstFrom = new Location(1, 4);
+        Location firstTo = new Location(0, 4);
+        Piece firstPawn = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPawn, null, PieceType.QUEEN, MoveType.NORMAL);
+
+        Location secondFrom = new Location(1, 4);
+        Location secondTo = new Location(0, 4);
+        Piece secondPawn = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPawn, null, PieceType.QUEEN, MoveType.NORMAL);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_EqualCastlingMoves() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstKing = new King(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstKing, null, null, MoveType.CASTLE);
+
+        Location secondFrom = new Location(6, 4);
+        Location secondTo = new Location(5, 4);
+        Piece secondKing = new King(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondKing, null, null, MoveType.CASTLE);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_EqualEnPassantMoves() {
+        Location firstFrom = new Location(3, 4);
+        Location firstTo = new Location(2, 5);
+        Piece firstWhitePawn = new Pawn(PieceColor.WHITE);
+        Piece firstBlackPawn = new Pawn(PieceColor.BLACK);
+        Move firstMove = new Move(firstFrom, firstTo, firstWhitePawn, firstBlackPawn, null, MoveType.EN_PASSANT);
+
+        Location secondFrom = new Location(3, 4);
+        Location secondTo = new Location(2, 5);
+        Piece secondWhitePawn = new Pawn(PieceColor.WHITE);
+        Piece secondBlackPawn = new Pawn(PieceColor.BLACK);
+        Move secondMove = new Move(secondFrom, secondTo, secondWhitePawn, secondBlackPawn, null, MoveType.EN_PASSANT);
+
+        assertEquals(firstMove, secondMove);
+    }
+
+    @Test
+    void equals_UnequalMoves() {
+        Location firstFrom = new Location(6, 4);
+        Location firstTo = new Location(5, 4);
+        Piece firstPiece = new Pawn(PieceColor.WHITE);
+        Move firstMove = new Move(firstFrom, firstTo, firstPiece, null, null, MoveType.NORMAL);
+
+        Location secondFrom = new Location(4, 6);
+        Location secondTo = new Location(4, 5);
+        Piece secondPiece = new Pawn(PieceColor.WHITE);
+        Move secondMove = new Move(secondFrom, secondTo, secondPiece, null, null, MoveType.NORMAL);
+
+        assertNotEquals(firstMove, secondMove);
+    }
 }
