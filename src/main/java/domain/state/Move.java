@@ -51,18 +51,6 @@ public final class Move {
         this.capturedLocation = capturedLocation;
     }
 
-    public Location getFrom() {
-        return from;
-    }
-
-    public Location getTo() {
-        return to;
-    }
-
-    public Piece getMovedPiece() {
-        return movedPiece;
-    }
-
     private static void validatePromotion(Piece movedPiece, PieceType promotion) {
         if (promotion == null) {
             return;
@@ -108,6 +96,18 @@ public final class Move {
         }
     }
 
+    public Location getFrom() {
+        return from;
+    }
+
+    public Location getTo() {
+        return to;
+    }
+
+    public Piece getMovedPiece() {
+        return movedPiece;
+    }
+
     public MoveType getMoveType() {
         return moveType;
     }
@@ -126,5 +126,23 @@ public final class Move {
 
     public Optional<Location> getCapturedLocation() {
         return Optional.ofNullable(capturedLocation);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Move other = (Move) obj;
+
+        return from.equals(other.from) && to.equals(other.to) && movedPiece.equals(other.movedPiece) &&
+                capturedPiece.equals(other.capturedPiece) && promotion == other.promotion &&
+                moveType == other.moveType && rookMovement.equals(other.rookMovement) &&
+                capturedLocation.equals(other.capturedLocation);
     }
 }
