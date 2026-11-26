@@ -31,4 +31,9 @@ public class Location {
 
         return x == other.x && y == other.y;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%d, %d)", x, y);
+    }
 }

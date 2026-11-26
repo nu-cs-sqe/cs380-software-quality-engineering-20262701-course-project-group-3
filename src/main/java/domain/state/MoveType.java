@@ -2,7 +2,18 @@
 package domain.state;
 
 public enum MoveType {
-    NORMAL,
-    CASTLE,
-    EN_PASSANT
+    NORMAL("Normal"),
+    CASTLE("Castle"),
+    EN_PASSANT("En Passant");
+
+    private final String label;
+
+    MoveType(String label) {
+        this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return this.label;
+    }
 }

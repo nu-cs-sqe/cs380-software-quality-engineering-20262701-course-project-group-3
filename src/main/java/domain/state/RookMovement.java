@@ -35,4 +35,9 @@ public final class RookMovement {
 
         return from.equals(other.from) && to.equals(other.to);
     }
+
+    @Override
+    public String toString() {
+        return String.format("RookMovement{from=%s, to=%s}", from, to);
+    }
 }

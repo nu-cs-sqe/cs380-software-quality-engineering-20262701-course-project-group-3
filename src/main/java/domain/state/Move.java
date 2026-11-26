@@ -145,4 +145,13 @@ public final class Move {
                 moveType == other.moveType && rookMovement.equals(other.rookMovement) &&
                 capturedLocation.equals(other.capturedLocation);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Move{from=%s, to=%s, movedPiece=%s, capturedPiece=%s, promotion=%s, "
+                        + "moveType=%s, rookMovement=%s, capturedLocation=%s}",
+                from, to, movedPiece, capturedPiece, promotion,
+                moveType, rookMovement, capturedLocation);
+    }
 }

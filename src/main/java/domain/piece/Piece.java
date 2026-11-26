@@ -21,7 +21,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return String.format("%s %s", color.name(), type.name());
+        return String.format("%s %s", color, type);
     }
 
     @Override
