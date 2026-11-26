@@ -51,6 +51,18 @@ public final class Move {
         this.capturedLocation = capturedLocation;
     }
 
+    public Location getFrom() {
+        return from;
+    }
+
+    public Location getTo() {
+        return to;
+    }
+
+    public Piece getMovedPiece() {
+        return movedPiece;
+    }
+
     private static void validatePromotion(Piece movedPiece, PieceType promotion) {
         if (promotion == null) {
             return;
