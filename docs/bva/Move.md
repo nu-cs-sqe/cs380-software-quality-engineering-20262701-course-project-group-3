@@ -17,14 +17,14 @@
 | TC03: Castling move   | Construct a move with `MoveType.CASTLE`; call `getMoveType()`     | Returns `MoveType.CASTLE`     | :white_check_mark: |
 | TC04: En passant move | Construct a move with `MoveType.EN_PASSANT`; call `getMoveType()` | Returns `MoveType.EN_PASSANT` | :white_check_mark: |
 
-### Method under test: `capturedPiece()`
+### Method under test: `getCapturedPiece()`
 
-|                           | System under test                                                 | Expected output                                  | Implemented?       |
-|---------------------------|-------------------------------------------------------------------|--------------------------------------------------|--------------------|
-| TC05: No captured piece   | Normal move without capture; call `capturedPiece()`               | Returns `Optional.empty()`                       | :white_check_mark: |
-| TC06: Captured piece      | Normal move capturing an opponent's piece; call `capturedPiece()` | Returns `Optional` containing the captured piece | :white_check_mark: |
+|                         | System under test                                                    | Expected output                                  | Implemented?       |
+|-------------------------|----------------------------------------------------------------------|--------------------------------------------------|--------------------|
+| TC05: No captured piece | Normal move without capture; call `getCapturedPiece()`               | Returns `Optional.empty()`                       | :white_check_mark: |
+| TC06: Captured piece    | Normal move capturing an opponent's piece; call `getCapturedPiece()` | Returns `Optional` containing the captured piece | :white_check_mark: |
 
-### Method under test: `promotion()`
+### Method under test: `getPromotion()`
 
 |                       | System under test                                   | Expected output                                 | Implemented?       |
 |-----------------------|-----------------------------------------------------|-------------------------------------------------|--------------------|

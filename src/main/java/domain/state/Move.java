@@ -114,11 +114,11 @@ public final class Move {
         return moveType;
     }
 
-    public Optional<Piece> capturedPiece() {
+    public Optional<Piece> getCapturedPiece() {
         return Optional.ofNullable(capturedPiece);
     }
 
-    public Optional<PieceType> promotion() {
+    public Optional<PieceType> getPromotion() {
         return Optional.ofNullable(promotion);
     }
 

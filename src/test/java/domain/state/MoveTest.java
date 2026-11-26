@@ -51,7 +51,7 @@ public class MoveTest {
 
         Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
 
-        assertTrue(move.capturedPiece().isEmpty());
+        assertTrue(move.getCapturedPiece().isEmpty());
     }
 
     @Test
@@ -63,8 +63,8 @@ public class MoveTest {
 
         Move move = new Move(from, to, whitePawn, blackPawn, null, MoveType.NORMAL);
 
-        assertTrue(move.capturedPiece().isPresent());
-        assertSame(blackPawn, move.capturedPiece().get());
+        assertTrue(move.getCapturedPiece().isPresent());
+        assertSame(blackPawn, move.getCapturedPiece().get());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class MoveTest {
 
         Move move = new Move(from, to, pawn, null, null, MoveType.NORMAL);
 
-        assertTrue(move.promotion().isEmpty());
+        assertTrue(move.getPromotion().isEmpty());
     }
 
     @Test
@@ -86,8 +86,8 @@ public class MoveTest {
 
         Move move = new Move(from, to, pawn, null, PieceType.QUEEN, MoveType.NORMAL);
 
-        assertTrue(move.promotion().isPresent());
-        assertEquals(PieceType.QUEEN, move.promotion().get());
+        assertTrue(move.getPromotion().isPresent());
+        assertEquals(PieceType.QUEEN, move.getPromotion().get());
     }
 
     @Test
